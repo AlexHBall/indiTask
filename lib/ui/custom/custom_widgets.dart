@@ -1,7 +1,26 @@
 import 'package:flutter/material.dart';
 
-Container containerButtonText(
+Container alarmTimeDisplay(
     double w, double h, String text, Color backgroundColor) {
+  // return Container(
+  //     width: w,
+  //     height: h,
+  //     // decoration: BoxDecoration(
+  //     //   border: Border.all(width: 1.0, color: Color(0xFF1C2638)),
+  //     //   borderRadius: BorderRadius.circular(50),
+  //     //   color: backgroundColor,
+  //     // ),
+  //     child: Padding(
+  //       padding: const EdgeInsets.all(22.0),
+  //       child: Text("AAAA",
+  //           textAlign: TextAlign.center,
+  //           style: TextStyle(
+  //               fontSize: 12,
+  //               fontWeight: FontWeight.w400,
+  //               color:
+  //                   // Color(0xFF1C2638)
+  //                   Colors.purple)),
+  //     ));
   return Container(
       width: w,
       height: h,
@@ -11,20 +30,16 @@ Container containerButtonText(
         color: backgroundColor,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(22.0),
-        child: Text(text,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                color:
-                    // Color(0xFF1C2638)
-                    Colors.purple)),
-      ));
+          padding: const EdgeInsets.only(top: 11),
+          child: Text(text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF1C2638)))));
 }
 
-Container containerButtonTextNoSolidBorder(
-    double w, double h, String text, Color backgroundColor) {
+Container scoreDisplay(double w, double h, String text, Color backgroundColor) {
   return Container(
       width: w,
       height: h,
@@ -33,19 +48,17 @@ Container containerButtonTextNoSolidBorder(
         color: backgroundColor,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(22.0),
+        padding: const EdgeInsets.only(top: 11),
         child: Text(text,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 12,
-                fontWeight: FontWeight.w400,
-                color:
-                    // Color(0xFF1C2638)
-                    Colors.purple)),
+                fontWeight: FontWeight.w500,
+                color: Colors.white)),
       ));
 }
 
-Container containerButtonIcon(double w, double h) {
+Container alarmIconDisplay(double w, double h) {
   return Container(
       width: w,
       height: h,
@@ -63,17 +76,18 @@ Container containerButtonIcon(double w, double h) {
 }
 
 Padding taskInput() {
-  TextStyle style = TextStyle(color: Color(0xFF1C2638),fontSize: 18,fontWeight: FontWeight.w400);
+  TextStyle style = TextStyle(
+      color: Color(0xFF1C2638), fontSize: 18, fontWeight: FontWeight.w400);
   return Padding(
     padding:
         const EdgeInsets.only(top: 25.0, left: 5.0, right: 5.0, bottom: 27.0),
     child: TextField(
       cursorColor: Colors.white,
-      decoration: InputDecoration(),
+      decoration: InputDecoration(
+          border: new UnderlineInputBorder(
+              borderSide: new BorderSide(color: Colors.purple))),
       style: style,
-      controller: TextEditingController(
-          text: "Finish financial analysis"
-          ),
+      controller: TextEditingController(text: "Finish financial analysis"),
       onSubmitted: (String text) async {},
       textAlign: TextAlign.left,
     ),
@@ -99,10 +113,9 @@ Padding taskInfo() {
     child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          containerButtonText(140.0, 40.0, "DATE", Color(0xFFFFFFFF)),
-          containerButtonIcon(60.0, 40.0),
-          containerButtonTextNoSolidBorder(
-              60.0, 40.0, "SCORE", Color(0xFF108B00)),
+          alarmTimeDisplay(140.0, 40.0, "26 Apr at 12:00AM", Color(0xFFFFFFFF)),
+          alarmIconDisplay(60.0, 40.0),
+          scoreDisplay(60.0, 40.0, "100", Color(0xFF108B00)),
         ]),
   );
 }
