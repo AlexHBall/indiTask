@@ -26,7 +26,7 @@ class TaskWidget extends State<Tasks> {
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF1C2638))),
         ),
-        addTask(),
+        AddTask(),
       ],
     );
   }
