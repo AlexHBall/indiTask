@@ -106,14 +106,22 @@ class RoundSliderTrackShape extends SliderTrackShape {
 
 class ScoreInput extends StatefulWidget {
   final Function updateScore;
-  ScoreInput({Key key, @required this.updateScore}) : super(key: key);
+  final double score;
+  ScoreInput({Key key, @required this.updateScore, @required this.score})
+      : super(key: key);
 
   @override
   _ScoreInputState createState() => _ScoreInputState();
 }
 
 class _ScoreInputState extends State<ScoreInput> {
-  double _currentSliderValue = 20;
+  double _currentSliderValue;
+
+  @override
+  void initState() {
+    _currentSliderValue = widget.score;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -394,7 +402,7 @@ class _AddTaskState extends State<AddTask> {
           child: Column(children: <Widget>[
             (scoreToggled)
                 ? ScoreInput(
-                    updateScore: _updateScore,
+                    updateScore: _updateScore, score: score.toDouble(),
                   )
                 : TaskInput(),
             TaskInfo(
