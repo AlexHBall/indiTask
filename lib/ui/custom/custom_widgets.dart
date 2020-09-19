@@ -2,25 +2,6 @@ import 'package:flutter/material.dart';
 
 Container alarmTimeDisplay(
     double w, double h, String text, Color backgroundColor) {
-  // return Container(
-  //     width: w,
-  //     height: h,
-  //     // decoration: BoxDecoration(
-  //     //   border: Border.all(width: 1.0, color: Color(0xFF1C2638)),
-  //     //   borderRadius: BorderRadius.circular(50),
-  //     //   color: backgroundColor,
-  //     // ),
-  //     child: Padding(
-  //       padding: const EdgeInsets.all(22.0),
-  //       child: Text("AAAA",
-  //           textAlign: TextAlign.center,
-  //           style: TextStyle(
-  //               fontSize: 12,
-  //               fontWeight: FontWeight.w400,
-  //               color:
-  //                   // Color(0xFF1C2638)
-  //                   Colors.purple)),
-  //     ));
   return Container(
       width: w,
       height: h,
@@ -84,8 +65,12 @@ Padding taskInput() {
     child: TextField(
       cursorColor: Colors.white,
       decoration: InputDecoration(
-          border: new UnderlineInputBorder(
-              borderSide: new BorderSide(color: Colors.purple))),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Color(0xFF1C2638)),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Color(0xFF1C2638)),
+          )),
       style: style,
       controller: TextEditingController(text: "Finish financial analysis"),
       onSubmitted: (String text) async {},
