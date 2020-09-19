@@ -19,7 +19,6 @@ class Home extends StatelessWidget {
           default:
             if (!snapshot.hasError) {
               return snapshot.data.getBool("welcome") != null
-              // return snapshot.data.getBool("welcome") != false
                   ? new Tasks()
                   : new OnboardingScreen();
             } else {

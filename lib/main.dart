@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:inditask/cubit/task_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inditask/repository/task_repository.dart';
 import 'package:inditask/ui/tasks.dart';
 import 'package:inditask/utils/utils.dart';
-
 import 'package:inditask/ui/home.dart';
 
 void main() {
@@ -14,7 +16,10 @@ class ThisApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       theme: basicTheme(),
-      home: Home(),
+      home: BlocProvider(
+        create: (context) => TaskCubit(TaskRepository()),
+        child: Home(),
+      ),
       routes: {
         "/tasks": (context) => Tasks(),
       },

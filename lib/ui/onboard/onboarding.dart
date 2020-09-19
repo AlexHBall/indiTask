@@ -7,6 +7,7 @@ class OnboardingScreen extends StatefulWidget {
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
+
 // TODO: Update shared prefs to save onboarding finished
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final int _numPages = 4;
@@ -64,62 +65,73 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF2F7FB),
+        backgroundColor: Color(0xFFF2F7FB),
         body: Column(
-      children: <Widget>[
-        Container(
-          height: 542.0,
-          child: PageView(
-              physics: new NeverScrollableScrollPhysics(),
-              controller: _pageController,
-              onPageChanged: (int page) {
-                setState(() {
-                  FocusScope.of(context).unfocus();
-                  _currentPage = page;
-                });
+          children: <Widget>[
+            Container(
+              height: 542.0,
+              child: PageView(
+                  physics: new NeverScrollableScrollPhysics(),
+                  controller: _pageController,
+                  onPageChanged: (int page) {
+                    setState(() {
+                      FocusScope.of(context).unfocus();
+                      _currentPage = page;
+                    });
+                  },
+                  children: onBoardPages),
+            ),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 2),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: _buildPageIndicator(),
+                )),
+            SizedBox(
+              height: 60,
+            ),
+            GestureDetector(
+              onTap: () async {
+                int _nextPage = _currentPage++;
+                if (_nextPage == 3) {
+                  setState(() {
+                    _text = 'Get Started';
+                  });
+                }
+                if (_nextPage == 4) {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  prefs.setBool("welcome", true);
+                  
+                  Navigator.pushNamedAndRemoveUntil(context, "/tasks",
+                      (Route<dynamic> route) {
+                    return false;
+                  });
+                }
+
+                _pageController.animateToPage(_nextPage,
+                    duration: kTabScrollDuration, curve: Curves.ease);
               },
-              children: onBoardPages),
-        ),
-        Padding(
-            padding: EdgeInsets.symmetric(horizontal: 2),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: _buildPageIndicator(),
-            )),
-        SizedBox(
-          height: 60,
-        ),
-        GestureDetector(
-          onTap: () {
-            int _nextPage = _currentPage++;
-            if (_nextPage == 3) {
-              setState(() {
-                _text = 'Get Started';
-              });
-            }
-            _pageController.animateToPage(_nextPage,
-                duration: kTabScrollDuration, curve: Curves.ease);
-          },
-          child: Container(
-            width: 321,
-            height: 66,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: Color(0xFF1C2638),
+              child: Container(
+                width: 321,
+                height: 66,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Color(0xFF1C2638),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(22.0),
+                  child: Text(_text,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white)),
+                ),
+              ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(22.0),
-              child: Text(_text,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white)),
-            ),
-          ),
-        ),
-      ],
-    ));
+          ],
+        ));
   }
 }
 

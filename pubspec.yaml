@@ -37,6 +37,9 @@ dev_dependencies:
   sqflite:
   path:  
   shared_preferences: ^0.5.10
+  bloc: ^6.0.1
+  flutter_bloc: ^6.0.1
+  equatable: ^1.2.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
