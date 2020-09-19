@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class RoundSliderTrackShape extends SliderTrackShape {
-
-  const RoundSliderTrackShape({this.disabledThumbGapWidth = 2.0, this.radius = 0});
+  const RoundSliderTrackShape(
+      {this.disabledThumbGapWidth = 2.0, this.radius = 0});
 
   final double disabledThumbGapWidth;
   final double radius;
@@ -15,7 +15,8 @@ class RoundSliderTrackShape extends SliderTrackShape {
     bool isEnabled,
     bool isDiscrete,
   }) {
-    final double overlayWidth = sliderTheme.overlayShape.getPreferredSize(isEnabled, isDiscrete).width;
+    final double overlayWidth =
+        sliderTheme.overlayShape.getPreferredSize(isEnabled, isDiscrete).width;
     final double trackHeight = sliderTheme.trackHeight;
     assert(overlayWidth >= 0);
     assert(trackHeight >= 0);
@@ -23,7 +24,8 @@ class RoundSliderTrackShape extends SliderTrackShape {
     assert(parentBox.size.height >= trackHeight);
 
     final double trackLeft = offset.dx + overlayWidth / 2;
-    final double trackTop = offset.dy + (parentBox.size.height - trackHeight) / 2;
+    final double trackTop =
+        offset.dy + (parentBox.size.height - trackHeight) / 2;
 
     final double trackWidth = parentBox.size.width - overlayWidth;
     return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
@@ -31,26 +33,30 @@ class RoundSliderTrackShape extends SliderTrackShape {
 
   @override
   void paint(
-      PaintingContext context,
-      Offset offset, {
-        RenderBox parentBox,
-        SliderThemeData sliderTheme,
-        Animation<double> enableAnimation,
-        TextDirection textDirection,
-        Offset thumbCenter,
-        bool isDiscrete,
-        bool isEnabled,
-      }) {
+    PaintingContext context,
+    Offset offset, {
+    RenderBox parentBox,
+    SliderThemeData sliderTheme,
+    Animation<double> enableAnimation,
+    TextDirection textDirection,
+    Offset thumbCenter,
+    bool isDiscrete,
+    bool isEnabled,
+  }) {
     if (sliderTheme.trackHeight == 0) {
       return;
     }
 
-    final ColorTween activeTrackColorTween =
-    ColorTween(begin: sliderTheme.disabledActiveTrackColor, end: sliderTheme.activeTrackColor);
-    final ColorTween inactiveTrackColorTween =
-    ColorTween(begin: sliderTheme.disabledInactiveTrackColor, end: sliderTheme.inactiveTrackColor);
-    final Paint activePaint = Paint()..color = activeTrackColorTween.evaluate(enableAnimation);
-    final Paint inactivePaint = Paint()..color = inactiveTrackColorTween.evaluate(enableAnimation);
+    final ColorTween activeTrackColorTween = ColorTween(
+        begin: sliderTheme.disabledActiveTrackColor,
+        end: sliderTheme.activeTrackColor);
+    final ColorTween inactiveTrackColorTween = ColorTween(
+        begin: sliderTheme.disabledInactiveTrackColor,
+        end: sliderTheme.inactiveTrackColor);
+    final Paint activePaint = Paint()
+      ..color = activeTrackColorTween.evaluate(enableAnimation);
+    final Paint inactivePaint = Paint()
+      ..color = inactiveTrackColorTween.evaluate(enableAnimation);
     Paint leftTrackPaint;
     Paint rightTrackPaint;
     switch (textDirection) {
@@ -67,7 +73,8 @@ class RoundSliderTrackShape extends SliderTrackShape {
     double horizontalAdjustment = 0.0;
     if (!isEnabled) {
       final double disabledThumbRadius =
-          sliderTheme.thumbShape.getPreferredSize(false, isDiscrete).width / 2.0;
+          sliderTheme.thumbShape.getPreferredSize(false, isDiscrete).width /
+              2.0;
       final double gap = disabledThumbGapWidth * (1.0 - enableAnimation.value);
       horizontalAdjustment = disabledThumbRadius + gap;
     }
@@ -80,18 +87,26 @@ class RoundSliderTrackShape extends SliderTrackShape {
       isDiscrete: isDiscrete,
     );
     //Modify this side
-    final RRect leftTrackSegment = RRect.fromLTRBR(trackRect.left, trackRect.top,
-        thumbCenter.dx - horizontalAdjustment, trackRect.bottom, Radius.circular(radius));
+    final RRect leftTrackSegment = RRect.fromLTRBR(
+        trackRect.left,
+        trackRect.top,
+        thumbCenter.dx - horizontalAdjustment,
+        trackRect.bottom,
+        Radius.circular(radius));
     context.canvas.drawRRect(leftTrackSegment, leftTrackPaint);
-    final RRect rightTrackSegment = RRect.fromLTRBR(thumbCenter.dx + horizontalAdjustment, trackRect.top,
-        trackRect.right, trackRect.bottom, Radius.circular(radius));
+    final RRect rightTrackSegment = RRect.fromLTRBR(
+        thumbCenter.dx + horizontalAdjustment,
+        trackRect.top,
+        trackRect.right,
+        trackRect.bottom,
+        Radius.circular(radius));
     context.canvas.drawRRect(rightTrackSegment, rightTrackPaint);
   }
 }
 
-
 class ScoreInput extends StatefulWidget {
-  ScoreInput({Key key}) : super(key: key);
+  final Function updateScore;
+  ScoreInput({Key key, @required this.updateScore}) : super(key: key);
 
   @override
   _ScoreInputState createState() => _ScoreInputState();
@@ -126,7 +141,7 @@ class _ScoreInputState extends State<ScoreInput> {
             data: SliderTheme.of(context).copyWith(
               activeTrackColor: Color(0xFF108B00),
               inactiveTrackColor: Color(0xFFEFEFEF),
-              trackShape:  RoundSliderTrackShape(radius: 20),
+              trackShape: RoundSliderTrackShape(radius: 20),
               trackHeight: 9.0,
               thumbColor: Color(0xFF108B00),
               thumbShape: RoundSliderThumbShape(enabledThumbRadius: 9.0),
@@ -140,6 +155,7 @@ class _ScoreInputState extends State<ScoreInput> {
               // inactiveColor: Colors.grey,
               // activeColor: Color(0xFF108B00),
               onChanged: (double value) {
+                widget.updateScore(value.round());
                 setState(() {
                   _currentSliderValue = value;
                 });
@@ -178,14 +194,25 @@ class _ScoreInputState extends State<ScoreInput> {
   }
 }
 
-class AddTask extends StatefulWidget {
-  AddTask({Key key}) : super(key: key);
+class TaskInfo extends StatefulWidget {
+  final Function notifyParent;
+  final bool toggle;
+  final String score;
+  TaskInfo(
+      {Key key,
+      @required this.notifyParent,
+      @required this.toggle,
+      @required this.score})
+      : super(key: key);
 
   @override
-  _AddTaskState createState() => _AddTaskState();
+  TaskInfoState createState() => TaskInfoState();
 }
 
-class _AddTaskState extends State<AddTask> {
+class TaskInfoState extends State<TaskInfo> {
+  TaskInfoState();
+  String _text = "100";
+
   Container alarmTimeDisplay(
       double w, double h, String text, Color backgroundColor) {
     return Container(
@@ -206,26 +233,6 @@ class _AddTaskState extends State<AddTask> {
                     color: Color(0xFF1C2638)))));
   }
 
-  Container scoreDisplay(
-      double w, double h, String text, Color backgroundColor) {
-    return Container(
-        width: w,
-        height: h,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          color: backgroundColor,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 11),
-          child: Text(text,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white)),
-        ));
-  }
-
   Container alarmIconDisplay(double w, double h) {
     return Container(
         width: w,
@@ -243,7 +250,76 @@ class _AddTaskState extends State<AddTask> {
             )));
   }
 
-  Padding taskInput() {
+  @override
+  Widget build(BuildContext context) {
+    GestureDetector scoreDisplay(double w, double h, Color backgroundColor) {
+      return GestureDetector(
+        onTap: () {
+          widget.notifyParent();
+
+          setState(() {
+            (widget.toggle) ? _text = widget.score.toString() : _text = "Done";
+          });
+        },
+        child: Container(
+            width: w,
+            height: h,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              color: backgroundColor,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 11),
+              child: Text(_text,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white)),
+            )),
+      );
+    }
+
+    return Padding(
+        padding: const EdgeInsets.only(left: 7.0, right: 7.0),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              alarmTimeDisplay(
+                  140.0, 40.0, "26 Apr at 12:00AM", Color(0xFFFFFFFF)),
+              alarmIconDisplay(60.0, 40.0),
+              scoreDisplay(60.0, 40.0, Color(0xFF108B00)),
+            ]));
+  }
+}
+
+class AddTaskButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.only(top: 33.0, left: 5.0, right: 5.0),
+        child: Container(
+            width: 320,
+            height: 66,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              color: Color(0xFF1C2638),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(22.0),
+              child: Text("Add Task",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white)),
+            )));
+  }
+}
+
+class TaskInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     TextStyle style = TextStyle(
         color: Color(0xFF1C2638), fontSize: 18, fontWeight: FontWeight.w400);
     return Padding(
@@ -265,39 +341,43 @@ class _AddTaskState extends State<AddTask> {
       ),
     );
   }
+}
 
-  Padding taskInfo() {
-    return Padding(
-        padding: const EdgeInsets.only(left: 7.0, right: 7.0),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              alarmTimeDisplay(
-                  140.0, 40.0, "26 Apr at 12:00AM", Color(0xFFFFFFFF)),
-              alarmIconDisplay(60.0, 40.0),
-              scoreDisplay(60.0, 40.0, "100", Color(0xFF108B00)),
-            ]));
+class AddTask extends StatefulWidget {
+  final bool scoreToggled;
+
+  AddTask(this.scoreToggled, {Key key}) : super(key: key);
+
+  @override
+  _AddTaskState createState() => _AddTaskState();
+}
+
+class _AddTaskState extends State<AddTask> {
+  bool scoreToggled = false;
+  int score = 100;
+  String scoreButtonText;
+
+  void _toggleScore() {
+    setState(() {
+      scoreToggled = !scoreToggled;
+      (scoreToggled)
+          ? scoreButtonText = score.toString()
+          : scoreButtonText = "Done";
+    });
   }
 
-  Padding addTaskButton() {
-    return Padding(
-        padding: const EdgeInsets.only(top: 33.0, left: 5.0, right: 5.0),
-        child: Container(
-            width: 320,
-            height: 66,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: Color(0xFF1C2638),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(22.0),
-              child: Text("Add Task",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white)),
-            )));
+  void _updateScore(int newScore) {
+    setState(() {
+      score = newScore;
+      scoreButtonText = newScore.toString();
+    });
+  }
+
+  @override
+  void initState() {
+    scoreToggled = widget.scoreToggled;
+    scoreButtonText = score.toString();
+    super.initState();
   }
 
   @override
@@ -312,9 +392,17 @@ class _AddTaskState extends State<AddTask> {
         child: Padding(
           padding: const EdgeInsets.only(left: 28.0, right: 28.0),
           child: Column(children: <Widget>[
-            ScoreInput(),
-            taskInfo(),
-            addTaskButton(),
+            (scoreToggled)
+                ? ScoreInput(
+                    updateScore: _updateScore,
+                  )
+                : TaskInput(),
+            TaskInfo(
+              notifyParent: _toggleScore,
+              toggle: scoreToggled,
+              score: scoreButtonText,
+            ),
+            AddTaskButton(),
           ]),
         ));
   }
