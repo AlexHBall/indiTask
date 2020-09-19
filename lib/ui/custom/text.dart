@@ -1,29 +1,29 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-/// Builds a textbox with text theme body 1 style
-class Body1Text extends StatelessWidget {
-  final String displayText;
-  Body1Text(this.displayText);
+// /// Builds a textbox with text theme body 1 style
+// class Body1Text extends StatelessWidget {
+//   final String displayText;
+//   Body1Text(this.displayText);
 
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      displayText,
-      style: Theme.of(context).textTheme.body1,
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Text(
+//       displayText,
+//       style: Theme.of(context).textTheme.body1,
+//     );
+//   }
+// }
 
-/// Builds a textbox with text theme body 2 style
-class Body2Text extends StatelessWidget {
-  final String displayText;
-  Body2Text(this.displayText);
+// /// Builds a textbox with text theme body 2 style
+// class Body2Text extends StatelessWidget {
+//   final String displayText;
+//   Body2Text(this.displayText);
 
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      displayText,
-      style: Theme.of(context).textTheme.bodyText2,
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Text(
+//       displayText,
+//       style: Theme.of(context).textTheme.bodyText2,
+//     );
+//   }
+// }
