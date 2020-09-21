@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inditask/ui/tasks.dart';
+import 'package:inditask/bloc/bloc.dart';
+import 'package:inditask/ui/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:inditask/ui/onboard/onboard.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inditask/repository/task_repository.dart';
 class Home extends StatelessWidget {
   Home();
 
@@ -19,7 +21,14 @@ class Home extends StatelessWidget {
           default:
             if (!snapshot.hasError) {
               return snapshot.data.getBool("welcome") != null
-                  ? new InitialScreen()
+                  ? new BlocProvider(
+                      create: (context) {
+                        return TaskBloc(
+                          taskRepo: TaskRepository(),
+                        )..add(LoadTasksEvent());
+                      },
+                      child: Dashboard(),
+                    )
                   : new OnboardingScreen();
             } else {
               return new ErrorScreen(snapshot.error);

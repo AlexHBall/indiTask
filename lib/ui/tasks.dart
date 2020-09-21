@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inditask/ui/custom/custom_widgets.dart';
+import 'package:inditask/ui/widgets/custom_widgets.dart';
 
 class InitialScreen extends StatefulWidget {
   @override

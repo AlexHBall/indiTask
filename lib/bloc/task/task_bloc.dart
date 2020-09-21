@@ -24,6 +24,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   Stream<TaskState> _mapTasksLoadedToState() async* {
     try {
       final todos = await this.taskRepo.getAllTasks();
+      if(todos.length == 0) {
+        yield NoTasks();
+      }
       yield TasksLoaded(todos);
     } catch (_) {
       yield TaskError("h");

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:inditask/bloc/blocs.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inditask/ui/tasks.dart';
 import 'package:inditask/utils/utils.dart';
 import 'package:inditask/ui/home.dart';
 
 void main() {
-  runApp(ThisApp());
+  runApp(
+    ThisApp()
+  );
 }
 
 class ThisApp extends StatelessWidget {
@@ -15,10 +15,7 @@ class ThisApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       theme: basicTheme(),
-      home: MultiBlocProvider(
-        providers: Blocs.allBlocs(),
-        child: Home(),
-      ),
+      home: Home(),
       routes: {
         "/tasks": (context) => InitialScreen(),
       },
