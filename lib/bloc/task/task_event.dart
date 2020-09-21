@@ -31,5 +31,5 @@ class EditTaskEvent extends TaskEvent {
   List<Object> get props => [editedTask];
 
   @override
-  String toString() => 'TaskUpdated { task: $task }';
+  String toString() => 'TaskUpdated { task: $editedTask }';
 }

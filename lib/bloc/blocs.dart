@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inditask/bloc/task_bloc.dart';
+import 'package:inditask/bloc/task/task_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Blocs {
