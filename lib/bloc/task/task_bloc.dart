@@ -22,11 +22,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Stream<TaskState> _mapTasksLoadedToState() async* {
+    print('loading all tasks');
     try {
       final todos = await this.taskRepo.getAllTasks();
-      if(todos.length == 0) {
-        yield NoTasks();
-      }
       yield TasksLoaded(todos);
     } catch (_) {
       yield TaskError("h");
@@ -34,11 +32,16 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Stream<TaskState> _mapTasksAddedToState(AddTaskEvent event) async* {
+    print("trying to add and state $state");
     if (state is TasksLoaded) {
+      print('saving');
       final List<Task> updatedTodos = List.from((state as TasksLoaded).tasks)
         ..add(event.task);
       _saveTask(event.task);
       yield TasksLoaded(updatedTodos);
+    } else if (state is NoTasks) {
+      _saveTask(event.task);
+      yield TaskLoading();
     }
   }
 
@@ -54,6 +57,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   @override
   Stream<TaskState> mapEventToState(TaskEvent event) async* {
+    print('got Event $event');
     if (event is LoadTasksEvent) {
       yield* _mapTasksLoadedToState();
     } else if (event is AddTaskEvent) {

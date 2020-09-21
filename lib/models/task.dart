@@ -54,7 +54,7 @@ class Task extends Equatable {
     map['description'] = _description;
     map['dueDate'] = _dueDate;
     map['cost'] = _cost;
-    map['alarm'] = _hasAlarm;
+    map['hasAlarm'] = _hasAlarm;
     map['softDelete'] = _softDelete;
     return map;
   }
@@ -64,7 +64,7 @@ class Task extends Equatable {
     this._description = map['description'];
     this._dueDate = map['dueDate'];
     this._cost = map['cost'];
-    this._hasAlarm = map['alarm'];
+    this._hasAlarm = map['hasAlarm'];
     this._softDelete = map['softDelete'];
   }
 

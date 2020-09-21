@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inditask/ui/widgets/custom_widgets.dart';
 
 class InitialScreen extends StatefulWidget {
+  //TODO: When onboarding make sure bloc exists
   @override
   State<StatefulWidget> createState() {
     return TaskWidget();
@@ -40,17 +41,3 @@ class TaskWidget extends State<InitialScreen> {
     );
   }
 }
-
-Widget buildInitialInput() {
-  return Center(
-    child: Text("Put first task input here"),
-  );
-}
-
-Widget buildLoading() {
-  return Center(
-    child: CircularProgressIndicator(),
-  );
-}
-
-Widget buildLoaded() {}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inditask/bloc/task/task_bloc.dart';
+import 'package:inditask/models/task.dart';
 
 class RoundSliderTrackShape extends SliderTrackShape {
   const RoundSliderTrackShape(
@@ -311,7 +312,8 @@ class AddTaskButton extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             print("avavasa");
-            // BlocProvider.of<TaskBloc>(context).add(AddTaskEvent());
+            Task task = new Task("Test", "09-25-2020", 100, 0);
+            BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(task));
           },
                   child: Container(
               width: 320,

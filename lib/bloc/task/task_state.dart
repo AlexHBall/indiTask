@@ -30,5 +30,4 @@ class TasksLoaded extends TaskState {
 class TaskError extends TaskState {
   final String message;
   TaskError(this.message);
-  // TODO: Override equality
 }

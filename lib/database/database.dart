@@ -7,9 +7,9 @@ import 'package:sqflite/sqflite.dart';
 final String taskTable = 'Task_table';
 final String colId = 'id';
 final String colDescription = 'description';
-final String colDate = 'date';
-final String colScore = 'score';
-final String colAlarm = 'alarm';
+final String colDate = 'dueDate';
+final String colScore = 'cost';
+final String colAlarm = 'hasAlarm';
 final String colSoftDelete = "softDelete";
 
 class DatabaseProvider {
