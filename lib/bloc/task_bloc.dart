@@ -1,33 +1,62 @@
-import 'package:inditask/models/task.dart';
-import 'package:inditask/repository/repository.dart';
-
 import 'dart:async';
 
-class TaskBloc {
-  final _taskRepository = TaskRepository();
+import 'package:bloc/bloc.dart';
+import 'package:inditask/models/task.dart';
+import 'package:inditask/repository/task_repository.dart';
+import 'package:meta/meta.dart';
+import 'package:equatable/equatable.dart';
 
-  final _taskController = StreamController<List<Task>>.broadcast();
+part 'task_event.dart';
+part 'task_state.dart';
 
-  get myEntries => _taskController.stream;
+class TaskBloc extends Bloc<TaskEvent, TaskState> {
+  TaskRepository taskRepo = TaskRepository();
+  TaskBloc({@required this.taskRepo}) : super(TaskLoading());
 
-  TaskBloc() {
-    getEntries();
+  Future _saveTask(Task task) {
+    return taskRepo.insertTask(task);
   }
 
-  getEntries() async {
-    _taskController.sink.add(await _taskRepository.getAllTasks());
+  Future _updateTask(Task task) {
+    return taskRepo.updateTask(task);
   }
 
-  addTask(Task task, String date) async {
-    await _taskRepository.insertTask(task);
-    getEntries();
+  Stream<TaskState> _mapTasksLoadedToState() async* {
+    try {
+      final todos = await this.taskRepo.getAllTasks();
+      yield TasksLoaded(todos);
+    } catch (_) {
+      yield TaskError("h");
+    }
   }
 
-  dispose() {
-    _taskController.close();
+  Stream<TaskState> _mapTasksAddedToState(AddTaskEvent event) async* {
+    if (state is TasksLoaded) {
+      final List<Task> updatedTodos = List.from((state as TasksLoaded).tasks)
+        ..add(event.task);
+      _saveTask(event.task);
+      yield TasksLoaded(updatedTodos);
+    }
   }
 
-  updateTask(Task task) async {
-    await _taskRepository.updateTask(task);
+  Stream<TaskState> _mapTaskEditedToState(EditTaskEvent event) async* {
+    if (state is TasksLoaded) {
+      final List<Task> updatedTodos = (state as TasksLoaded).tasks.map((todo) {
+        return todo.id == event.editedTask.id ? event.editedTask : todo;
+      }).toList();
+      yield TasksLoaded(updatedTodos);
+      _updateTask(event.editedTask);
+    }
+  }
+
+  @override
+  Stream<TaskState> mapEventToState(TaskEvent event) async* {
+    if (event is LoadTasksEvent) {
+      yield* _mapTasksLoadedToState();
+    } else if (event is AddTaskEvent) {
+      yield* _mapTasksAddedToState(event);
+    } else if (event is EditTaskEvent) {
+      yield* _mapTaskEditedToState(event);
+    }
   }
 }

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:inditask/ui/custom/custom_widgets.dart';
 
-class Tasks extends StatefulWidget {
+class InitialScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return TaskWidget();
   }
 }
 
-class TaskWidget extends State<Tasks> {
+class TaskWidget extends State<InitialScreen> {
   Column initialPage() {
     return Column(
       children: <Widget>[
@@ -26,7 +26,7 @@ class TaskWidget extends State<Tasks> {
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF1C2638))),
         ),
-        AddTask(false),
+        AddTask(scoreToggled: false),
       ],
     );
   }

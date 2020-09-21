@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inditask/bloc/task_bloc.dart';
 
 class RoundSliderTrackShape extends SliderTrackShape {
   const RoundSliderTrackShape(
@@ -306,22 +308,28 @@ class AddTaskButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.only(top: 33.0, left: 5.0, right: 5.0),
-        child: Container(
-            width: 320,
-            height: 66,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: Color(0xFF1C2638),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(22.0),
-              child: Text("Add Task",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white)),
-            )));
+        child: GestureDetector(
+          onTap: () {
+            print("avavasa");
+            BlocProvider.of<TaskBloc>(context).add(AddTaskEvent());
+          },
+                  child: Container(
+              width: 320,
+              height: 66,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: Color(0xFF1C2638),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(22.0),
+                child: Text("Add Task",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+              )),
+        ));
   }
 }
 
@@ -354,7 +362,10 @@ class TaskInput extends StatelessWidget {
 class AddTask extends StatefulWidget {
   final bool scoreToggled;
 
-  AddTask(this.scoreToggled, {Key key}) : super(key: key);
+  AddTask({
+    Key key,
+    @required this.scoreToggled,
+  }) : super(key: key);
 
   @override
   _AddTaskState createState() => _AddTaskState();
@@ -402,7 +413,8 @@ class _AddTaskState extends State<AddTask> {
           child: Column(children: <Widget>[
             (scoreToggled)
                 ? ScoreInput(
-                    updateScore: _updateScore, score: score.toDouble(),
+                    updateScore: _updateScore,
+                    score: score.toDouble(),
                   )
                 : TaskInput(),
             TaskInfo(

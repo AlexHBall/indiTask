@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
+import 'package:equatable/equatable.dart';
 
-class Task {
+class Task extends Equatable {
   DateFormat daysFormat = DateFormat("MM-dd-yyyy");
 
   int _id;
@@ -75,4 +76,7 @@ class Task {
   String toString() {
     return "Task with ID [$_id] Description [$_description] date [$_dueDate] cost [$_cost] and alarm [$_hasAlarm]";
   }
+
+  @override
+  List<Object> get props =>[_id, _description, _dueDate, _cost];
 }
