@@ -160,7 +160,7 @@ class _CountDownState extends State<CountdownTimer> {
   _items() {
     Text inbetween = Text(
       " : ",
-      style: _getTextStyle(widget.hoursSymbolTextStyle),
+      style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xFF1C2638),fontSize: 20),
     );
     List<Widget> list = [];
     if (diffDate == null) {
@@ -168,7 +168,7 @@ class _CountDownState extends State<CountdownTimer> {
       return list;
     }
     if (diffDate.days != -1) {
-      var days = _getNumberAddZero(diffDate.days);
+      var days = diffDate.days;
       list.add(Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text(
           '${days ?? widget.defaultDays}',
