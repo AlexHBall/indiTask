@@ -49,7 +49,10 @@ class TaskCard extends StatelessWidget {
   final Color backgroundColor;
 
   TaskCard(
-      {Key key, @required this.cost, this.description, this.backgroundColor})
+      {Key key,
+      @required this.cost,
+      @required this.description,
+      @required this.backgroundColor})
       : super(key: key);
 
   @override
@@ -101,7 +104,6 @@ class TaskCard extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  //TODO: Score description here
                   description,
                   style: TextStyle(
                       color: Colors.white,
@@ -118,31 +120,38 @@ class TaskCard extends StatelessWidget {
   }
 }
 
-class CarouselWithIndicatorDemo extends StatefulWidget {
+class Carousel extends StatefulWidget {
+  final List<Task> tasks;
+  const Carousel(this.tasks);
   @override
   State<StatefulWidget> createState() {
     return _CarouselWithIndicatorState();
   }
 }
 
-class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
+class _CarouselWithIndicatorState extends State<Carousel> {
   List<Color> colors = [
     Color(0xFF1C2638),
     Color(0XFF9BBFD6),
     Color(0XFF108B00),
     Color(0XFFFF8C00)
   ];
+  int _currentIndex = 0;
+  List<TaskCard> taskCards = [];
 
   @override
+  void initState() {
+    for (var i = 0; i < widget.tasks.length; i++) {
+      TaskCard taskCard = TaskCard(
+          cost: widget.tasks[i].cost,
+          description: widget.tasks[i].description,
+          backgroundColor: colors[i % 4]);
+      taskCards.add(taskCard);
+      super.initState();
+    }
+  }
+  @override
   Widget build(BuildContext context) {
-    int _currentIndex = 0;
-    List<TaskCard> taskCards = [
-      TaskCard(cost: 100, description: "GG", backgroundColor: colors[0 % 4]),
-      TaskCard(cost: 50, description: "GD", backgroundColor: colors[1 % 4]),
-      TaskCard(cost: 50, description: "GD", backgroundColor: colors[2 % 4]),
-      TaskCard(cost: 50, description: "GD", backgroundColor: colors[3 % 4])
-    ];
-
     List<T> map<T>(List list, Function handler) {
       List<T> result = [];
       for (var i = 0; i < list.length; i++) {
@@ -156,37 +165,45 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: map<Widget>(taskCards, (index, url) {
-            return Container(
-              width: 10.0,
-              height: 10.0,
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _currentIndex == index ? Colors.blueAccent : Colors.grey,
+            return Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Container(
+                height: 10,
+                width: 0.2 * widget.tasks.length,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Container(
+                  //TODO: Width needs to be 1/n where n is number of tasks
+                  width: 1/widget.tasks.length,
+                  height: 6.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    color: _currentIndex == index
+                        ? Color(0xFF1C2638)
+                        : Colors.grey,
+                    //TODO: Get the border raduis working as inteded
+                    // borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
               ),
             );
           }),
         ),
         CarouselSlider(
           options: CarouselOptions(
-            height: 350.0,
+            height: 400.0,
             autoPlay: false,
-            aspectRatio: 1.0,
+            viewportFraction: 1.0,
             onPageChanged: (index, reason) {
               setState(() {
                 _currentIndex = index;
               });
             },
           ),
-          items: taskCards.map((card) {
-            return Builder(builder: (BuildContext context) {
-              return Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: card,
-              );
-            });
-          }).toList(),
+          items: taskCards,
         ),
       ],
     );

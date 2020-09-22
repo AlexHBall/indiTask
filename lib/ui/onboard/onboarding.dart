@@ -6,7 +6,6 @@ class OnboardingScreen extends StatefulWidget {
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
 
-// TODO: Update shared prefs to save onboarding finished
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final int _numPages = 4;
   int _currentPage = 0;

@@ -6,6 +6,7 @@ class Blocs {
   static List<BlocProvider> allBlocs() {
     return [
       BlocProvider<TaskBloc>(
+        // ignore: missing_required_param
         create: (BuildContext context) => TaskBloc(),
       )
     ];

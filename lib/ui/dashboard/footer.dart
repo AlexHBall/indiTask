@@ -15,9 +15,8 @@ class _TimeRemainingState extends State<TimeRemaining> {
     // var t2 = DateTime.now().millisecondsSinceEpoch;
     // print(t - t2);
     return CountdownTimer(
-      //TODO: Why is diff coming up negative here ?
-      // endTime:  widget.endTime.millisecondsSinceEpoch - DateTime.now().millisecondsSinceEpoch,
-      endTime: DateTime.now().millisecondsSinceEpoch + 100000 * 60 * 60,
+      // endTime: widget.endTime.millisecondsSinceEpoch,
+      endTime: DateTime.now().millisecondsSinceEpoch + 1000,
       defaultDays: "==",
       defaultHours: "--",
       defaultMin: "**",
@@ -38,7 +37,7 @@ class RemaingingTimeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -71,7 +70,7 @@ class CompleteWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 18.0),
+        padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 18.0),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),

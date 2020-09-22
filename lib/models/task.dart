@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class Task extends Equatable {
   DateFormat daysFormat = DateFormat("MM-dd-yyyy");
 
@@ -8,8 +9,7 @@ class Task extends Equatable {
   String _description;
   String _dueDate;
   int _cost;
-  // TODO: Set this as a boolean in code and convert to integer before saving to database
-  int _hasAlarm; 
+  int _hasAlarm;
   int _softDelete = 0;
 
   Task(this._description, this._dueDate, this._cost, this._hasAlarm);
@@ -31,6 +31,10 @@ class Task extends Equatable {
 
   set description(String description) {
     this._description = description;
+  }
+
+  set cost(int cost) {
+    this.cost = cost;
   }
 
   set hasAlarm(int alarmStatus) {
@@ -70,7 +74,10 @@ class Task extends Equatable {
   }
 
   DateTime getDateTime() {
-    return daysFormat.parse(date);
+    print("date");
+    DateTime time = daysFormat.parse(date);
+    print("time $time");
+    return time;
   }
 
   @override
@@ -79,5 +86,5 @@ class Task extends Equatable {
   }
 
   @override
-  List<Object> get props =>[_id, _description, _dueDate, _cost];
+  List<Object> get props => [_id, _description, _dueDate, _cost];
 }

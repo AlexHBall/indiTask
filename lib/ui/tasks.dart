@@ -27,7 +27,7 @@ class TaskWidget extends State<InitialScreen> {
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF1C2638))),
         ),
-        AddTask(scoreToggled: false),
+        AddTask(costToggled: false),
       ],
     );
   }

@@ -20,16 +20,15 @@ class Home extends StatelessWidget {
             return new LoadingScreen("loading");
           default:
             if (!snapshot.hasError) {
-              return snapshot.data.getBool("welcome") != null
-                  ? new BlocProvider(
+              return new BlocProvider(
                       create: (context) {
                         return TaskBloc(
                           taskRepo: TaskRepository(),
                         )..add(LoadTasksEvent());
                       },
-                      child: Dashboard(),
-                    )
-                  : new OnboardingScreen();
+                      child:  snapshot.data.getBool("welcome") != null
+                  ? Dashboard() : OnboardingScreen()
+                    );
             } else {
               return new ErrorScreen(snapshot.error);
             }

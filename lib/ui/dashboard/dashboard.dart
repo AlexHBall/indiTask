@@ -3,6 +3,7 @@ import 'package:inditask/bloc/task/task_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inditask/models/task.dart';
 import 'package:inditask/ui/tasks.dart';
+import 'package:inditask/ui/widgets/custom_widgets.dart';
 import 'package:inditask/ui/widgets/timer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 part 'carosel.dart';
@@ -31,30 +32,55 @@ class Dashboard extends StatelessWidget {
   }
 }
 
-class DashBoardDisplay extends StatelessWidget {
+class DashBoardDisplay extends StatefulWidget {
   final List<Task> tasks;
   const DashBoardDisplay(this.tasks);
+
+  @override
+  _DashBoardDisplayState createState() => _DashBoardDisplayState();
+}
+
+class _DashBoardDisplayState extends State<DashBoardDisplay> {
+  int currentTask;
+  // void _onTaskChange() {
+  //   // This needs to change the remaining time
+  //   setState(() {
+  //     currentTask += 1;
+  //   });
+  // }
+
+  @override
+  void initState() {
+    currentTask = 0;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Task firstTask = tasks.first;
-
     return Scaffold(
       backgroundColor: Color(0XFFF2F7FB),
       body: Column(
         children: [
           HeaderRow(),
           TasksRow(),
-          CarouselWithIndicatorDemo(),
-          // TaskCarosel(
-          //     cost: firstTask.cost,
-          //     description: firstTask.description,
-          //     backgroundColor: Color(0xFF1C2638)),
-          RemaingingTimeWidget(this.tasks.first.getDateTime()),
+          // Carousel(),
+          Carousel(widget.tasks),
+          RemaingingTimeWidget(widget.tasks[currentTask].getDateTime()),
           CompleteWidget(),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (BuildContext bc) {
+                return BlocProvider.value(
+                  value: BlocProvider.of<TaskBloc>(context),
+                  child: AddTask(
+                    costToggled: false,
+                  ),
+                );
+              });
           // Add your onPressed code here!
         },
         child: Icon(Icons.add),
@@ -90,7 +116,7 @@ class TasksRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 40.0, right: 14.0),
+      padding: const EdgeInsets.only(left: 40.0, right: 14.0, top: 50.0),
       child: Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,7 +129,7 @@ class TasksRow extends StatelessWidget {
                   fontWeight: FontWeight.bold),
             ),
             Padding(
-                padding: EdgeInsets.only(top: 20.0),
+                padding: EdgeInsets.only(top: 20.0, right: 18),
                 child: Image.asset('assets/images/listicon.png')),
           ],
         ),
