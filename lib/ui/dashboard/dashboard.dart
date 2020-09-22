@@ -76,13 +76,13 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
 
   void _onCompleteSwipe() {
     setState(() {
-      print('completing item $currentTask');
       Task task = incompleteTasks[pageController.page.toInt()];
       task.setCompleted = 1;
       BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
       incompleteTasks =
           widget.tasks.where((element) => element.completed == 0).toList();
-      taskCards = fillTaskCards(incompleteTasks);
+
+      (currentTask == 0) ? currentTask += 1 : currentTask -= 1;
     });
   }
 
@@ -97,7 +97,6 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
     currentTask = 0;
     incompleteTasks =
         widget.tasks.where((element) => element.completed == 0).toList();
-    print('incomplete tasks $incompleteTasks');
     if (incompleteTasks.length == 0) {
       incompleteTasks.add(
           Task("Finish financial analysis for sonly", "09-22-2020", 50, 0));
@@ -117,8 +116,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
         children: [
           HeaderRow(),
           TasksRow(),
-          Expanded(child: CardView(taskCards, pageController, _onPageChanged)),
-          // Carousel(incompleteTasks, currentTask, _onPageChanged),
+          CardView(taskCards, pageController, _onPageChanged),
           RemaingingTimeWidget(incompleteTasks[currentTask].getDateTime()),
           CompleteWidget(_onCompleteSwipe),
         ],
