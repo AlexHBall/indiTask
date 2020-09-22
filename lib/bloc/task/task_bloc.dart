@@ -45,7 +45,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   Stream<TaskState> _mapTaskEditedToState(EditTaskEvent event) async* {
     if (state is TasksLoaded) {
-      print('trying to change id $event.editedTask.id');
       final List<Task> updatedTasks = (state as TasksLoaded).tasks.map((task) {
         return task.id == event.editedTask.id ? event.editedTask : task;
       }).toList();

@@ -1,5 +1,57 @@
 part of 'dashboard.dart';
 
+class HeaderRow extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 40.0, right: 15.0, top: 40.0),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Image.asset('assets/images/ribbon.png'),
+        MaterialButton(
+          onPressed: () {},
+          color: Color(0xFF1C2638),
+          textColor: Colors.white,
+          child: Icon(
+            Icons.settings,
+            size: 20,
+          ),
+          padding: EdgeInsets.all(10),
+          shape: CircleBorder(),
+        )
+      ]),
+    );
+  }
+}
+
+class TasksRow extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 40.0, right: 14.0, top: 0),
+      child: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Text(
+                'Tasks Due:',
+                style: TextStyle(
+                    color: Color(0xFF272140),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            Padding(
+                padding: EdgeInsets.only(top: 10.0, right: 18),
+                child: Image.asset('assets/images/listicon.png')),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class TimeRemaining extends StatefulWidget {
   final DateTime endTime;
   TimeRemaining({Key key, @required this.endTime}) : super(key: key);
@@ -11,12 +63,9 @@ class TimeRemaining extends StatefulWidget {
 class _TimeRemainingState extends State<TimeRemaining> {
   @override
   Widget build(BuildContext context) {
-    // var t = widget.endTime.millisecondsSinceEpoch;
-    // var t2 = DateTime.now().millisecondsSinceEpoch;
-    // print(t - t2);
     return CountdownTimer(
-      // endTime: widget.endTime.millisecondsSinceEpoch,
-      endTime: DateTime.now().millisecondsSinceEpoch + 1000,
+      endTime: widget.endTime.millisecondsSinceEpoch,
+      // endTime: DateTime.now().millisecondsSinceEpoch + 1000,
       defaultDays: "==",
       defaultHours: "--",
       defaultMin: "**",
@@ -113,3 +162,4 @@ class CompleteWidget extends StatelessWidget {
         ));
   }
 }
+

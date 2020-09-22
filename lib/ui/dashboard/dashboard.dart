@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:inditask/bloc/task/task_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inditask/models/task.dart';
+import 'package:inditask/ui/dashboard/cardview.dart';
 import 'package:inditask/ui/tasks.dart';
 import 'package:inditask/ui/widgets/custom_widgets.dart';
 import 'package:inditask/ui/widgets/timer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 part 'carosel.dart';
-part 'footer.dart';
+part 'taskcard.dart';
+part 'widgets.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -43,22 +45,51 @@ class DashBoardDisplay extends StatefulWidget {
 class _DashBoardDisplayState extends State<DashBoardDisplay> {
   int currentTask;
   List<Task> incompleteTasks;
-  Carousel carousel;
-  void _onCarouselChange(int newIndex) {
-    setState(() {
-      currentTask = newIndex;
-    });
+  List<TaskCard> taskCards;
+  PageController pageController;
+
+  List<TaskCard> fillTaskCards(tasks) {
+    List<Color> colors = [
+      Color(0xFF1C2638),
+      Color(0XFF9BBFD6),
+      Color(0XFF108B00),
+      Color(0XFFFF8C00)
+    ];
+    taskCards = <TaskCard>[];
+    if (incompleteTasks.length < 1) {
+      TaskCard taskCard = TaskCard(
+          cost: 0,
+          description: "Please add a task",
+          backgroundColor: colors[0]);
+      taskCards.add(taskCard);
+    } else {
+      for (var i = 0; i < incompleteTasks.length; i++) {
+        TaskCard taskCard = TaskCard(
+            cost: incompleteTasks[i].cost,
+            description: incompleteTasks[i].description,
+            backgroundColor: colors[i % 4]);
+        taskCards.add(taskCard);
+      }
+    }
+    return taskCards;
   }
 
   void _onCompleteSwipe() {
-    print('completing item $currentTask');
-    Task task = incompleteTasks[currentTask];
-    task.setCompleted = 1;
-    BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
-    incompleteTasks =
-        widget.tasks.where((element) => element.completed == 0).toList();
-    print('i have a new list of incomplete tasks: $incompleteTasks');
-    carousel = Carousel(incompleteTasks, currentTask, _onCarouselChange);
+    setState(() {
+      print('completing item $currentTask');
+      Task task = incompleteTasks[pageController.page.toInt()];
+      task.setCompleted = 1;
+      BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
+      incompleteTasks =
+          widget.tasks.where((element) => element.completed == 0).toList();
+      taskCards = fillTaskCards(incompleteTasks);
+    });
+  }
+
+  void _onPageChanged(index) {
+    setState(() {
+      currentTask = index;
+    });
   }
 
   @override
@@ -71,19 +102,23 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
       incompleteTasks.add(
           Task("Finish financial analysis for sonly", "09-22-2020", 50, 0));
     }
-    carousel = Carousel(incompleteTasks, currentTask, _onCarouselChange);
+    pageController = PageController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    taskCards = fillTaskCards(incompleteTasks);
+    print("task cards built in dashboard $taskCards");
+
     return Scaffold(
       backgroundColor: Color(0XFFF2F7FB),
       body: Column(
         children: [
           HeaderRow(),
           TasksRow(),
-          carousel,
+          Expanded(child: CardView(taskCards, pageController, _onPageChanged)),
+          // Carousel(incompleteTasks, currentTask, _onPageChanged),
           RemaingingTimeWidget(incompleteTasks[currentTask].getDateTime()),
           CompleteWidget(_onCompleteSwipe),
         ],
@@ -104,58 +139,6 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
         },
         child: Icon(Icons.add),
         backgroundColor: Color(0XFF1C2638),
-      ),
-    );
-  }
-}
-
-class HeaderRow extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 40.0, right: 15.0, top: 40.0),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Image.asset('assets/images/ribbon.png'),
-        MaterialButton(
-          onPressed: () {},
-          color: Color(0xFF1C2638),
-          textColor: Colors.white,
-          child: Icon(
-            Icons.settings,
-            size: 20,
-          ),
-          padding: EdgeInsets.all(10),
-          shape: CircleBorder(),
-        )
-      ]),
-    );
-  }
-}
-
-class TasksRow extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 40.0, right: 14.0, top: 0),
-      child: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top:10.0),
-              child: Text(
-                'Tasks Due:',
-                style: TextStyle(
-                    color: Color(0xFF272140),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-                padding: EdgeInsets.only(top: 10.0, right: 18),
-                child: Image.asset('assets/images/listicon.png')),
-          ],
-        ),
       ),
     );
   }

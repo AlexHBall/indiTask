@@ -303,7 +303,7 @@ class _AddTaskState extends State<AddTask> {
     int cost = this.cost;
     // TODO: Date String Properly
     // String date = dateCtrl.text;
-    String date = "09-25-2020";
+    String date = "09-26-2020";
     int alarm = 0;
     Task taskToAdd = Task(desc, date, cost, alarm);
     print('Adding Task $taskToAdd');
