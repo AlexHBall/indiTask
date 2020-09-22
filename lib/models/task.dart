@@ -10,7 +10,7 @@ class Task extends Equatable {
   String _dueDate;
   int _cost;
   int _hasAlarm;
-  int _softDelete = 0;
+  int _completed = 0;
 
   Task(this._description, this._dueDate, this._cost, this._hasAlarm);
   Task.withId(this._id, this._description, this._dueDate, this._hasAlarm);
@@ -41,14 +41,14 @@ class Task extends Equatable {
     this._hasAlarm = alarmStatus;
   }
 
-  set softDelete(int deleted) {
+  set setCompleted(int deleted) {
     if (deleted == 0 || deleted == 1) {
-      this._softDelete = deleted;
+      this._completed = deleted;
     }
   }
 
-  get softDelete {
-    return this._softDelete;
+  get completed {
+    return this._completed;
   }
 
   Map<String, dynamic> toMap() {
@@ -60,7 +60,7 @@ class Task extends Equatable {
     map['dueDate'] = _dueDate;
     map['cost'] = _cost;
     map['hasAlarm'] = _hasAlarm;
-    map['softDelete'] = _softDelete;
+    map['softDelete'] = _completed;
     return map;
   }
 
@@ -70,14 +70,11 @@ class Task extends Equatable {
     this._dueDate = map['dueDate'];
     this._cost = map['cost'];
     this._hasAlarm = map['hasAlarm'];
-    this._softDelete = map['softDelete'];
+    this._completed = map['softDelete'];
   }
 
   DateTime getDateTime() {
-    print("date");
-    DateTime time = daysFormat.parse(date);
-    print("time $time");
-    return time;
+    return daysFormat.parse(date);
   }
 
   @override

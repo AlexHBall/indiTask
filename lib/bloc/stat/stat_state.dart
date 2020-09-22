@@ -11,18 +11,19 @@ abstract class StatState extends Equatable {
 class StatsLoading extends StatState {}
 
 class StatsLoadSuccess extends StatState {
-  //TODO: Expand this to include all the stats required
-  final int numActive;
-  final int numCompleted;
+  final int tasksEntered;
+  final int totalPoints;
+  final int percentageComplete;
+  final int percentageLoss;
 
-  const StatsLoadSuccess(this.numActive, this.numCompleted);
+  const StatsLoadSuccess(this.tasksEntered, this.totalPoints,this.percentageComplete,this.percentageLoss);
 
   @override
-  List<Object> get props => [numActive, numCompleted];
+  List<Object> get props => [tasksEntered, totalPoints,percentageComplete,percentageLoss];
 
   @override
   String toString() {
-    return 'StatsLoadSuccess { numActive: $numActive, numCompleted: $numCompleted }';
+    return 'StatsLoadSuccess { numActive: $tasksEntered, numCompleted: $totalPoints }';
   }
 }
 

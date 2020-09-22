@@ -23,12 +23,14 @@ class StatBloc extends Bloc<StatEvent, StatState> {
   @override
   Stream<StatState> mapEventToState(StatEvent event) async* {
     if (event is StatsUpdated) {
-      //TOOD: Change how these work to get the correct stats
-      int numActive =
-          event.tasks.where((todo) => !todo.softDelete).toList().length;
-      int numCompleted =
-          event.tasks.where((todo) => todo.softDelete).toList().length;
-      yield StatsLoadSuccess(numActive, numCompleted);
+      //TODO: Get loss
+
+      List<Task> tasks = event.tasks;
+      int tasksEntered = tasks.toList().length;
+      int totalTasksCompleted = tasks.where((task) => task.completed).toList().length;
+      int percentageComplete = (totalTasksCompleted / tasksEntered).round();
+      int totalPoints = tasks.toList().fold(0, (sum, item) => sum + item.cost);
+      yield StatsLoadSuccess(tasksEntered, totalPoints,percentageComplete,7);
     }
   }
 
