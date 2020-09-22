@@ -148,7 +148,7 @@ class _CarouselWithIndicatorState extends State<Carousel> {
 
   @override
   Widget build(BuildContext context) {
-    print('Carousel built');
+    taskCards = [];
     _currentIndex = widget.index;
     if (widget.tasks.length < 1) {
       _currentIndex = 1;
@@ -164,9 +164,10 @@ class _CarouselWithIndicatorState extends State<Carousel> {
             description: widget.tasks[i].description,
             backgroundColor: colors[i % 4]);
         taskCards.add(taskCard);
+        print("task cards now $taskCards");
       }
     }
-
+        print('Carousel built with $_currentIndex)');
 
     List<T> map<T>(List list, Function handler) {
       List<T> result = [];
@@ -178,36 +179,36 @@ class _CarouselWithIndicatorState extends State<Carousel> {
 
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: map<Widget>(taskCards, (index, url) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Container(
-                height: 10,
-                width: 0.2 * widget.tasks.length,
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Container(
-                  //TODO: Width needs to be 1/n where n is number of tasks
-                  width: 1 / widget.tasks.length,
-                  height: 6.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: _currentIndex == index
-                        ? Color(0xFF1C2638)
-                        : Colors.grey,
-                    //TODO: Get the border raduis working as inteded
-                    // borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-            );
-          }),
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: map<Widget>(taskCards, (index, url) {
+        //     return Padding(
+        //       padding: const EdgeInsets.only(top: 20),
+        //       child: Container(
+        //         height: 10,
+        //         width: 150,
+        //         decoration: BoxDecoration(
+        //           shape: BoxShape.rectangle,
+        //           color: Colors.grey,
+        //           borderRadius: BorderRadius.circular(50),
+        //         ),
+        //         child: Container(
+        //           //TODO: Width needs to be 1/n where n is number of tasks
+        //           width: 1 / widget.tasks.length,
+        //           height: 10.0,
+        //           decoration: BoxDecoration(
+        //             shape: BoxShape.rectangle,
+        //             color: _currentIndex == index
+        //                 ? Color(0xFF1C2638)
+        //                 : Colors.grey,
+        //             //TODO: Get the border raduis working as inteded
+        //             // borderRadius: BorderRadius.circular(10),
+        //           ),
+        //         ),
+        //       ),
+        //     );
+        //   }),
+        // ),
         CarouselSlider(
           options: CarouselOptions(
             height: 400.0,
@@ -215,7 +216,6 @@ class _CarouselWithIndicatorState extends State<Carousel> {
             viewportFraction: 1.0,
             onPageChanged: (index, reason) {
               setState(() {
-                _currentIndex = index;
                 widget.onChange(index);
               });
             },
