@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inditask/bloc/bloc.dart';
-import 'package:inditask/ui/dashboard.dart';
+import 'package:inditask/ui/dashboard/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:inditask/ui/onboard/onboard.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

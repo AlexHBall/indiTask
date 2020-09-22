@@ -18,6 +18,7 @@ class Task extends Equatable {
   int get id => _id;
   String get description => _description;
   String get date => _dueDate;
+  int get cost => _cost;
   int get alarm => _hasAlarm;
 
   set task(String newTask) {
