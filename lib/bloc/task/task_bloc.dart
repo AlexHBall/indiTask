@@ -22,7 +22,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Stream<TaskState> _mapTasksLoadedToState() async* {
-    print('loading all tasks');
     try {
       final todos = await this.taskRepo.getAllTasks();
       yield TasksLoaded(todos);
@@ -32,7 +31,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Stream<TaskState> _mapTasksAddedToState(AddTaskEvent event) async* {
-    print("trying to add and state $state");
     if (state is TasksLoaded) {
       print('saving');
       final List<Task> updatedTodos = List.from((state as TasksLoaded).tasks)

@@ -43,7 +43,7 @@ class DashBoardDisplay extends StatefulWidget {
 class _DashBoardDisplayState extends State<DashBoardDisplay> {
   int currentTask;
   List<Task> incompleteTasks;
-
+  Carousel carousel;
   void _onCarouselChange(int newIndex) {
     setState(() {
       currentTask = newIndex;
@@ -51,21 +51,27 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
   }
 
   void _onCompleteSwipe() {
-        Task task = incompleteTasks[currentTask];
-        task.setCompleted = 1;
-        BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
-        incompleteTasks = widget.tasks.where((element) => element.completed==0).toList();
-        print('i have a new list of incomplete tasks: $incompleteTasks');
-        currentTask +=1;
+    print('completing item $currentTask');
+    Task task = incompleteTasks[currentTask];
+    task.setCompleted = 1;
+    BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
+    incompleteTasks =
+        widget.tasks.where((element) => element.completed == 0).toList();
+    print('i have a new list of incomplete tasks: $incompleteTasks');
+    carousel = Carousel(incompleteTasks, currentTask, _onCarouselChange);
   }
 
   @override
   void initState() {
     currentTask = 0;
-    incompleteTasks = widget.tasks.where((element) => element.completed==0).toList();
-    if (incompleteTasks.length == 0){
-      incompleteTasks.add( Task("Add a new task","09-22-2020",0,0));
+    incompleteTasks =
+        widget.tasks.where((element) => element.completed == 0).toList();
+    print('incomplete tasks $incompleteTasks');
+    if (incompleteTasks.length == 0) {
+      incompleteTasks.add(
+          Task("Finish financial analysis for sonly", "09-22-2020", 50, 0));
     }
+    carousel = Carousel(incompleteTasks, currentTask, _onCarouselChange);
     super.initState();
   }
 
@@ -77,7 +83,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
         children: [
           HeaderRow(),
           TasksRow(),
-          Carousel(incompleteTasks,currentTask,_onCarouselChange),
+          carousel,
           RemaingingTimeWidget(incompleteTasks[currentTask].getDateTime()),
           CompleteWidget(_onCompleteSwipe),
         ],
@@ -106,22 +112,23 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
 class HeaderRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      Padding(
-          padding: EdgeInsets.only(top: 20.0),
-          child: Image.asset('assets/images/ribbon.png')),
-      MaterialButton(
-        onPressed: () {},
-        color: Colors.blue,
-        textColor: Colors.white,
-        child: Icon(
-          Icons.settings,
-          size: 24,
-        ),
-        padding: EdgeInsets.all(16),
-        shape: CircleBorder(),
-      )
-    ]);
+    return Padding(
+      padding: const EdgeInsets.only(left: 40.0, right: 15.0, top: 40.0),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Image.asset('assets/images/ribbon.png'),
+        MaterialButton(
+          onPressed: () {},
+          color: Color(0xFF1C2638),
+          textColor: Colors.white,
+          child: Icon(
+            Icons.settings,
+            size: 20,
+          ),
+          padding: EdgeInsets.all(10),
+          shape: CircleBorder(),
+        )
+      ]),
+    );
   }
 }
 
@@ -129,20 +136,23 @@ class TasksRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 40.0, right: 14.0, top: 50.0),
+      padding: const EdgeInsets.only(left: 40.0, right: 14.0, top: 0),
       child: Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Tasks Due:',
-              style: TextStyle(
-                  color: Color(0xFF272140),
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
+            Padding(
+              padding: const EdgeInsets.only(top:10.0),
+              child: Text(
+                'Tasks Due:',
+                style: TextStyle(
+                    color: Color(0xFF272140),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
             Padding(
-                padding: EdgeInsets.only(top: 20.0, right: 18),
+                padding: EdgeInsets.only(top: 10.0, right: 18),
                 child: Image.asset('assets/images/listicon.png')),
           ],
         ),

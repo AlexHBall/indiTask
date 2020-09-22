@@ -36,6 +36,7 @@ class RemaingingTimeWidget extends StatelessWidget {
   const RemaingingTimeWidget(this.timeLeft);
   @override
   Widget build(BuildContext context) {
+    print("remaining time being built");
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Container(

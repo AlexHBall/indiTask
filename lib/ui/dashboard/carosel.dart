@@ -143,9 +143,21 @@ class _CarouselWithIndicatorState extends State<Carousel> {
 
   @override
   void initState() {
-    _currentIndex = widget.index;
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    print('Carousel built');
+    _currentIndex = widget.index;
     if (widget.tasks.length < 1) {
+      _currentIndex = 1;
+      TaskCard taskCard = TaskCard(
+          cost: 0,
+          description: "Please add a task",
+          backgroundColor: colors[0]);
+      taskCards.add(taskCard);
+    } else {
       for (var i = 0; i < widget.tasks.length; i++) {
         TaskCard taskCard = TaskCard(
             cost: widget.tasks[i].cost,
@@ -153,19 +165,9 @@ class _CarouselWithIndicatorState extends State<Carousel> {
             backgroundColor: colors[i % 4]);
         taskCards.add(taskCard);
       }
-    } else {
-      _currentIndex =1;
-      TaskCard taskCard = TaskCard(
-          cost: 0,
-          description: "Please add a task",
-          backgroundColor: colors[0]);
-      taskCards.add(taskCard);
     }
-    super.initState();
-  }
 
-  @override
-  Widget build(BuildContext context) {
+
     List<T> map<T>(List list, Function handler) {
       List<T> result = [];
       for (var i = 0; i < list.length; i++) {

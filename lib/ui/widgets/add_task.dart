@@ -236,32 +236,30 @@ class AddTaskButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(top: 33.0, left: 5.0, right: 5.0),
-        child: GestureDetector(
-          onTap: onSumbit(),
-          child: Container(
-              width: 320,
-              height: 66,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: Color(0xFF1C2638),
-              ),
-              child: RawMaterialButton(
-                fillColor: Color(0xFF1C2638),
-                splashColor: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(22.0),
-                  child: Text("Add Task",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white)),
-                ),
-                onPressed: onSumbit,
-                shape: const StadiumBorder(),
-              )),
-        ));
+      padding: const EdgeInsets.only(top: 33.0, left: 5.0, right: 5.0),
+      child: Container(
+          width: 320,
+          height: 66,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: Color(0xFF1C2638),
+          ),
+          child: RawMaterialButton(
+            fillColor: Color(0xFF1C2638),
+            splashColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(22.0),
+              child: Text("Add Task",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white)),
+            ),
+            onPressed: onSumbit,
+            shape: const StadiumBorder(),
+          )),
+    );
   }
 }
 
