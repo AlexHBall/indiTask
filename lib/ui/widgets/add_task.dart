@@ -246,14 +246,20 @@ class AddTaskButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(50),
                 color: Color(0xFF1C2638),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(22.0),
-                child: Text("Add Task",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white)),
+              child: RawMaterialButton(
+                fillColor: Color(0xFF1C2638),
+                splashColor: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(22.0),
+                  child: Text("Add Task",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white)),
+                ),
+                onPressed: onSumbit,
+                shape: const StadiumBorder(),
               )),
         ));
   }
@@ -302,7 +308,7 @@ class _AddTaskState extends State<AddTask> {
     String date = "09-25-2020";
     int alarm = 0;
     Task taskToAdd = Task(desc, date, cost, alarm);
-    print("task to add $taskToAdd");
+    print('Adding Task $taskToAdd');
     BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(taskToAdd));
     //TODO: Remove modal on add
   }
