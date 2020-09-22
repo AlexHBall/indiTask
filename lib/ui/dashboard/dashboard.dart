@@ -42,17 +42,27 @@ class DashBoardDisplay extends StatefulWidget {
 
 class _DashBoardDisplayState extends State<DashBoardDisplay> {
   int currentTask;
+  List<Task> incompleteTasks;
 
   void _onCarouselChange(int newIndex) {
     setState(() {
-      print("now on card index $newIndex");
       currentTask = newIndex;
     });
+  }
+
+  void _onCompleteSwipe() {
+        Task task = widget.tasks[currentTask];
+        task.setCompleted = 1;
+        print("I want to complete task $task with index $currentTask"); 
+        BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
+
   }
 
   @override
   void initState() {
     currentTask = 0;
+    incompleteTasks = widget.tasks.where((element) => element.completed==0).toList();
+    print('I have a list of incomplete tasks $incompleteTasks');
     super.initState();
   }
 
@@ -65,9 +75,9 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
           HeaderRow(),
           TasksRow(),
           // Carousel(),
-          Carousel(widget.tasks,currentTask,_onCarouselChange),
-          RemaingingTimeWidget(widget.tasks[currentTask].getDateTime()),
-          CompleteWidget(),
+          Carousel(incompleteTasks,currentTask,_onCarouselChange),
+          RemaingingTimeWidget(incompleteTasks[currentTask].getDateTime()),
+          CompleteWidget(_onCompleteSwipe),
         ],
       ),
       floatingActionButton: FloatingActionButton(

@@ -67,6 +67,9 @@ class RemaingingTimeWidget extends StatelessWidget {
 }
 
 class CompleteWidget extends StatelessWidget {
+  final Function onSwipe;
+  const CompleteWidget(this.onSwipe);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -79,7 +82,7 @@ class CompleteWidget extends StatelessWidget {
           height: 65.0,
           child: Dismissible(
             onDismissed: (DismissDirection direction) async {
-              print("MARK ME AS COMPLETE");
+              onSwipe();
             },
             key: UniqueKey(),
             child: Row(
