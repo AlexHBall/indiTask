@@ -42,12 +42,13 @@ class DashBoardDisplay extends StatefulWidget {
 
 class _DashBoardDisplayState extends State<DashBoardDisplay> {
   int currentTask;
-  // void _onTaskChange() {
-  //   // This needs to change the remaining time
-  //   setState(() {
-  //     currentTask += 1;
-  //   });
-  // }
+
+  void _onCarouselChange(int newIndex) {
+    setState(() {
+      print("now on card index $newIndex");
+      currentTask = newIndex;
+    });
+  }
 
   @override
   void initState() {
@@ -64,7 +65,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
           HeaderRow(),
           TasksRow(),
           // Carousel(),
-          Carousel(widget.tasks),
+          Carousel(widget.tasks,currentTask,_onCarouselChange),
           RemaingingTimeWidget(widget.tasks[currentTask].getDateTime()),
           CompleteWidget(),
         ],

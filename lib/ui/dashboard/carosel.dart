@@ -122,7 +122,9 @@ class TaskCard extends StatelessWidget {
 
 class Carousel extends StatefulWidget {
   final List<Task> tasks;
-  const Carousel(this.tasks);
+  final int index;
+  final Function onChange;
+  const Carousel(this.tasks,this.index,this.onChange);
   @override
   State<StatefulWidget> createState() {
     return _CarouselWithIndicatorState();
@@ -136,11 +138,12 @@ class _CarouselWithIndicatorState extends State<Carousel> {
     Color(0XFF108B00),
     Color(0XFFFF8C00)
   ];
-  int _currentIndex = 0;
+  int _currentIndex;
   List<TaskCard> taskCards = [];
 
   @override
   void initState() {
+    _currentIndex = widget.index;
     for (var i = 0; i < widget.tasks.length; i++) {
       TaskCard taskCard = TaskCard(
           cost: widget.tasks[i].cost,
@@ -200,6 +203,7 @@ class _CarouselWithIndicatorState extends State<Carousel> {
             onPageChanged: (index, reason) {
               setState(() {
                 _currentIndex = index;
+                widget.onChange(index);
               });
             },
           ),
