@@ -3,6 +3,7 @@ import 'package:inditask/bloc/task/task_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inditask/models/task.dart';
 import 'package:inditask/ui/dashboard/cardview.dart';
+import 'package:inditask/ui/stats/statistics.dart';
 import 'package:inditask/ui/tasks.dart';
 import 'package:inditask/ui/widgets/custom_widgets.dart';
 import 'package:inditask/ui/widgets/timer.dart';
@@ -82,7 +83,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
       incompleteTasks =
           widget.tasks.where((element) => element.completed == 0).toList();
 
-      (currentTask == 0) ? currentTask += 1 : currentTask -= 1;
+      // (currentTask == 0) ? currentTask += 1 : currentTask -= 1;
     });
   }
 

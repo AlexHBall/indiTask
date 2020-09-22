@@ -42,9 +42,17 @@ class TasksRow extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            Padding(
-                padding: EdgeInsets.only(top: 10.0, right: 18),
-                child: Image.asset('assets/images/listicon.png')),
+            MaterialButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => StatisticsBody()));
+              },
+              textColor: Colors.white,
+              child: Image.asset('assets/images/listicon.png'),
+              padding: EdgeInsets.all(10),
+              shape: ContinuousRectangleBorder(),
+            )
+            //
           ],
         ),
       ),
@@ -162,4 +170,3 @@ class CompleteWidget extends StatelessWidget {
         ));
   }
 }
-
