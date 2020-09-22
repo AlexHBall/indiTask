@@ -51,18 +51,21 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
   }
 
   void _onCompleteSwipe() {
-        Task task = widget.tasks[currentTask];
+        Task task = incompleteTasks[currentTask];
         task.setCompleted = 1;
-        print("I want to complete task $task with index $currentTask"); 
         BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
-
+        incompleteTasks = widget.tasks.where((element) => element.completed==0).toList();
+        print('i have a new list of incomplete tasks: $incompleteTasks');
+        currentTask +=1;
   }
 
   @override
   void initState() {
     currentTask = 0;
     incompleteTasks = widget.tasks.where((element) => element.completed==0).toList();
-    print('I have a list of incomplete tasks $incompleteTasks');
+    if (incompleteTasks.length == 0){
+      incompleteTasks.add( Task("Add a new task","09-22-2020",0,0));
+    }
     super.initState();
   }
 
@@ -74,7 +77,6 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
         children: [
           HeaderRow(),
           TasksRow(),
-          // Carousel(),
           Carousel(incompleteTasks,currentTask,_onCarouselChange),
           RemaingingTimeWidget(incompleteTasks[currentTask].getDateTime()),
           CompleteWidget(_onCompleteSwipe),

@@ -124,7 +124,7 @@ class Carousel extends StatefulWidget {
   final List<Task> tasks;
   final int index;
   final Function onChange;
-  const Carousel(this.tasks,this.index,this.onChange);
+  const Carousel(this.tasks, this.index, this.onChange);
   @override
   State<StatefulWidget> createState() {
     return _CarouselWithIndicatorState();
@@ -144,15 +144,26 @@ class _CarouselWithIndicatorState extends State<Carousel> {
   @override
   void initState() {
     _currentIndex = widget.index;
-    for (var i = 0; i < widget.tasks.length; i++) {
+
+    if (widget.tasks.length < 1) {
+      for (var i = 0; i < widget.tasks.length; i++) {
+        TaskCard taskCard = TaskCard(
+            cost: widget.tasks[i].cost,
+            description: widget.tasks[i].description,
+            backgroundColor: colors[i % 4]);
+        taskCards.add(taskCard);
+      }
+    } else {
+      _currentIndex =1;
       TaskCard taskCard = TaskCard(
-          cost: widget.tasks[i].cost,
-          description: widget.tasks[i].description,
-          backgroundColor: colors[i % 4]);
+          cost: 0,
+          description: "Please add a task",
+          backgroundColor: colors[0]);
       taskCards.add(taskCard);
-      super.initState();
     }
+    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     List<T> map<T>(List list, Function handler) {
@@ -180,7 +191,7 @@ class _CarouselWithIndicatorState extends State<Carousel> {
                 ),
                 child: Container(
                   //TODO: Width needs to be 1/n where n is number of tasks
-                  width: 1/widget.tasks.length,
+                  width: 1 / widget.tasks.length,
                   height: 6.0,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
