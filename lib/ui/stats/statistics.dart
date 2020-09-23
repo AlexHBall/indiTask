@@ -4,6 +4,7 @@ import 'package:inditask/bloc/stat/stat_bloc.dart';
 import 'package:inditask/bloc/tab/tab.dart';
 import 'package:inditask/models/models.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inditask/ui/widgets/custom_widgets.dart';
 
 class StatisticsHeader extends StatelessWidget {
   @override
@@ -246,11 +247,11 @@ class StatsDash extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<StatBloc, StatState>(builder: (context, state) {
       if (state is StatsLoading) {
-        return CircularProgressIndicator();
+        return CircleIndicator();
       } else if (state is StatsLoaded) {
         return StatisticsBody(state.tasksEntered,state.totalPoints,state.percentageComplete);
       }
-      return CircularProgressIndicator();
+      return CircleIndicator();
     });
   }
 }

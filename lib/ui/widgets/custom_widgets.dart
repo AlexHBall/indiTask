@@ -111,3 +111,13 @@ class RoundSliderTrackShape extends SliderTrackShape {
     context.canvas.drawRRect(rightTrackSegment, rightTrackPaint);
   }
 }
+
+class CircleIndicator extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return (Center(
+        child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation(Colors.blue),
+            strokeWidth: 5.0)));
+  }
+}

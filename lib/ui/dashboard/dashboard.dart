@@ -23,7 +23,7 @@ class Dashboard extends StatelessWidget {
         if (state is TasksLoaded) {
           return DashBoardDisplay(state.tasks);
         }
-        return CircularProgressIndicator();
+        return CircleIndicator();
       },
     );
   }

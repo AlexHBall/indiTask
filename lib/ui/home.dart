@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
                     // (activeTab == AppTab.stats) ? return StatsDash() : return Dashboard();
                   }
                 }
-                return CircularProgressIndicator();
+                return CircleIndicator();
               },
             );
           } else if (activeTab == AppTab.stats) {
