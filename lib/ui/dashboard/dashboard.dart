@@ -124,7 +124,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
         children: [
           HeaderRow(),
           TasksRow(),
-          CardView(taskCards, pageController, _onPageChanged),
+          CardView(taskCards, pageController, _onPageChanged,currentTask),
           RemaingingTimeWidget(incompleteTasks[currentTask].getDateTime()),
           CompleteWidget(_onCompleteSwipe),
         ],
