@@ -77,13 +77,15 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
 
   void _onCompleteSwipe() {
     setState(() {
+      print(currentTask);
       Task task = incompleteTasks[pageController.page.toInt()];
       task.setCompleted = 1;
       BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
       incompleteTasks =
           widget.tasks.where((element) => element.completed == 0).toList();
-
-      // (currentTask == 0) ? currentTask += 1 : currentTask -= 1;
+      if (currentTask == incompleteTasks.length) {
+        currentTask -= 1;
+      }
     });
   }
 
