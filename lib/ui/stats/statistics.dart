@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:inditask/bloc/tab/tab.dart';
+import 'package:inditask/models/models.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StatisticsHeader extends StatelessWidget {
   @override
@@ -226,7 +229,7 @@ class StatisticsBody extends StatelessWidget {
         floatingActionButton: MaterialButton(
           color: Colors.red,
           onPressed: () {
-            Navigator.pop(context);
+            BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
           },
         ));
   }

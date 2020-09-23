@@ -11,7 +11,6 @@ class CardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        PositionViewer(),
         Container(height: 400,
           child: PageView.builder(
               controller: ctrl,
@@ -24,11 +23,4 @@ class CardView extends StatelessWidget {
       ],
     );
   }
-}
-class PositionViewer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Text('yolo');
-  }
-
 }

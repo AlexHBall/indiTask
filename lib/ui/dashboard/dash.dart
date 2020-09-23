@@ -17,9 +17,7 @@ class Dash extends StatelessWidget {
           }
           return Dashboard();
         } else {
-          return Center(
-            child: Text("Error"),
-          );
+          return CircularProgressIndicator();
         }
       },
     );

@@ -44,8 +44,8 @@ class TasksRow extends StatelessWidget {
             ),
             MaterialButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => StatisticsBody()));
+            BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.stats));
+
               },
               textColor: Colors.white,
               child: Image.asset('assets/images/listicon.png'),
