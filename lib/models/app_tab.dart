@@ -1,1 +1,1 @@
-enum AppTab{onboard,tasks,stats}
+enum AppTab{onboard,tasks,stats,add}

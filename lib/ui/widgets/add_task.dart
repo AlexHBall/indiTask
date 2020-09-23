@@ -309,6 +309,7 @@ class _AddTaskState extends State<AddTask> {
     Task taskToAdd = Task(desc, date, cost, alarm);
     print('Adding Task $taskToAdd');
     BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(taskToAdd));
+    BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
   }
 
   @override

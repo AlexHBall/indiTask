@@ -41,17 +41,6 @@ class IndiTodos extends StatelessWidget {
               ],
               child: HomeScreen(),
             ),
-        // '/stats' : (context) => MultiBlocProvider(
-        //   providers: [
-        //     BlocProvider(
-        //       create: (context) => SubjectBloc(),
-        //     ),
-        //     BlocProvider(
-        //       create: (context) => SubjectBloc(),
-        //     ),
-        //   ],
-        //   child: Stats(),
-        // )
       },
     );
   }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inditask/bloc/tab/tab_bloc.dart';
+import 'package:inditask/bloc/tab/tab_event.dart';
 import 'package:inditask/bloc/task/task_bloc.dart';
+import 'package:inditask/models/models.dart';
 import 'package:inditask/models/task.dart';
 
 part 'add_task.dart';
