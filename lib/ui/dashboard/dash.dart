@@ -11,10 +11,8 @@ class Dash extends StatelessWidget {
     return BlocBuilder<TaskBloc, TaskState>(
       builder: (context, state) {
         if (state is TasksLoaded) {
-          List<Task> incompleteTasks =
-              state.tasks.where((element) => element.completed == 0).toList();
-
-          if (incompleteTasks.length == 0) {
+          if (state.tasks.where((element) => element.completed == 0).length ==
+              0) {
             return InitialScreen();
           }
           return Dashboard();

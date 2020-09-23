@@ -100,7 +100,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       await SharedPreferences.getInstance();
                   prefs.setBool("welcome", true);
                   
-                  Navigator.pushNamedAndRemoveUntil(context, "/tasks",
+                  Navigator.pushNamedAndRemoveUntil(context, "/dash",
                       (Route<dynamic> route) {
                     return false;
                   });

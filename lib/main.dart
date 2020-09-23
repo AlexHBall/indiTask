@@ -17,7 +17,7 @@ class ThisApp extends StatelessWidget {
       theme: basicTheme(),
       home: Home(),
       routes: {
-        "/tasks": (context) => InitialScreen(),
+        "/dash": (context) => Dash(),
       },
     );
   }

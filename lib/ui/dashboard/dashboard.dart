@@ -14,17 +14,12 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TaskBloc, TaskState>(
-      listener: (context, state) {
-        print("State has changed to $state  ");
-      },
+      listener: (context, state) {},
       builder: (
         context,
         state,
       ) {
         if (state is TasksLoaded) {
-          if (state.tasks.length == 0) {
-            return InitialScreen();
-          }
           return DashBoardDisplay(state.tasks);
         }
         return CircularProgressIndicator();
@@ -75,7 +70,6 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
 
   void _onCompleteSwipe() {
     setState(() {
-      print(currentTask);
       Task task = incompleteTasks[pageController.page.toInt()];
       task.setCompleted = 1;
       BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
@@ -83,6 +77,11 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
           widget.tasks.where((element) => element.completed == 0).toList();
       if (currentTask == incompleteTasks.length) {
         currentTask -= 1;
+      }
+      if (incompleteTasks.length == 0) {
+        incompleteTasks.add(
+            Task("Please add a task", "09-25-2020", 50, 0));
+        currentTask = 0;
       }
     });
   }
@@ -109,7 +108,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
         widget.tasks.where((element) => element.completed == 0).toList();
     if (incompleteTasks.length == 0) {
       incompleteTasks.add(
-          Task("Finish financial analysis for sonly", "09-22-2020", 50, 0));
+          Task("Finish financial analysis for sonly", "09-25-2020", 50, 0));
     }
     pageController = PageController();
     super.initState();
@@ -118,8 +117,6 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
   @override
   Widget build(BuildContext context) {
     taskCards = fillTaskCards(incompleteTasks);
-    print("task cards built in dashboard $taskCards");
-
     return Scaffold(
       backgroundColor: Color(0XFFF2F7FB),
       body: Column(
@@ -132,7 +129,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: ()  async {
+        onPressed: () async {
           await showModalBottomSheet(
               context: context,
               builder: (BuildContext bc) {
@@ -143,7 +140,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
                   ),
                 );
               });
-              _handleAddedTasks();
+          _handleAddedTasks();
           // Add your onPressed code here!
         },
         child: Icon(Icons.add),
