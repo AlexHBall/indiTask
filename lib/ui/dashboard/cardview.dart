@@ -52,7 +52,6 @@ class _CardViewState extends State<CardView> {
 
       return AnimatedContainer(
           duration: Duration(milliseconds: 150),
-          // TODO: Get the borders round?
           height: 10.0,
           width: isActive ? 320.0 / numberOfPages : 320.0 / numberOfPages,
           decoration: getBoxDec());
