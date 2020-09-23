@@ -9,13 +9,6 @@ class CardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('page veiw building');
-    List<Color> colors = [
-      Color(0xFF1C2638),
-      Color(0XFF9BBFD6),
-      Color(0XFF108B00),
-      Color(0XFFFF8C00)
-    ];
     return Column(
       children: [
         PositionViewer(),
