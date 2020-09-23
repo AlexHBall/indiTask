@@ -8,15 +8,18 @@ abstract class StatState extends Equatable {
   List<Object> get props => [];
 }
 
-class StatsLoading extends StatState {}
+class StatsLoading extends StatState {
+  @override
+  String toString() => 'StatsLoading';
+}
 
-class StatsLoadSuccess extends StatState {
+class StatsLoaded extends StatState {
   final int tasksEntered;
   final int totalPoints;
   final int percentageComplete;
   final int percentageLoss;
 
-  const StatsLoadSuccess(this.tasksEntered, this.totalPoints,this.percentageComplete,this.percentageLoss);
+  const StatsLoaded(this.tasksEntered, this.totalPoints,this.percentageComplete,this.percentageLoss);
 
   @override
   List<Object> get props => [tasksEntered, totalPoints,percentageComplete,percentageLoss];

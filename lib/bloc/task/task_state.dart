@@ -11,7 +11,10 @@ abstract class TaskState extends Equatable {
 // no tasks yet
 class TaskInitial extends TaskState {}
 
-class TaskLoading extends TaskState {}
+class TaskLoading extends TaskState {
+
+  
+} 
 
 class NoTasks extends TaskState {}
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inditask/bloc/tab/tab_bloc.dart';
+import 'package:inditask/bloc/task/task_bloc.dart';
 import 'package:inditask/models/models.dart';
 import 'package:inditask/ui/dashboard/dashboard.dart';
 import 'package:inditask/ui/stats/statistics.dart';
@@ -19,7 +20,7 @@ class HomeScreen extends StatelessWidget {
           } else if (activeTab == AppTab.add) {
             return InitialScreen();
           } else if (activeTab == AppTab.stats) {
-            return StatisticsBody();
+            return StatsDash();
           }
           return OnboardingScreen();
         }
@@ -34,9 +35,12 @@ class HomeScreen extends StatelessWidget {
                 return new LoadingScreen("loading");
               default:
                 if (!snapshot.hasError) {
-                  return snapshot.data.getBool("welcome") != null
-                      ? _getActivePage()
-                      : OnboardingScreen();
+                  bool onboardCompleted = snapshot.data.getBool("welcome");
+
+                  if (onboardCompleted == null) {
+                    activeTab = AppTab.onboard;
+                  }
+                  return _getActivePage();
                 } else {
                   return new ErrorScreen(snapshot.error);
                 }

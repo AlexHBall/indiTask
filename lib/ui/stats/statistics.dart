@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inditask/bloc/bloc.dart';
+import 'package:inditask/bloc/stat/stat_bloc.dart';
 import 'package:inditask/bloc/tab/tab.dart';
 import 'package:inditask/models/models.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -188,6 +190,10 @@ class StatisticsCard2 extends StatelessWidget {
 }
 
 class StatisticsBody extends StatelessWidget {
+  final int totalTasks;
+  final int totalPoints;
+  final int percentComplete;
+  StatisticsBody(this.totalTasks,this.totalPoints,this.percentComplete);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -199,12 +205,12 @@ class StatisticsBody extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    StatisticsCard2("Tasks Entered", "147",
+                    StatisticsCard2("Tasks Entered", totalTasks.toString(),
                         "assets/images/charts.png", Color(0xFF1C2638), 261),
                     SizedBox(
                       height: 16.0,
                     ),
-                    StatisticsCard("Loss/Wage %", "8%",
+                    StatisticsCard("Loss/Wage %", "?",
                         "assets/images/rate.png", Color(0XFF108B00), 226),
                   ],
                 ),
@@ -213,12 +219,12 @@ class StatisticsBody extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    StatisticsCard("Total Points", "1080",
+                    StatisticsCard("Total Points", totalPoints.toString(),
                         "assets/images/running.png", Color(0XFF9BBFD6), 179),
                     SizedBox(
                       height: 16.0,
                     ),
-                    StatisticsCard("% Complete", "81%",
+                    StatisticsCard("% Complete", "$percentComplete%",
                         "assets/images/calories.png", Color(0XFFFF8C00), 309),
                   ],
                 ),
@@ -232,5 +238,18 @@ class StatisticsBody extends StatelessWidget {
             BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
           },
         ));
+  }
+}
+
+class StatsDash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<StatBloc, StatState>(builder: (context, state) {
+      if (state is StatsLoading) {
+        return CircularProgressIndicator();
+      } else if (state is StatsLoaded) {
+        return StatisticsBody(state.tasksEntered,state.totalPoints,state.percentageComplete);
+      }
+    });
   }
 }
