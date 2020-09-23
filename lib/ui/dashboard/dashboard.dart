@@ -8,7 +8,7 @@ import 'package:inditask/ui/tasks.dart';
 import 'package:inditask/ui/widgets/custom_widgets.dart';
 import 'package:inditask/ui/widgets/timer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-part 'carosel.dart';
+// part 'carosel.dart';
 part 'taskcard.dart';
 part 'widgets.dart';
 
@@ -95,6 +95,15 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
     });
   }
 
+  void _handleAddedTasks() {
+    setState(() {
+      incompleteTasks =
+          widget.tasks.where((element) => element.completed == 0).toList();
+      currentTask = 0;
+      taskCards = fillTaskCards(incompleteTasks);
+    });
+  }
+
   @override
   void initState() {
     currentTask = 0;
@@ -125,8 +134,8 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
+        onPressed: ()  async {
+          await showModalBottomSheet(
               context: context,
               builder: (BuildContext bc) {
                 return BlocProvider.value(
@@ -136,6 +145,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
                   ),
                 );
               });
+              _handleAddedTasks();
           // Add your onPressed code here!
         },
         child: Icon(Icons.add),

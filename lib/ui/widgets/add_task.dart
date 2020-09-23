@@ -26,6 +26,7 @@ class TaskInput extends StatelessWidget {
           // onSubmit(text);
         },
         textAlign: TextAlign.left,
+        autofocus: true,
       ),
     );
   }
