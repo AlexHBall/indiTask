@@ -250,6 +250,7 @@ class StatsDash extends StatelessWidget {
       } else if (state is StatsLoaded) {
         return StatisticsBody(state.tasksEntered,state.totalPoints,state.percentageComplete);
       }
+      return CircularProgressIndicator();
     });
   }
 }

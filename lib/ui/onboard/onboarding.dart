@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inditask/ui/widgets/custom_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -10,7 +11,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final int _numPages = 4;
   int _currentPage = 0;
   String _text = "Next";
-
   PageController _pageController;
   List<Widget> onBoardPages;
   @override
@@ -36,6 +36,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           "Motivating people through points", 183.0, 60.0),
     ];
     super.initState();
+  }
+
+  void _setPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("welcome", true);
   }
 
   List<Widget> _buildPageIndicator() {
@@ -87,45 +92,48 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             SizedBox(
               height: 60,
             ),
-            GestureDetector(
-              onTap: () async {
-                int _nextPage = _currentPage++;
-                if (_nextPage == 3) {
-                  setState(() {
-                    _text = 'Get Started';
-                  });
-                }
-                if (_nextPage == 4) {
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  prefs.setBool("welcome", true);
-                  
-                  Navigator.pushNamedAndRemoveUntil(context, "/",
-                      (Route<dynamic> route) {
-                    return false;
-                  });
-                }
-
-                _pageController.animateToPage(_nextPage,
-                    duration: kTabScrollDuration, curve: Curves.ease);
-              },
+            Padding(
+              padding: const EdgeInsets.only(top: 33.0, left: 5.0, right: 5.0),
               child: Container(
-                width: 321,
-                height: 66,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Color(0xFF1C2638),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(22.0),
-                  child: Text(_text,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white)),
-                ),
-              ),
+                  width: 320,
+                  height: 66,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Color(0xFF1C2638),
+                  ),
+                  child: RawMaterialButton(
+                    fillColor: Color(0xFF1C2638),
+                    splashColor: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(22.0),
+                      child: Text(_text,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                    ),
+                    onPressed: () async {
+                      setState(() async {
+                        _currentPage++;
+                        if (_currentPage == 3) {
+                          _text = "Get Started";
+                        }
+
+                        if (_currentPage == 4) {
+                          _setPrefs();
+                          Navigator.pushNamed(
+                            context,
+                            "/",
+                          );
+                        }
+
+                        _pageController.animateToPage(_currentPage,
+                            duration: kTabScrollDuration, curve: Curves.ease);
+                      });
+                    },
+                    shape: const StadiumBorder(),
+                  )),
             ),
           ],
         ));
