@@ -33,18 +33,20 @@ class StatisticsHeader extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   border: Border.all(width: 1.0, color: Color(0xFF1C2638)),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
                         "All Time",
                         style: TextStyle(
                             color: Color(0xFF1C2638), fontWeight: FontWeight.bold,fontSize: 12.0),
                       ),
-                      Text(">"),
+                      SizedBox(width: 5,),
+                      Image.asset("assets/images/filterSelector.png", scale: 1.2,),
                     ],
                   ),
                 )),
@@ -78,6 +80,63 @@ class StatisticsCard extends StatelessWidget {
           shape: BoxShape.rectangle,
           color: backgroundColor,
           borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            image: AssetImage(imgPath),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 22.0),
+              child: Center(
+                  child: Text(
+                title,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0),
+              )),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 48.0),
+              child: Center(
+                  child: Text(
+                body,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 40.0),
+              )),
+            ),
+          ],
+        ));
+  }
+}
+
+class StatisticsCard2 extends StatelessWidget {
+  final String title;
+  final String body;
+  final String imgPath;
+  final Color backgroundColor;
+  final double height;
+  StatisticsCard2(
+    this.title,
+    this.body,
+    this.imgPath,
+    this.backgroundColor,
+    this.height,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: height,
+        width: 165.0,
+        decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
           children: [
@@ -105,17 +164,19 @@ class StatisticsCard extends StatelessWidget {
             ),
             Padding(
               padding:
-                  const EdgeInsets.only(top: 40.0, left: 15.0, right: 15.0),
-              child: Image.asset(imgPath, scale: 0.1
-
-                  // height: 3,
-                  // width: 3,
-                  ),
+                  const EdgeInsets.only(top: 20.0, left: 15.0, right: 15.0),
+              child: Image.asset(
+                imgPath,
+                    // scale: 0.1,
+                    // height: 3,
+                    // width: 3,
+              ),
             ),
           ],
         ));
   }
 }
+
 
 class StatisticsBody extends StatelessWidget {
   @override
@@ -129,7 +190,7 @@ class StatisticsBody extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  StatisticsCard("Tasks Entered", "147",
+                  StatisticsCard2("Tasks Entered", "147",
                       "assets/images/charts.png", Color(0xFF1C2638), 261),
                   SizedBox(
                     height: 16.0,
