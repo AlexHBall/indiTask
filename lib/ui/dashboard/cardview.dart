@@ -53,7 +53,7 @@ class _CardViewState extends State<CardView> {
       return AnimatedContainer(
           duration: Duration(milliseconds: 150),
           height: 10.0,
-          width: isActive ? 320.0 / numberOfPages : 320.0 / numberOfPages,
+          width: isActive ? 300.0 / numberOfPages : 300.0 / numberOfPages,
           decoration: getBoxDec());
     }
 
@@ -68,9 +68,13 @@ class _CardViewState extends State<CardView> {
 
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: _buildPageIndicator(),
+        Padding(
+          padding: const EdgeInsets.only(left: 25.0,right: 40),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: 
+            _buildPageIndicator(),
+          ),
         ),
         Container(
           height: 400,
