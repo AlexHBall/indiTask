@@ -266,10 +266,11 @@ class AddTaskButton extends StatelessWidget {
 
 class AddTask extends StatefulWidget {
   final bool costToggled;
-
+  final bool isModal;
   AddTask({
     Key key,
     @required this.costToggled,
+    @required this.isModal,
   }) : super(key: key);
 
   @override
@@ -308,8 +309,10 @@ class _AddTaskState extends State<AddTask> {
     int alarm = 0;
     Task taskToAdd = Task(desc, date, cost, alarm);
     print('Adding Task $taskToAdd');
+    if (!widget.isModal) {
+      BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
+    }
     BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(taskToAdd));
-    BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
   }
 
   @override

@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inditask/models/models.dart';
 import 'package:inditask/models/task.dart';
 import 'package:inditask/ui/dashboard/cardview.dart';
-import 'package:inditask/ui/stats/statistics.dart';
 import 'package:inditask/ui/widgets/custom_widgets.dart';
 import 'package:inditask/ui/widgets/timer.dart';
 part 'taskcard.dart';
@@ -132,13 +131,17 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+          // BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.add));
+
           await showModalBottomSheet(
               context: context,
               builder: (BuildContext bc) {
-                return BlocProvider.value(
+                return
+                 BlocProvider.value(
                   value: BlocProvider.of<TaskBloc>(context),
                   child: AddTask(
                     costToggled: false,
+                    isModal: true,
                   ),
                 );
               });

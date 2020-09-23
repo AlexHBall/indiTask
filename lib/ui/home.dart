@@ -16,11 +16,24 @@ class HomeScreen extends StatelessWidget {
       builder: (context, activeTab) {
         Widget _getActivePage() {
           if (activeTab == AppTab.tasks) {
-            return Dashboard();
-          } else if (activeTab == AppTab.add) {
-            return InitialScreen();
+            return BlocConsumer<TaskBloc, TaskState>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                if (state is TasksLoaded) {
+                  if (state.tasks.length == 0) {
+                    return InitialScreen();
+                  } else {
+                    return Dashboard();
+                    // (activeTab == AppTab.stats) ? return StatsDash() : return Dashboard();
+                  }
+                }
+                return CircularProgressIndicator();
+              },
+            );
           } else if (activeTab == AppTab.stats) {
             return StatsDash();
+          } else if (activeTab == AppTab.add) {
+            return InitialScreen();
           }
           return OnboardingScreen();
         }
@@ -36,7 +49,7 @@ class HomeScreen extends StatelessWidget {
               default:
                 if (!snapshot.hasError) {
                   bool onboardCompleted = snapshot.data.getBool("welcome");
-
+                  print('onboard $onboardCompleted');
                   if (onboardCompleted == null) {
                     activeTab = AppTab.onboard;
                   }
@@ -97,7 +110,7 @@ class TaskWidget extends State<InitialScreen> {
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF1C2638))),
         ),
-        AddTask(costToggled: false),
+        AddTask(costToggled: false,isModal: false,),
       ],
     );
   }
