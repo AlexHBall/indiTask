@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inditask/bloc/bloc.dart';
+import 'package:inditask/ui/dashboard/dash.dart';
 import 'package:inditask/ui/dashboard/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:inditask/ui/onboard/onboard.dart';
@@ -27,7 +28,7 @@ class Home extends StatelessWidget {
                         )..add(LoadTasksEvent());
                       },
                       child:  snapshot.data.getBool("welcome") != null
-                  ? Dashboard() : OnboardingScreen()
+                  ? Dash() : OnboardingScreen()
                     );
             } else {
               return new ErrorScreen(snapshot.error);

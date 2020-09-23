@@ -43,10 +43,17 @@ class StatisticsHeader extends StatelessWidget {
                       Text(
                         "All Time",
                         style: TextStyle(
-                            color: Color(0xFF1C2638), fontWeight: FontWeight.bold,fontSize: 12.0),
+                            color: Color(0xFF1C2638),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.0),
                       ),
-                      SizedBox(width: 5,),
-                      Image.asset("assets/images/filterSelector.png", scale: 1.2,),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Image.asset(
+                        "assets/images/filterSelector.png",
+                        scale: 1.2,
+                      ),
                     ],
                   ),
                 )),
@@ -134,9 +141,9 @@ class StatisticsCard2 extends StatelessWidget {
         height: height,
         width: 165.0,
         decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(10),
+          shape: BoxShape.rectangle,
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
           children: [
@@ -167,9 +174,9 @@ class StatisticsCard2 extends StatelessWidget {
                   const EdgeInsets.only(top: 20.0, left: 15.0, right: 15.0),
               child: Image.asset(
                 imgPath,
-                    // scale: 0.1,
-                    // height: 3,
-                    // width: 3,
+                // scale: 0.1,
+                // height: 3,
+                // width: 3,
               ),
             ),
           ],
@@ -177,46 +184,50 @@ class StatisticsCard2 extends StatelessWidget {
   }
 }
 
-
 class StatisticsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        StatisticsHeader(),
-        Padding(
-          padding: const EdgeInsets.only(top: 15.0, left: 16.0),
-          child: Row(
-            children: [
-              Column(
-                children: [
-                  StatisticsCard2("Tasks Entered", "147",
-                      "assets/images/charts.png", Color(0xFF1C2638), 261),
-                  SizedBox(
-                    height: 16.0,
-                  ),
-                  StatisticsCard("Loss/Wage %", "8%", "assets/images/rate.png",
-                      Color(0XFF108B00), 226),
-                ],
-              ),
-              SizedBox(
-                width: 16.0,
-              ),
-              Column(
-                children: [
-                  StatisticsCard("Total Points", "1080",
-                      "assets/images/running.png", Color(0XFF9BBFD6), 179),
-                  SizedBox(
-                    height: 16.0,
-                  ),
-                  StatisticsCard("% Complete", "81%",
-                      "assets/images/calories.png", Color(0XFFFF8C00), 309),
-                ],
-              ),
-            ],
+        body: Column(children: [
+          StatisticsHeader(),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0, left: 16.0),
+            child: Row(
+              children: [
+                Column(
+                  children: [
+                    StatisticsCard2("Tasks Entered", "147",
+                        "assets/images/charts.png", Color(0xFF1C2638), 261),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    StatisticsCard("Loss/Wage %", "8%",
+                        "assets/images/rate.png", Color(0XFF108B00), 226),
+                  ],
+                ),
+                SizedBox(
+                  width: 16.0,
+                ),
+                Column(
+                  children: [
+                    StatisticsCard("Total Points", "1080",
+                        "assets/images/running.png", Color(0XFF9BBFD6), 179),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    StatisticsCard("% Complete", "81%",
+                        "assets/images/calories.png", Color(0XFFFF8C00), 309),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ]),
-    );
+        ]),
+        floatingActionButton: MaterialButton(
+          color: Colors.red,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ));
   }
 }

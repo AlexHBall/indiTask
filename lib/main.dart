@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inditask/ui/tasks.dart';
+import 'package:inditask/ui/dashboard/dash.dart';
 import 'package:inditask/utils/utils.dart';
 import 'package:inditask/ui/home.dart';
 

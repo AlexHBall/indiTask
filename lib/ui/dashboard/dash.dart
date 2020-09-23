@@ -1,8 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:inditask/bloc/task/task_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inditask/models/models.dart';
+import 'package:inditask/ui/dashboard/dashboard.dart';
 import 'package:inditask/ui/widgets/custom_widgets.dart';
 
+class Dash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TaskBloc, TaskState>(
+      builder: (context, state) {
+        if (state is TasksLoaded) {
+          List<Task> incompleteTasks =
+              state.tasks.where((element) => element.completed == 0).toList();
+
+          if (incompleteTasks.length == 0) {
+            return InitialScreen();
+          }
+          return Dashboard();
+        } else {
+          return Center(
+            child: Text("Error"),
+          );
+        }
+      },
+    );
+  }
+}
+
 class InitialScreen extends StatefulWidget {
-  //TODO: When onboarding make sure bloc exists
   @override
   State<StatefulWidget> createState() {
     return TaskWidget();
