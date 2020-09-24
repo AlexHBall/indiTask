@@ -6,65 +6,76 @@ import 'package:inditask/bloc/tab/tab.dart';
 import 'package:inditask/models/models.dart';
 import 'package:inditask/utils/colors.dart';
 import 'package:inditask/widgets/widgets.dart';
-import 'package:inditask/utils/colors.dart';
 
 class StatisticsHeader extends StatelessWidget {
+  Widget statsHeaderText() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        "Statistics",
+        style: TextStyle(
+            color: Colour.blue.color,
+            fontWeight: FontWeight.bold,
+            fontSize: 18.0),
+      ),
+    );
+  }
+
+  Widget dashboardSubtitleText() {
+    return Text(
+      "Dashboard",
+      style: TextStyle(
+          color: Colour.blue.color,
+          fontWeight: FontWeight.bold,
+          fontSize: 40.0),
+    );
+  }
+
+  Widget filterBox() {
+    return Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          border: Border.all(width: 1.0, color: Colour.blue.color),
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                "All Time",
+                style: TextStyle(
+                    color: Colour.blue.color,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12.0),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Image.asset(
+                "assets/images/filterSelector.png",
+                scale: 1.2,
+              ),
+            ],
+          ),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 60, bottom: 40.0, left: 30.0),
       child: Column(children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "Statistics",
-            style: TextStyle(
-                color: Colour.blue.color,
-                fontWeight: FontWeight.bold,
-                fontSize: 18.0),
-          ),
-        ),
+        statsHeaderText(),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              "Dashboard",
-              style: TextStyle(
-                  color: Colour.blue.color,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40.0),
-            ),
+            dashboardSubtitleText(),
             SizedBox(
               width: 18.0,
             ),
-            Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  border: Border.all(width: 1.0, color: Colour.blue.color),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        "All Time",
-                        style: TextStyle(
-                            color: Colour.blue.color,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12.0),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Image.asset(
-                        "assets/images/filterSelector.png",
-                        scale: 1.2,
-                      ),
-                    ],
-                  ),
-                )),
+            filterBox(),
           ],
         )
       ]),
@@ -86,6 +97,30 @@ class StatisticsCard extends StatelessWidget {
     this.height,
   );
 
+  Widget titleText() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 22.0),
+      child: Center(
+          child: Text(
+        title,
+        style: TextStyle(
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18.0),
+      )),
+    );
+  }
+
+  Widget bodyText() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 48.0),
+      child: Center(
+          child: Text(
+        body,
+        style: TextStyle(
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 40.0),
+      )),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -102,28 +137,8 @@ class StatisticsCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 22.0),
-              child: Center(
-                  child: Text(
-                title,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0),
-              )),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 48.0),
-              child: Center(
-                  child: Text(
-                body,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40.0),
-              )),
-            ),
+            titleText(),
+            bodyText(),
           ],
         ));
   }
@@ -182,9 +197,6 @@ class StatisticsCard2 extends StatelessWidget {
                   const EdgeInsets.only(top: 20.0, left: 15.0, right: 15.0),
               child: Image.asset(
                 imgPath,
-                // scale: 0.1,
-                // height: 3,
-                // width: 3,
               ),
             ),
           ],
@@ -197,6 +209,35 @@ class StatisticsBody extends StatelessWidget {
   final int totalPoints;
   final int percentComplete;
   StatisticsBody(this.totalTasks, this.totalPoints, this.percentComplete);
+
+  Widget statsLeftCol() {
+    return Column(
+      children: [
+        StatisticsCard2("Tasks Entered", totalTasks.toString(),
+            "assets/images/charts.png", Colour.blue.color, 261),
+        SizedBox(
+          height: 16.0,
+        ),
+        StatisticsCard("Loss/Wage %", "?", "assets/images/rate.png",
+            Colour.green.color, 226),
+      ],
+    );
+  }
+
+  Widget statsRightCol() {
+    return Column(
+      children: [
+        StatisticsCard("Total Points", totalPoints.toString(),
+            "assets/images/running.png", Colour.lightBlue.color, 179),
+        SizedBox(
+          height: 16.0,
+        ),
+        StatisticsCard("% Complete", "$percentComplete%",
+            "assets/images/calories.png", Colour.orange.color, 309),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -206,31 +247,11 @@ class StatisticsBody extends StatelessWidget {
             padding: const EdgeInsets.only(top: 15.0, left: 16.0),
             child: Row(
               children: [
-                Column(
-                  children: [
-                    StatisticsCard2("Tasks Entered", totalTasks.toString(),
-                        "assets/images/charts.png", Colour.blue.color, 261),
-                    SizedBox(
-                      height: 16.0,
-                    ),
-                    StatisticsCard("Loss/Wage %", "?", "assets/images/rate.png",
-                        Colour.green.color, 226),
-                  ],
-                ),
+                statsLeftCol(),
                 SizedBox(
                   width: 16.0,
                 ),
-                Column(
-                  children: [
-                    StatisticsCard("Total Points", totalPoints.toString(),
-                        "assets/images/running.png", Colour.lightBlue.color, 179),
-                    SizedBox(
-                      height: 16.0,
-                    ),
-                    StatisticsCard("% Complete", "$percentComplete%",
-                        "assets/images/calories.png", Colour.orange.color, 309),
-                  ],
-                ),
+                statsRightCol(),
               ],
             ),
           ),
