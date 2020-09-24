@@ -13,7 +13,7 @@ ThemeData basicTheme() {
             fontStyle: FontStyle.normal
         ),
         bodyText2: base.bodyText2.copyWith(
-            color: Color(0xFFFFF),
+            color: Colour.white.color,
             fontFamily: fontFamily,
             fontSize: 18,
             fontStyle: FontStyle.normal));

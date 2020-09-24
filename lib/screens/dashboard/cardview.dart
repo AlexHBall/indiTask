@@ -27,14 +27,14 @@ class _CardViewState extends State<CardView> {
         } else {
           if (i == 0) {
             return BoxDecoration(
-              color: Color(0xFFE8E8E8),
+              color: Colour.grey.color,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
                   bottomLeft: Radius.circular(10)),
             );
           } else if (i == numberOfPages-1) {
             return BoxDecoration(
-              color: Color(0xFFE8E8E8),
+              color: Colour.grey.color,
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(10),
                   topRight: Radius.circular(10)),
@@ -42,7 +42,7 @@ class _CardViewState extends State<CardView> {
           } else {
             // return box no borders
             return BoxDecoration(
-              color: Color(0xFFE8E8E8),
+              color: Colour.grey.color,
               shape: BoxShape.rectangle,
             );
           }

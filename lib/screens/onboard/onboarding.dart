@@ -57,7 +57,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       height: 10.0,
       width: isActive ? 10.0 : 10.0,
       decoration: BoxDecoration(
-        color: isActive ? Colour.blue.color : Color(0xFFE8E8E8),
+        color: isActive ? Colour.blue.color : Colour.grey.color,
         shape: BoxShape.circle,
       ),
     );
@@ -66,7 +66,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFFF2F7FB),
+        backgroundColor: Colour.backGrey.color,
         body: Column(
           children: <Widget>[
             Container(

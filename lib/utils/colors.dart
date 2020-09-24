@@ -6,6 +6,9 @@ enum Colour {
   green,
   lightBlue,
   orange,
+  grey,
+  darkPurple,
+  backGrey,
 }
 
 extension ColourExtension on Colour {
@@ -15,6 +18,9 @@ extension ColourExtension on Colour {
     Colour.green: Color(0xFF108B00),
     Colour.lightBlue: Color(0xFF9BBFD6),
     Colour.orange: Color(0xFFFF8C00),
+    Colour.grey : Color(0xFFE8E8E8),
+    Colour.darkPurple : Color(0xFF272140),
+    Colour.backGrey : Color(0xFFF2F7FB),
   };
 
   Color get color => colors[this];

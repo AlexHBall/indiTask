@@ -38,7 +38,7 @@ class TaskWidget extends State<InitialScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF2F7FB),
+      backgroundColor: Colour.backGrey.color,
       resizeToAvoidBottomPadding: false,
       body: initialPage(),
     );

@@ -118,7 +118,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
   Widget build(BuildContext context) {
     taskCards = fillTaskCards(incompleteTasks);
     return Scaffold(
-      backgroundColor: Color(0XFFF2F7FB),
+      backgroundColor: Colour.backGrey.color,
       body: Column(
         children: [
           HeaderRow(),

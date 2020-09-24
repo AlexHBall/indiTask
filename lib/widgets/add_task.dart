@@ -173,7 +173,7 @@ class TaskInfoState extends State<TaskInfo> {
         decoration: BoxDecoration(
           border: Border.all(width: 1.0, color: Colour.lightBlue.color),
           borderRadius: BorderRadius.circular(50),
-          color: Color(0xFFFF),
+          color: Colour.white.color,
         ),
         child: Padding(
             padding: const EdgeInsets.only(top: 1.0),
@@ -219,7 +219,7 @@ class TaskInfoState extends State<TaskInfo> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               alarmTimeDisplay(
-                  140.0, 40.0, "26 Apr at 12:00AM", Color(0xFFFFFFFF)),
+                  140.0, 40.0, "26 Apr at 12:00AM", Colour.white.color),
               alarmIconDisplay(60.0, 40.0),
               scoreDisplay(60.0, 40.0, Colour.green.color),
             ]));

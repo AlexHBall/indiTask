@@ -37,7 +37,7 @@ class TasksRow extends StatelessWidget {
               child: Text(
                 'Tasks Due:',
                 style: TextStyle(
-                    color: Color(0xFF272140),
+                    color: Colour.darkPurple.color,
                     fontSize: 18,
                     fontWeight: FontWeight.bold),
               ),
