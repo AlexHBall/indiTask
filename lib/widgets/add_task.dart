@@ -10,7 +10,7 @@ class TaskInput extends StatelessWidget {
         color: Colour.blue.color, fontSize: 18, fontWeight: FontWeight.w400);
     return Padding(
       padding:
-          const EdgeInsets.only(top: 25.0, left: 5.0, right: 5.0, bottom: 27.0),
+          const EdgeInsets.only(top: 25.0, left: 5.0, right: 5.0, bottom: 42.0),
       child: TextField(
         cursorColor: Colour.blue.color,
         decoration: InputDecoration(
