@@ -100,11 +100,14 @@ class TaskCard extends StatelessWidget {
             ),
             Padding(
               //TODO: Align this properly
-              padding: const EdgeInsets.only(left: 53.0, top: 90.0),
+              padding: const EdgeInsets.only(
+                  left: 53.0, top: 90.0, right: 30.0, bottom: 50.0),
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
                   description,
+                  overflow: TextOverflow.ellipsis,  maxLines: 3,
+
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 23,

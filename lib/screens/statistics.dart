@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/bloc/tab/tab.dart';
 import 'package:inditask/models/models.dart';
-import 'package:inditask/ui/widgets/widgets.dart';
+import 'package:inditask/widgets/widgets.dart';
 
 class StatisticsHeader extends StatelessWidget {
   @override

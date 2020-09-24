@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inditask/ui/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {

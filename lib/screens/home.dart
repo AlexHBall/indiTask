@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/models/models.dart';
-import 'package:inditask/ui/dashboard/dashboard.dart';
-import 'package:inditask/ui/stats/statistics.dart';
-import 'package:inditask/ui/widgets/widgets.dart';
+import 'package:inditask/screens/dashboard/dashboard.dart';
+import 'package:inditask/screens/screens.dart';
+import 'package:inditask/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:inditask/ui/onboard/onboard.dart';
+import 'package:inditask/screens/onboard/onboard.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,7 +23,6 @@ class HomeScreen extends StatelessWidget {
                     return InitialScreen();
                   } else {
                     return Dashboard();
-                    // (activeTab == AppTab.stats) ? return StatsDash() : return Dashboard();
                   }
                 }
                 return CircleIndicator();
@@ -44,7 +43,7 @@ class HomeScreen extends StatelessWidget {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
               case ConnectionState.waiting:
-                return new LoadingScreen("loading");
+                return new CircleIndicator();
               default:
                 if (!snapshot.hasError) {
                   bool onboardCompleted = snapshot.data.getBool("welcome");
@@ -64,16 +63,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class LoadingScreen extends StatelessWidget {
-  final String text;
-  LoadingScreen(this.text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
-  }
-}
-
 class ErrorScreen extends StatelessWidget {
   final error;
   ErrorScreen(this.error);
@@ -84,42 +73,3 @@ class ErrorScreen extends StatelessWidget {
   }
 }
 
-class InitialScreen extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return TaskWidget();
-  }
-}
-
-class TaskWidget extends State<InitialScreen> {
-  Column initialPage() {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(top: 142.0),
-          child: Image.asset('assets/images/logoSmall.png'),
-        ),
-        Padding(
-          padding:
-              EdgeInsets.only(top: 28.0, left: 55.0, right: 50.0, bottom: 20.0),
-          child: Text("Create your first task",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1C2638))),
-        ),
-        AddTask(costToggled: false,isModal: false,),
-      ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFFF2F7FB),
-      resizeToAvoidBottomPadding: false,
-      body: initialPage(),
-    );
-  }
-}

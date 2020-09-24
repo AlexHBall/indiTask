@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/repository/task_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inditask/ui/home.dart';
+import 'package:inditask/screens/home.dart';
 import 'package:inditask/utils/theme.dart';
 
 void main() {
