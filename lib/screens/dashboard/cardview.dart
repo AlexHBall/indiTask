@@ -32,7 +32,7 @@ class _CardViewState extends State<CardView> {
                   topLeft: Radius.circular(10),
                   bottomLeft: Radius.circular(10)),
             );
-          } else if (i == numberOfPages-1) {
+          } else if (i == numberOfPages - 1) {
             return BoxDecoration(
               color: Colour.grey.color,
               borderRadius: BorderRadius.only(
@@ -65,29 +65,36 @@ class _CardViewState extends State<CardView> {
       return list;
     }
 
+    Widget pageIndicator() {
+      return Padding(
+        padding: const EdgeInsets.only(left: 25.0, right: 40),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: _buildPageIndicator(),
+        ),
+      );
+    }
+
+    Widget page() {
+      return Container(
+        height: 400,
+        child: PageView.builder(
+            controller: widget.ctrl,
+            onPageChanged: (index) {
+              _currentPage = index;
+              widget.onChange(index);
+            },
+            itemCount: widget.tasks.length,
+            itemBuilder: (BuildContext context, int index) {
+              return widget.tasks[index];
+            }),
+      );
+    }
+
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 25.0,right: 40),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: 
-            _buildPageIndicator(),
-          ),
-        ),
-        Container(
-          height: 400,
-          child: PageView.builder(
-              controller: widget.ctrl,
-              onPageChanged: (index) {
-                _currentPage = index;
-                widget.onChange(index);
-              },
-              itemCount: widget.tasks.length,
-              itemBuilder: (BuildContext context, int index) {
-                return widget.tasks[index];
-              }),
-        ),
+        pageIndicator(),
+        page(),
       ],
     );
   }
