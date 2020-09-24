@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/bloc/tab/tab.dart';
 import 'package:inditask/models/models.dart';
+import 'package:inditask/utils/colors.dart';
 import 'package:inditask/widgets/widgets.dart';
+import 'package:inditask/utils/colors.dart';
 
 class StatisticsHeader extends StatelessWidget {
   @override
@@ -17,7 +19,7 @@ class StatisticsHeader extends StatelessWidget {
           child: Text(
             "Statistics",
             style: TextStyle(
-                color: Color(0xFF1C2638),
+                color: Colour.blue.color,
                 fontWeight: FontWeight.bold,
                 fontSize: 18.0),
           ),
@@ -28,7 +30,7 @@ class StatisticsHeader extends StatelessWidget {
             Text(
               "Dashboard",
               style: TextStyle(
-                  color: Color(0xFF1C2638),
+                  color: Colour.blue.color,
                   fontWeight: FontWeight.bold,
                   fontSize: 40.0),
             ),
@@ -38,7 +40,7 @@ class StatisticsHeader extends StatelessWidget {
             Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
-                  border: Border.all(width: 1.0, color: Color(0xFF1C2638)),
+                  border: Border.all(width: 1.0, color: Colour.blue.color),
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Padding(
@@ -49,7 +51,7 @@ class StatisticsHeader extends StatelessWidget {
                       Text(
                         "All Time",
                         style: TextStyle(
-                            color: Color(0xFF1C2638),
+                            color: Colour.blue.color,
                             fontWeight: FontWeight.bold,
                             fontSize: 12.0),
                       ),
@@ -207,12 +209,12 @@ class StatisticsBody extends StatelessWidget {
                 Column(
                   children: [
                     StatisticsCard2("Tasks Entered", totalTasks.toString(),
-                        "assets/images/charts.png", Color(0xFF1C2638), 261),
+                        "assets/images/charts.png", Colour.blue.color, 261),
                     SizedBox(
                       height: 16.0,
                     ),
                     StatisticsCard("Loss/Wage %", "?", "assets/images/rate.png",
-                        Color(0XFF108B00), 226),
+                        Colour.green.color, 226),
                   ],
                 ),
                 SizedBox(
@@ -221,12 +223,12 @@ class StatisticsBody extends StatelessWidget {
                 Column(
                   children: [
                     StatisticsCard("Total Points", totalPoints.toString(),
-                        "assets/images/running.png", Color(0XFF9BBFD6), 179),
+                        "assets/images/running.png", Colour.lightBlue.color, 179),
                     SizedBox(
                       height: 16.0,
                     ),
                     StatisticsCard("% Complete", "$percentComplete%",
-                        "assets/images/calories.png", Color(0XFFFF8C00), 309),
+                        "assets/images/calories.png", Colour.orange.color, 309),
                   ],
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inditask/utils/colors.dart';
 
 //The purpose here is COLOURS, FONTS, TEXT STYLES
 ThemeData basicTheme() {
@@ -6,7 +7,7 @@ ThemeData basicTheme() {
   TextTheme _basicTextTheme(TextTheme base) {
     return base.copyWith(
         bodyText1: base.bodyText1.copyWith(
-            color: Color(0xFF1C2638),
+            color: Colour.blue.color,
             fontFamily: fontFamily,
             fontSize: 18,
             fontStyle: FontStyle.normal

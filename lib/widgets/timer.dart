@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:inditask/utils/colors.dart';
 
 /// A Countdown.
 class CountdownTimer extends StatefulWidget {
@@ -160,7 +161,7 @@ class _CountDownState extends State<CountdownTimer> {
   _items() {
     Text inbetween = Text(
       " : ",
-      style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xFF1C2638),fontSize: 20),
+      style: TextStyle(fontWeight: FontWeight.bold,color: Colour.blue.color,fontSize: 20),
     );
     List<Widget> list = [];
     if (diffDate == null) {

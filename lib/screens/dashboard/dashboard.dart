@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/models/models.dart';
+import 'package:inditask/utils/colors.dart';
 import 'package:inditask/widgets/widgets.dart';
 
 part 'taskcard.dart';
@@ -43,10 +44,10 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
 
   List<TaskCard> fillTaskCards(tasks) {
     List<Color> colors = [
-      Color(0xFF1C2638),
-      Color(0XFF9BBFD6),
-      Color(0XFF108B00),
-      Color(0XFFFF8C00)
+      Colour.blue.color,
+      Colour.lightBlue.color,
+      Colour.green.color,
+      Colour.orange.color
     ];
     taskCards = <TaskCard>[];
     if (incompleteTasks.length < 1) {
@@ -146,7 +147,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
           // Add your onPressed code here!
         },
         child: Icon(Icons.add),
-        backgroundColor: Color(0XFF1C2638),
+        backgroundColor: Colour.blue.color,
       ),
     );
   }

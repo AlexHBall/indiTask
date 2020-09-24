@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/models/models.dart';
+import 'package:inditask/utils/colors.dart';
 
 part 'add_task.dart';
 

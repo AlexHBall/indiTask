@@ -7,18 +7,18 @@ class TaskInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyle style = TextStyle(
-        color: Color(0xFF1C2638), fontSize: 18, fontWeight: FontWeight.w400);
+        color: Colour.blue.color, fontSize: 18, fontWeight: FontWeight.w400);
     return Padding(
       padding:
           const EdgeInsets.only(top: 25.0, left: 5.0, right: 5.0, bottom: 27.0),
       child: TextField(
-        cursorColor: Color(0xFF1C2638),
+        cursorColor: Colour.blue.color,
         decoration: InputDecoration(
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF1C2638)),
+              borderSide: BorderSide(color: Colour.blue.color),
             ),
             focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF1C2638)),
+              borderSide: BorderSide(color: Colour.blue.color),
             )),
         style: style,
         controller: descriptionCtrl,
@@ -55,7 +55,7 @@ class _CostInputState extends State<CostInput> {
         height: 40.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
-          color: Color(0xFF108B00),
+          color: Colour.green.color,
         ),
         child: Padding(
           padding: const EdgeInsets.only(top: 11),
@@ -72,11 +72,11 @@ class _CostInputState extends State<CostInput> {
         width: 250,
         child: SliderTheme(
             data: SliderTheme.of(context).copyWith(
-              activeTrackColor: Color(0xFF108B00),
+              activeTrackColor: Colour.green.color,
               inactiveTrackColor: Color(0xFFEFEFEF),
               trackShape: RoundSliderTrackShape(radius: 20),
               trackHeight: 9.0,
-              thumbColor: Color(0xFF108B00),
+              thumbColor: Colour.green.color,
               thumbShape: RoundSliderThumbShape(enabledThumbRadius: 9.0),
               overlayColor: Colors.white,
               overlayShape: RoundSliderOverlayShape(overlayRadius: 15.0),
@@ -86,7 +86,7 @@ class _CostInputState extends State<CostInput> {
               min: 0,
               max: 100,
               // inactiveColor: Colors.grey,
-              // activeColor: Color(0xFF108B00),
+              // activeColor: Colour.green.color,
               onChanged: (double value) {
                 widget.updateCost(value.round());
                 setState(() {
@@ -152,7 +152,7 @@ class TaskInfoState extends State<TaskInfo> {
         width: w,
         height: h,
         decoration: BoxDecoration(
-          border: Border.all(width: 1.0, color: Color(0xFF1C2638)),
+          border: Border.all(width: 1.0, color: Colour.blue.color),
           borderRadius: BorderRadius.circular(50),
           color: backgroundColor,
         ),
@@ -163,7 +163,7 @@ class TaskInfoState extends State<TaskInfo> {
                 style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFF1C2638)))));
+                    color: Colour.blue.color))));
   }
 
   Container alarmIconDisplay(double w, double h) {
@@ -171,7 +171,7 @@ class TaskInfoState extends State<TaskInfo> {
         width: w,
         height: h,
         decoration: BoxDecoration(
-          border: Border.all(width: 1.0, color: Color(0xFF9BBFD6)),
+          border: Border.all(width: 1.0, color: Colour.lightBlue.color),
           borderRadius: BorderRadius.circular(50),
           color: Color(0xFFFF),
         ),
@@ -179,7 +179,7 @@ class TaskInfoState extends State<TaskInfo> {
             padding: const EdgeInsets.only(top: 1.0),
             child: Icon(
               Icons.add_alarm,
-              color: Color(0xFF9BBFD6),
+              color: Colour.lightBlue.color,
             )));
   }
 
@@ -221,7 +221,7 @@ class TaskInfoState extends State<TaskInfo> {
               alarmTimeDisplay(
                   140.0, 40.0, "26 Apr at 12:00AM", Color(0xFFFFFFFF)),
               alarmIconDisplay(60.0, 40.0),
-              scoreDisplay(60.0, 40.0, Color(0xFF108B00)),
+              scoreDisplay(60.0, 40.0, Colour.green.color),
             ]));
   }
 }
@@ -239,10 +239,10 @@ class AddTaskButton extends StatelessWidget {
           height: 66,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
-            color: Color(0xFF1C2638),
+            color: Colour.blue.color,
           ),
           child: RawMaterialButton(
-            fillColor: Color(0xFF1C2638),
+            fillColor: Colour.blue.color,
             splashColor: Colors.white,
             child: Padding(
               padding: const EdgeInsets.all(22.0),
@@ -326,7 +326,7 @@ class _AddTaskState extends State<AddTask> {
     return Container(
         height: 527,
         decoration: BoxDecoration(
-            border: Border.all(width: 1.0, color: Color(0xFF1C2638)),
+            border: Border.all(width: 1.0, color: Colour.blue.color),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10), topRight: Radius.circular(10)),
             color: Colors.white),

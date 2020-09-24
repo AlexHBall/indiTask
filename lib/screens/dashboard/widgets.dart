@@ -9,7 +9,7 @@ class HeaderRow extends StatelessWidget {
         Image.asset('assets/images/ribbon.png'),
         MaterialButton(
           onPressed: () {},
-          color: Color(0xFF1C2638),
+          color: Colour.blue.color,
           textColor: Colors.white,
           child: Icon(
             Icons.settings,
@@ -83,7 +83,7 @@ class _TimeRemainingState extends State<TimeRemaining> {
       minSymbol: "min ",
       secSymbol: "sec",
       textStyle: TextStyle(
-          fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1C2638)),
+          fontWeight: FontWeight.bold, fontSize: 16, color: Colour.blue.color),
     );
   }
 }
@@ -149,7 +149,7 @@ class CompleteWidget extends StatelessWidget {
                   width: 45.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color(0xFF1C2638),
+                    color: Colour.blue.color,
                   ),
                   child: Padding(
                       padding: EdgeInsets.only(top: 0),
@@ -161,7 +161,7 @@ class CompleteWidget extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF1C2638))),
+                          color: Colour.blue.color)),
                 ),
               ],
             ),

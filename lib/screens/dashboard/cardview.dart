@@ -21,7 +21,7 @@ class _CardViewState extends State<CardView> {
       BoxDecoration getBoxDec() {
         if (isActive) {
           return BoxDecoration(
-              color: Color(0xFF1C2638),
+              color: Colour.blue.color,
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(10));
         } else {

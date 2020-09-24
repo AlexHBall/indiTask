@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inditask/utils/colors.dart';
 import 'package:inditask/widgets/widgets.dart';
 
 class InitialScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class TaskWidget extends State<InitialScreen> {
               style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF1C2638))),
+                  color: Colour.blue.color)),
         ),
         AddTask(
           costToggled: false,

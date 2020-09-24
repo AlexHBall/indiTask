@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inditask/utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -56,7 +57,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       height: 10.0,
       width: isActive ? 10.0 : 10.0,
       decoration: BoxDecoration(
-        color: isActive ? Color(0xFF1C2638) : Color(0xFFE8E8E8),
+        color: isActive ? Colour.blue.color : Color(0xFFE8E8E8),
         shape: BoxShape.circle,
       ),
     );
@@ -97,10 +98,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   height: 66,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
-                    color: Color(0xFF1C2638),
+                    color: Colour.blue.color,
                   ),
                   child: RawMaterialButton(
-                    fillColor: Color(0xFF1C2638),
+                    fillColor: Colour.blue.color,
                     splashColor: Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.all(22.0),
@@ -158,7 +159,7 @@ class Screen extends StatelessWidget {
           padding: EdgeInsets.only(top: headerPadding),
           child: Text(headerText,
               style: Theme.of(context).textTheme.bodyText1.copyWith(
-                  color: Color(0xFF1C2638),
+                  color: Colour.blue.color,
                   fontSize: 24,
                   fontWeight: FontWeight.bold)),
         ),
@@ -167,7 +168,7 @@ class Screen extends StatelessWidget {
           child: Text(bodyText,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyText1.copyWith(
-                  color: Color(0xFF1C2638),
+                  color: Colour.blue.color,
                   fontSize: 18,
                   fontWeight: FontWeight.w400)),
         ),
