@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:inditask/bloc/tab/tab.dart';
-import 'package:inditask/bloc/tab/tab_bloc.dart';
-import 'package:inditask/bloc/task/task_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/models/models.dart';
-import 'package:inditask/models/task.dart';
-import 'package:inditask/ui/dashboard/cardview.dart';
-import 'package:inditask/ui/widgets/custom_widgets.dart';
-import 'package:inditask/ui/widgets/timer.dart';
+import 'package:inditask/ui/widgets/widgets.dart';
+
 part 'taskcard.dart';
 part 'widgets.dart';
+part 'cardview.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -124,7 +122,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
         children: [
           HeaderRow(),
           TasksRow(),
-          CardView(taskCards, pageController, _onPageChanged,currentTask),
+          CardView(taskCards, pageController, _onPageChanged, currentTask),
           RemaingingTimeWidget(incompleteTasks[currentTask].getDateTime()),
           CompleteWidget(_onCompleteSwipe),
         ],
@@ -136,8 +134,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
           await showModalBottomSheet(
               context: context,
               builder: (BuildContext bc) {
-                return
-                 BlocProvider.value(
+                return BlocProvider.value(
                   value: BlocProvider.of<TaskBloc>(context),
                   child: AddTask(
                     costToggled: false,

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:inditask/bloc/tab/tab_bloc.dart';
-import 'package:inditask/bloc/task/task_bloc.dart';
+import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/models/models.dart';
 import 'package:inditask/ui/dashboard/dashboard.dart';
 import 'package:inditask/ui/stats/statistics.dart';
-import 'package:inditask/ui/widgets/custom_widgets.dart';
+import 'package:inditask/ui/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:inditask/ui/onboard/onboard.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

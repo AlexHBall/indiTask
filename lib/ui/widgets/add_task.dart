@@ -12,7 +12,7 @@ class TaskInput extends StatelessWidget {
       padding:
           const EdgeInsets.only(top: 25.0, left: 5.0, right: 5.0, bottom: 27.0),
       child: TextField(
-        cursorColor: Colors.white,
+        cursorColor: Color(0xFF1C2638),
         decoration: InputDecoration(
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Color(0xFF1C2638)),
@@ -22,9 +22,6 @@ class TaskInput extends StatelessWidget {
             )),
         style: style,
         controller: descriptionCtrl,
-        onSubmitted: (String text) async {
-          // onSubmit(text);
-        },
         textAlign: TextAlign.left,
         autofocus: true,
       ),
@@ -313,6 +310,7 @@ class _AddTaskState extends State<AddTask> {
       BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
     }
     BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(taskToAdd));
+    descriptionCtrl.clear();
   }
 
   @override

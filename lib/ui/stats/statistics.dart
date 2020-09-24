@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:inditask/bloc/bloc.dart';
-import 'package:inditask/bloc/stat/stat_bloc.dart';
 import 'package:inditask/bloc/tab/tab.dart';
 import 'package:inditask/models/models.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inditask/ui/widgets/custom_widgets.dart';
+import 'package:inditask/ui/widgets/widgets.dart';
 
 class StatisticsHeader extends StatelessWidget {
   @override
@@ -194,7 +194,7 @@ class StatisticsBody extends StatelessWidget {
   final int totalTasks;
   final int totalPoints;
   final int percentComplete;
-  StatisticsBody(this.totalTasks,this.totalPoints,this.percentComplete);
+  StatisticsBody(this.totalTasks, this.totalPoints, this.percentComplete);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -211,8 +211,8 @@ class StatisticsBody extends StatelessWidget {
                     SizedBox(
                       height: 16.0,
                     ),
-                    StatisticsCard("Loss/Wage %", "?",
-                        "assets/images/rate.png", Color(0XFF108B00), 226),
+                    StatisticsCard("Loss/Wage %", "?", "assets/images/rate.png",
+                        Color(0XFF108B00), 226),
                   ],
                 ),
                 SizedBox(
@@ -249,7 +249,8 @@ class StatsDash extends StatelessWidget {
       if (state is StatsLoading) {
         return CircleIndicator();
       } else if (state is StatsLoaded) {
-        return StatisticsBody(state.tasksEntered,state.totalPoints,state.percentageComplete);
+        return StatisticsBody(
+            state.tasksEntered, state.totalPoints, state.percentageComplete);
       }
       return CircleIndicator();
     });

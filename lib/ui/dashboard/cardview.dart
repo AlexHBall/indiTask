@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:inditask/ui/dashboard/dashboard.dart';
+part of 'dashboard.dart';
 
 class CardView extends StatefulWidget {
   final List<TaskCard> tasks;
