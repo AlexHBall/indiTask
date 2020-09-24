@@ -24,11 +24,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           "Wage points for every task. Compare with friends and see who is most productive.",
           122.0,
           40.0),
-      //TODO: Align the text here properly
       Screen(
           'assets/images/onboard3.png',
           "Based on loss aversion",
-          "When you don’t complete a task, you lose the amount of points you waged.",
+          "When you don’t complete a task, you lose the amount of points    you waged.",
           146.0,
           60.0),
       Screen('assets/images/onboard4.png', "Welcome To Inditask",

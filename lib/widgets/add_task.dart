@@ -146,7 +146,6 @@ class TaskInfoState extends State<TaskInfo> {
   TaskInfoState();
   String _text = "100";
 
-  //TODO: Make this a switch
   Container alarmTimeDisplay(
       double w, double h, String text, Color backgroundColor) {
     return Container(
