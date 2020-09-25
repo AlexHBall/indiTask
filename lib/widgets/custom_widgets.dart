@@ -4,7 +4,7 @@ import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/models/models.dart';
 import 'package:inditask/utils/colors.dart';
 
-part 'add_task.dart';
+part 'taskmodal.dart/add_task.dart';
 
 class RoundSliderTrackShape extends SliderTrackShape {
   const RoundSliderTrackShape(
