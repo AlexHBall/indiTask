@@ -178,6 +178,15 @@ class _CountDownState extends State<CountdownTimer> {
         Text("day", style: _getTextStyle(widget.daysTextStyle))
       ]));
       list.add(inbetween);
+    } else if (diffDate.days == -1) {
+      list.add(Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(
+          '${0}',
+          style: _getTextStyle(widget.daysTextStyle),
+        ),
+        Text("day", style: _getTextStyle(widget.daysTextStyle))
+      ]));
+      list.add(inbetween);
     }
     if (diffDate.hours != -1) {
       var hours = _getNumberAddZero(diffDate.hours);

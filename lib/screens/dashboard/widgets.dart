@@ -62,7 +62,6 @@ class _TimeRemainingState extends State<TimeRemaining> {
   Widget build(BuildContext context) {
     return CountdownTimer(
       endTime: widget.endTime.millisecondsSinceEpoch,
-      // endTime: DateTime.now().millisecondsSinceEpoch + 1000,
       defaultDays: "==",
       defaultHours: "--",
       defaultMin: "**",
