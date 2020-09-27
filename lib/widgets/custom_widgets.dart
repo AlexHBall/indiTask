@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/models/models.dart';
 import 'package:inditask/utils/colors.dart';
+import 'package:inditask/widgets/taskmodal/timepicker.dart';
 
-part 'taskmodal.dart/add_task.dart';
+part 'taskmodal/add_task.dart';
 
 class RoundSliderTrackShape extends SliderTrackShape {
   const RoundSliderTrackShape(

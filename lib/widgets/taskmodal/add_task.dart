@@ -259,6 +259,20 @@ class TaskInfoState extends State<TaskInfo> {
           ),
           padding: EdgeInsets.all(8.0),
           onPressed: () {
+            showDialog(
+                context: context,
+                builder: (_) => new AlertDialog(
+                      title: new Text("Material Dialog"),
+                      content: TimePicker(),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text('Close me!'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        )
+                      ],
+                    ));
             widget.notifyParentDate();
           },
           child: Text(widget.date,
@@ -489,16 +503,17 @@ class _AddTaskState extends State<AddTask> {
         child: Padding(
           padding: const EdgeInsets.only(left: 28.0, right: 28.0),
           child: Column(children: <Widget>[
-            _getInputRow(),
-            TaskInfo(
-              notifyParentCost: _toggleCost,
-              notifyParentAlarm: _toggleAlarm,
-              notifyParentDate: _toggleDate,
-              inputState: inputRowState,
-              cost: costButtonText,
-              date: "26 Apr at 12:00AM",
-            ),
-            AddTaskButton(_addTask),
+            // _getInputRow(),
+            // TaskInfo(
+            //   notifyParentCost: _toggleCost,
+            //   notifyParentAlarm: _toggleAlarm,
+            //   notifyParentDate: _toggleDate,
+            //   inputState: inputRowState,
+            //   cost: costButtonText,
+            //   date: "26 Apr at 12:00AM",
+            // ),
+            // AddTaskButton(_addTask),
+            TimePicker(),
           ]),
         ));
   }

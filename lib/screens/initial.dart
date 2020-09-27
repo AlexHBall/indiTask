@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inditask/utils/colors.dart';
+import 'package:inditask/widgets/taskmodal/timepicker.dart';
 import 'package:inditask/widgets/widgets.dart';
 
 class InitialScreen extends StatefulWidget {
@@ -35,10 +36,11 @@ class AddTaskWidget extends State<InitialScreen> {
       children: <Widget>[
         image(),
         textHeader(),
-        AddTask(
-          costToggled: false,
-          isModal: false,
-        ),
+        // AddTask(
+        //   costToggled: false,
+        //   isModal: false,
+        // ),
+        DateTimeModal(),
       ],
     );
   }
