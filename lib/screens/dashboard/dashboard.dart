@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/models/models.dart';
 import 'package:inditask/utils/colors.dart';
+import 'package:inditask/widgets/taskmodal/add_task.dart';
 import 'package:inditask/widgets/widgets.dart';
 
 part 'taskcard.dart';

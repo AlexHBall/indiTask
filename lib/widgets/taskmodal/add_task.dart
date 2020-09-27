@@ -1,4 +1,11 @@
-part of '../custom_widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inditask/bloc/bloc.dart';
+import 'package:inditask/models/models.dart';
+import 'package:inditask/utils/colors.dart';
+import 'package:inditask/widgets/taskmodal/timepicker.dart';
+import 'package:flutter/material.dart';
+import 'package:inditask/widgets/widgets.dart';
+import 'package:intl/intl.dart';
 
 class TaskInput extends StatelessWidget {
   final TextEditingController descriptionCtrl;
@@ -258,23 +265,7 @@ class TaskInfoState extends State<TaskInfo> {
             side: BorderSide(color: Colour.blue.color),
           ),
           padding: EdgeInsets.all(8.0),
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (_) => new AlertDialog(
-                      title: new Text("Material Dialog"),
-                      content: TimePicker(),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text('Close me!'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        )
-                      ],
-                    ));
-            widget.notifyParentDate();
-          },
+          onPressed: widget.notifyParentDate,
           child: Text(widget.date,
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -401,11 +392,20 @@ class AddTask extends StatefulWidget {
 
 class _AddTaskState extends State<AddTask> {
   String costButtonText;
-  int cost = 100;
   int alarmSelected = -1;
   TextEditingController descriptionCtrl;
   TextEditingController dateCtrl;
   AddTaskState inputRowState;
+  DateTime dueDate = DateTime.now();
+  bool selectingDate = false;
+  Task task;
+  String _formatDateString() {
+    final DateFormat firstFormatter = DateFormat('dd MMM');
+    String partOne = firstFormatter.format(dueDate);
+    final DateFormat secondFormatter = DateFormat('jm');
+    String partTwo = secondFormatter.format(dueDate);
+    return ("$partOne at $partTwo");
+  }
 
   void _toggleCost() {
     setState(() {
@@ -417,13 +417,13 @@ class _AddTaskState extends State<AddTask> {
 
       (inputRowState == AddTaskState.cost)
           ? costButtonText = "Done"
-          : costButtonText = cost.toString();
+          : costButtonText = task.cost.toString();
     });
   }
 
   void _updateCost(int newCost) {
     setState(() {
-      cost = newCost;
+      task.cost = newCost;
       costButtonText = newCost.toString();
     });
   }
@@ -444,24 +444,30 @@ class _AddTaskState extends State<AddTask> {
     });
   }
 
-  void _toggleDate() {}
+  void _toggleDate() {
+    setState(() {
+      selectingDate = !selectingDate;
+    });
+  }
 
-  void _updateDate() {}
+  void _updateDate(DateTime selectedDateTime) {
+    setState(() {
+      dueDate = selectedDateTime;
+    });
+    _toggleDate();
+  }
 
   void _addTask() {
     String desc = descriptionCtrl.text;
     if (desc.isNotEmpty) {
-      int cost = this.cost;
-      // TODO: Date String Properly
-      // String date = dateCtrl.text;
-      String date = "09-26-2020";
-      int alarm = 0;
-      Task taskToAdd = Task(desc, date, cost, alarm);
-      print('Adding Task $taskToAdd');
+      DateFormat daysFormat = DateFormat("MM-dd-yyyy");
+      String date = daysFormat.format(dueDate);
+      task.date = date;
+      print('Adding Task $task');
       if (!widget.isModal) {
         BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
       }
-      BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(taskToAdd));
+      BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(task));
       descriptionCtrl.clear();
     }
   }
@@ -477,22 +483,38 @@ class _AddTaskState extends State<AddTask> {
     } else if (inputRowState == AddTaskState.cost) {
       return CostInput(
         updateCost: _updateCost,
-        cost: cost.toDouble(),
+        cost: task.cost.toDouble(),
       );
     }
   }
 
   @override
   void initState() {
-    costButtonText = cost.toString();
+    task = Task("", dueDate.toString(), 100, 0);
+    costButtonText = task.cost.toString();
     descriptionCtrl = TextEditingController();
     dateCtrl = TextEditingController();
     inputRowState = AddTaskState.text;
+    dueDate = new DateTime(dueDate.year, dueDate.month, dueDate.day + 1);
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> inputWidgets = [
+      _getInputRow(),
+      TaskInfo(
+        notifyParentCost: _toggleCost,
+        notifyParentAlarm: _toggleAlarm,
+        notifyParentDate: _toggleDate,
+        inputState: inputRowState,
+        cost: costButtonText,
+        date: _formatDateString(),
+      ),
+      AddTaskButton(_addTask)
+    ];
+
     return Container(
         height: 527,
         decoration: BoxDecoration(
@@ -502,19 +524,11 @@ class _AddTaskState extends State<AddTask> {
             color: Colors.white),
         child: Padding(
           padding: const EdgeInsets.only(left: 28.0, right: 28.0),
-          child: Column(children: <Widget>[
-            // _getInputRow(),
-            // TaskInfo(
-            //   notifyParentCost: _toggleCost,
-            //   notifyParentAlarm: _toggleAlarm,
-            //   notifyParentDate: _toggleDate,
-            //   inputState: inputRowState,
-            //   cost: costButtonText,
-            //   date: "26 Apr at 12:00AM",
-            // ),
-            // AddTaskButton(_addTask),
-            TimePicker(),
-          ]),
+          child: selectingDate
+              ? DateTimeModal(
+                  onSubmit: _updateDate,
+                )
+              : Column(children: inputWidgets),
         ));
   }
 }

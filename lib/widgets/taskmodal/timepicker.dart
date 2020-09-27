@@ -5,87 +5,6 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel, WeekdayFormat;
 import 'package:flutter_calendar_carousel/classes/event.dart';
 
-class DateTimeModal extends StatefulWidget {
-  final Function onSubmit;
-  const DateTimeModal({this.onSubmit});
-  @override
-  _DateTimeModalState createState() => _DateTimeModalState();
-}
-
-class _DateTimeModalState extends State<DateTimeModal> {
-  bool _isCalendar = true;
-  DateTime _datePicked = DateTime.now();
-  DateTime _timePicked = DateTime.now();
-
-  @override
-  Widget build(Object context) {
-    void shiftScreen() {
-      setState(() {
-        _isCalendar = false;
-      });
-    }
-
-    void submit() {
-      DateTime timeToReturn = DateTime(_datePicked.year, _datePicked.month,
-          _datePicked.day, _timePicked.hour, _timePicked.minute, 0, 0);
-      print("Returned time $timeToReturn");
-
-      widget.onSubmit(timeToReturn);
-    }
-
-    void _onDatePicked(DateTime date) {
-      setState(() {
-        _datePicked = date;
-      });
-    }
-
-    void _onTimePicked(DateTime time) {
-      setState(() {
-        print("pressed a time $time");
-        _timePicked = time;
-      });
-    }
-
-    Widget datePickerColumn() {
-      return Column(children: [
-        ModalHeader(text: "Set Date"),
-        _isCalendar
-            ? DatePicker(
-                onDateChange: _onDatePicked,
-              )
-            : TimePicker(),
-        NextButton(
-          text: "Next",
-          onSubmit: shiftScreen,
-        )
-      ]);
-    }
-
-    Widget timePickerColumn() {
-      return Column(children: [
-        ModalHeader(text: "Set Time"),
-        TimePicker(
-          onTimeChange: _onTimePicked,
-        ),
-        NextButton(
-          text: "Done",
-          onSubmit: submit,
-        )
-      ]);
-    }
-
-    return Flexible(
-        child: Container(
-            decoration: BoxDecoration(
-                border: Border.all(width: 1.0, color: Colour.blue.color),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
-                color: Colors.white),
-            child: _isCalendar ? datePickerColumn() : timePickerColumn()));
-  }
-}
-
 class DatePicker extends StatefulWidget {
   final Function onDateChange;
   const DatePicker({this.onDateChange});
@@ -152,13 +71,7 @@ class _DatePickerState extends State<DatePicker> {
     );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        children: [
-          // _months(),
-          // _days(),
-          _calendarCarouselNoHeader,
-        ],
-      ),
+      child: _calendarCarouselNoHeader,
     );
   }
 }
@@ -256,5 +169,77 @@ class NextButton extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class DateTimeModal extends StatefulWidget {
+  final Function onSubmit;
+  const DateTimeModal({this.onSubmit});
+  @override
+  _DateTimeModalState createState() => _DateTimeModalState();
+}
+
+class _DateTimeModalState extends State<DateTimeModal> {
+  bool _isCalendar = true;
+  DateTime _datePicked = DateTime.now();
+  DateTime _timePicked = DateTime.now();
+
+  @override
+  Widget build(Object context) {
+    void shiftScreen() {
+      setState(() {
+        _isCalendar = false;
+      });
+    }
+
+    void submit() {
+      DateTime timeToReturn = DateTime(_datePicked.year, _datePicked.month,
+          _datePicked.day, _timePicked.hour, _timePicked.minute, 0, 0);
+      print("Returned time $timeToReturn");
+
+      widget.onSubmit(timeToReturn);
+    }
+
+    void _onDatePicked(DateTime date) {
+      setState(() {
+        _datePicked = date;
+      });
+    }
+
+    void _onTimePicked(DateTime time) {
+      setState(() {
+        _timePicked = time;
+      });
+    }
+
+    Widget datePickerColumn() {
+      return Column(children: [
+        ModalHeader(text: "Set Date"),
+        _isCalendar
+            ? DatePicker(
+                onDateChange: _onDatePicked,
+              )
+            : TimePicker(),
+        NextButton(
+          text: "Next",
+          onSubmit: shiftScreen,
+        )
+      ]);
+    }
+
+    Widget timePickerColumn() {
+      return Column(children: [
+        ModalHeader(text: "Set Time"),
+        TimePicker(
+          onTimeChange: _onTimePicked,
+        ),
+        NextButton(
+          text: "Done",
+          onSubmit: submit,
+        )
+      ]);
+    }
+
+    return  _isCalendar ? datePickerColumn() : timePickerColumn();
   }
 }
