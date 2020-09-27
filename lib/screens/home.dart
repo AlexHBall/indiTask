@@ -19,7 +19,8 @@ class HomeScreen extends StatelessWidget {
               listener: (context, state) {},
               builder: (context, state) {
                 if (state is TasksLoaded) {
-                  if (state.tasks.length == 0) {
+                  int l = state.tasks.where((element) => element.completed == 0).length;
+                  if (l == 0) {
                     return InitialScreen();
                   } else {
                     return Dashboard();

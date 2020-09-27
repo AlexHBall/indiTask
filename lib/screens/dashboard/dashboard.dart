@@ -80,8 +80,8 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
         currentTask -= 1;
       }
       if (incompleteTasks.length == 0) {
-        incompleteTasks.add(Task("Please add a task", "09-25-2020", 50, 0));
-        currentTask = 0;
+        // incompleteTasks.add(Task("Please add a task", "09-25-2020", 50, 0));
+        // currentTask = 0;
         BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.add));
       }
     });

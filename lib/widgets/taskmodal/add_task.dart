@@ -487,6 +487,13 @@ class _AddTaskState extends State<AddTask> {
     }
   }
 
+  int toNearestFive(int x) {
+    double rem = x.toDouble() % 5;
+
+    double rounded = (rem < 2.5) ? x-rem : x + rem;
+    return rounded.round();
+  }
+
   @override
   void initState() {
     task = Task("", dueDate.toString(), 100, 0);
@@ -494,7 +501,8 @@ class _AddTaskState extends State<AddTask> {
     descriptionCtrl = TextEditingController();
     dateCtrl = TextEditingController();
     inputRowState = AddTaskState.text;
-    dueDate = new DateTime(dueDate.year, dueDate.month, dueDate.day + 1,dueDate.hour,dueDate.minute);
+    int roundedMins = toNearestFive(dueDate.minute);
+    dueDate = new DateTime(dueDate.year, dueDate.month, dueDate.day + 1,dueDate.hour,roundedMins);
     super.initState();
   }
 
