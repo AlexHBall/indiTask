@@ -4,7 +4,6 @@ import 'package:equatable/equatable.dart';
 // ignore: must_be_immutable
 class Task extends Equatable {
   DateFormat daysFormat = DateFormat("MM-dd-yyyy");
-
   int _id;
   String _description;
   String _dueDate;
@@ -34,7 +33,7 @@ class Task extends Equatable {
   }
 
   set cost(int cost) {
-    this.cost = cost;
+    this._cost = cost;
   }
 
   set hasAlarm(int alarmStatus) {
