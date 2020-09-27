@@ -26,15 +26,15 @@ class _DateTimeModalState extends State<DateTimeModal> {
     }
 
     void submit() {
-      print("Date $_timePicked");
       DateTime timeToReturn = DateTime(_datePicked.year, _datePicked.month,
           _datePicked.day, _timePicked.hour, _timePicked.minute, 0, 0);
+      print("Returned time $timeToReturn");
+
       widget.onSubmit(timeToReturn);
     }
 
     void _onDatePicked(DateTime date) {
       setState(() {
-        print("pressed a day $date");
         _datePicked = date;
       });
     }
@@ -42,7 +42,7 @@ class _DateTimeModalState extends State<DateTimeModal> {
     void _onTimePicked(DateTime time) {
       setState(() {
         print("pressed a time $time");
-        _datePicked = time;
+        _timePicked = time;
       });
     }
 
