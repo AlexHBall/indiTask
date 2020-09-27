@@ -7,17 +7,6 @@ class HeaderRow extends StatelessWidget {
       padding: const EdgeInsets.only(left: 40.0, right: 15.0, top: 40.0),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Image.asset('assets/images/ribbon.png'),
-        MaterialButton(
-          onPressed: () {},
-          color: Colour.blue.color,
-          textColor: Colors.white,
-          child: Icon(
-            Icons.settings,
-            size: 20,
-          ),
-          padding: EdgeInsets.all(10),
-          shape: CircleBorder(),
-        )
       ]),
     );
   }

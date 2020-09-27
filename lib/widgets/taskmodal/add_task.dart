@@ -250,7 +250,12 @@ class TaskInfo extends StatefulWidget {
 
 class TaskInfoState extends State<TaskInfo> {
   TaskInfoState();
-  String _text = "100";
+  String _text;
+  @override
+  void initState() {
+    _text = widget.cost.toString();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -289,12 +294,6 @@ class TaskInfoState extends State<TaskInfo> {
           padding: EdgeInsets.all(8.0),
           onPressed: () {
             widget.notifyParentAlarm();
-            //TODO: change _text to color
-            // setState(() {
-            //   (widget.inputState != AddTaskState.cost)
-            //       ? _text = "Done"
-            //       : _text = widget.cost.toString();
-            // });
           },
           child: Icon(Icons.add_alarm, color: Colour.lightBlue.color),
         ),
@@ -345,7 +344,8 @@ class TaskInfoState extends State<TaskInfo> {
 
 class AddTaskButton extends StatelessWidget {
   final Function onSumbit;
-  AddTaskButton(this.onSumbit);
+  final bool isEdit;
+  AddTaskButton(this.onSumbit, this.isEdit);
 
   @override
   Widget build(BuildContext context) {
@@ -363,7 +363,7 @@ class AddTaskButton extends StatelessWidget {
             splashColor: Colors.white,
             child: Padding(
               padding: const EdgeInsets.all(22.0),
-              child: Text("Add Task",
+              child: Text((isEdit) ? "Update Task" : "Add Task",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 18,
@@ -380,11 +380,10 @@ class AddTaskButton extends StatelessWidget {
 class AddTask extends StatefulWidget {
   final bool costToggled;
   final bool isModal;
-  AddTask({
-    Key key,
-    @required this.costToggled,
-    @required this.isModal,
-  }) : super(key: key);
+  final Task task;
+  AddTask(
+      {Key key, @required this.costToggled, @required this.isModal, this.task})
+      : super(key: key);
 
   @override
   _AddTaskState createState() => _AddTaskState();
@@ -399,6 +398,7 @@ class _AddTaskState extends State<AddTask> {
   DateTime dueDate = DateTime.now();
   bool selectingDate = false;
   Task task;
+  bool isEdit = false;
   String _formatDateString() {
     final DateFormat firstFormatter = DateFormat('dd MMM');
     String partOne = firstFormatter.format(dueDate);
@@ -466,7 +466,12 @@ class _AddTaskState extends State<AddTask> {
       if (!widget.isModal) {
         BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
       }
-      BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(task));
+      if (isEdit) {
+        BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
+        Navigator.pop(context);
+      } else {
+        BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(task));
+      }
       descriptionCtrl.clear();
     }
   }
@@ -490,19 +495,25 @@ class _AddTaskState extends State<AddTask> {
   int toNearestFive(int x) {
     double rem = x.toDouble() % 5;
 
-    double rounded = (rem < 2.5) ? x-rem : x + rem;
+    double rounded = (rem < 2.5) ? x - rem : x + rem;
     return rounded.round();
   }
 
   @override
   void initState() {
-    task = Task("", dueDate.toString(), 100, 0);
+    if (widget.task != null) {
+      task = widget.task;
+      isEdit = true;
+    } else {
+      task = Task("", dueDate.toString(), 100, 0);
+    }
     costButtonText = task.cost.toString();
-    descriptionCtrl = TextEditingController();
-    dateCtrl = TextEditingController();
+    descriptionCtrl = TextEditingController(text: task.description);
+    dateCtrl = TextEditingController(text: task.getDateString());
     inputRowState = AddTaskState.text;
     int roundedMins = toNearestFive(dueDate.minute);
-    dueDate = new DateTime(dueDate.year, dueDate.month, dueDate.day + 1,dueDate.hour,roundedMins);
+    dueDate = new DateTime(dueDate.year, dueDate.month, dueDate.day + 1,
+        dueDate.hour, roundedMins);
     super.initState();
   }
 
@@ -518,7 +529,7 @@ class _AddTaskState extends State<AddTask> {
         cost: costButtonText,
         date: _formatDateString(),
       ),
-      AddTaskButton(_addTask)
+      AddTaskButton(_addTask, isEdit)
     ];
 
     return Container(

@@ -2,7 +2,8 @@ part of 'dashboard.dart';
 
 class ButtonWrapper extends StatelessWidget {
   final Widget child;
-  const ButtonWrapper({this.child});
+  final Function onPress;
+  const ButtonWrapper({@required this.child, @required this.onPress});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class ButtonWrapper extends StatelessWidget {
         // color: Colors.white,
         textColor: Colors.white,
         padding: EdgeInsets.all(8.0),
-        onPressed: () {},
+        onPressed: onPress,
         child: child,
       ),
     );
@@ -24,6 +25,8 @@ class ButtonWrapper extends StatelessWidget {
 }
 
 class EditButton extends StatelessWidget {
+  final Function onPress;
+  const EditButton({@required this.onPress});
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
@@ -31,6 +34,7 @@ class EditButton extends StatelessWidget {
         "Edit",
         style: TextStyle(fontSize: 8.0, fontWeight: FontWeight.w600),
       ),
+      onPress: onPress,
     );
   }
 }
@@ -38,7 +42,10 @@ class EditButton extends StatelessWidget {
 class AlarmButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ButtonWrapper(child: Icon(Icons.add_alarm, size: 12));
+    return ButtonWrapper(
+      child: Icon(Icons.add_alarm, size: 12),
+      onPress: () {},
+    );
   }
 }
 
@@ -46,12 +53,14 @@ class TaskCard extends StatelessWidget {
   final int cost;
   final String description;
   final Color backgroundColor;
+  final Function onEditPress;
 
   TaskCard(
       {Key key,
       @required this.cost,
       @required this.description,
-      @required this.backgroundColor})
+      @required this.backgroundColor,
+      @required this.onEditPress})
       : super(key: key);
 
   Widget score() {
@@ -78,7 +87,7 @@ class TaskCard extends StatelessWidget {
         padding: const EdgeInsets.only(left: 17.0, top: 12.0),
         child: Row(
           children: [
-            EditButton(),
+            EditButton(onPress: onEditPress,),
             SizedBox(
               width: 3.0,
             ),

@@ -33,6 +33,10 @@ class Task extends Equatable {
     return date;
   }
 
+  String getDateString() {
+    return _dueDate;
+  }
+
   set description(String description) {
     this._description = description;
   }

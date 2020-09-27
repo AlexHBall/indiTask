@@ -31,37 +31,6 @@ class StatisticsHeader extends StatelessWidget {
     );
   }
 
-  Widget filterBox() {
-    return Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          border: Border.all(width: 1.0, color: Colour.blue.color),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                "All Time",
-                style: TextStyle(
-                    color: Colour.blue.color,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12.0),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Image.asset(
-                "assets/images/filterSelector.png",
-                scale: 1.2,
-              ),
-            ],
-          ),
-        ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -75,7 +44,6 @@ class StatisticsHeader extends StatelessWidget {
             SizedBox(
               width: 18.0,
             ),
-            filterBox(),
           ],
         )
       ]),

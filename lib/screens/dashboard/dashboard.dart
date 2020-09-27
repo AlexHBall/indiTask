@@ -43,6 +43,24 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
   List<TaskCard> taskCards;
   PageController pageController;
 
+  void editTask() async {
+    print("hello from the other side");
+    await showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return BlocProvider.value(
+            value: BlocProvider.of<TaskBloc>(context),
+            child: AddTask(
+              costToggled: false,
+              isModal: true,
+              task: incompleteTasks[currentTask],
+            ),
+          );
+        });
+    _handleAddedTasks();
+    // incompleteTasks[currentTask];
+  }
+
   List<TaskCard> fillTaskCards(tasks) {
     List<Color> colors = [
       Colour.blue.color,
@@ -53,16 +71,20 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
     taskCards = <TaskCard>[];
     if (incompleteTasks.length < 1) {
       TaskCard taskCard = TaskCard(
-          cost: 0,
-          description: "Please add a task",
-          backgroundColor: colors[0]);
+        cost: 0,
+        description: "Please add a task",
+        backgroundColor: colors[0],
+        onEditPress: () => {},
+      );
       taskCards.add(taskCard);
     } else {
       for (var i = 0; i < incompleteTasks.length; i++) {
         TaskCard taskCard = TaskCard(
-            cost: incompleteTasks[i].cost,
-            description: incompleteTasks[i].description,
-            backgroundColor: colors[i % 4]);
+          cost: incompleteTasks[i].cost,
+          description: incompleteTasks[i].description,
+          backgroundColor: colors[i % 4],
+          onEditPress: editTask,
+        );
         taskCards.add(taskCard);
       }
     }
@@ -80,8 +102,6 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
         currentTask -= 1;
       }
       if (incompleteTasks.length == 0) {
-        // incompleteTasks.add(Task("Please add a task", "09-25-2020", 50, 0));
-        // currentTask = 0;
         BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.add));
       }
     });
@@ -97,7 +117,6 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
     setState(() {
       incompleteTasks =
           widget.tasks.where((element) => element.completed == 0).toList();
-      currentTask = 0;
       taskCards = fillTaskCards(incompleteTasks);
     });
   }
