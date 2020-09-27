@@ -93,6 +93,7 @@ class RemaingingTimeWidget extends StatelessWidget {
   const RemaingingTimeWidget(this.timeLeft);
   @override
   Widget build(BuildContext context) {
+    print("time left $timeLeft");
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Container(
@@ -112,7 +113,7 @@ class RemaingingTimeWidget extends StatelessWidget {
               ),
             ),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
+                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 6.0),
                 child: TimeRemaining(
                   endTime: timeLeft,
                 )),

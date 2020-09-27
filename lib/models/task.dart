@@ -1,9 +1,10 @@
+import 'package:inditask/doa/doa.dart';
 import 'package:intl/intl.dart';
 import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
 class Task extends Equatable {
-  DateFormat daysFormat = DateFormat("MM-dd-yyyy");
+  DateFormat daysFormat = DateFormat("yyyy-MM-dd H:m:s");
   int _id;
   String _description;
   String _dueDate;
@@ -16,7 +17,6 @@ class Task extends Equatable {
 
   int get id => _id;
   String get description => _description;
-  String get date => _dueDate;
   int get cost => _cost;
   int get alarm => _hasAlarm;
 
@@ -24,8 +24,13 @@ class Task extends Equatable {
     this._description = newTask;
   }
 
-  set date(String newDate) {
-    this._dueDate = date;
+  set date(DateTime newDate) {
+    this._dueDate = daysFormat.format(newDate);
+  }
+
+  DateTime getDate() {
+    DateTime date = daysFormat.parse(_dueDate);
+    return date;
   }
 
   set description(String description) {
@@ -70,10 +75,6 @@ class Task extends Equatable {
     this._cost = map['cost'];
     this._hasAlarm = map['hasAlarm'];
     this._completed = map['softDelete'];
-  }
-
-  DateTime getDateTime() {
-    return daysFormat.parse(date);
   }
 
   @override

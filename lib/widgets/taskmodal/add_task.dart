@@ -460,9 +460,8 @@ class _AddTaskState extends State<AddTask> {
   void _addTask() {
     String desc = descriptionCtrl.text;
     if (desc.isNotEmpty) {
-      DateFormat daysFormat = DateFormat("MM-dd-yyyy");
-      String date = daysFormat.format(dueDate);
-      task.date = date;
+      task.date = dueDate;
+      task.description = desc;
       print('Adding Task $task');
       if (!widget.isModal) {
         BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
@@ -495,8 +494,7 @@ class _AddTaskState extends State<AddTask> {
     descriptionCtrl = TextEditingController();
     dateCtrl = TextEditingController();
     inputRowState = AddTaskState.text;
-    dueDate = new DateTime(dueDate.year, dueDate.month, dueDate.day + 1);
-
+    dueDate = new DateTime(dueDate.year, dueDate.month, dueDate.day + 1,dueDate.hour,dueDate.minute);
     super.initState();
   }
 

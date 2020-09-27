@@ -117,6 +117,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime as = incompleteTasks[currentTask].getDate();
     taskCards = fillTaskCards(incompleteTasks);
     return Scaffold(
       backgroundColor: Colour.backGrey.color,
@@ -125,14 +126,12 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
           HeaderRow(),
           TasksRow(),
           CardView(taskCards, pageController, _onPageChanged, currentTask),
-          RemaingingTimeWidget(incompleteTasks[currentTask].getDateTime()),
+          RemaingingTimeWidget(as),
           CompleteWidget(_onCompleteSwipe),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.add));
-
           await showModalBottomSheet(
               context: context,
               builder: (BuildContext bc) {
@@ -145,7 +144,6 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
                 );
               });
           _handleAddedTasks();
-          // Add your onPressed code here!
         },
         child: Icon(Icons.add),
         backgroundColor: Colour.blue.color,
