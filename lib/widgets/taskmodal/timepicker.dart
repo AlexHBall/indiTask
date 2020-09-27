@@ -61,12 +61,12 @@ class _DatePickerState extends State<DatePicker> {
       ),
       todayButtonColor: Colors.white,
       todayBorderColor: Colors.white,
-      minSelectedDate: _currentDate.subtract(Duration(days: 360)),
+      minSelectedDate: _currentDate,
       maxSelectedDate: _currentDate.add(Duration(days: 360)),
       inactiveDaysTextStyle: TextStyle(
-        color: Colors.tealAccent,
-        fontSize: 24,
-      ),
+          color: Color(0xFF95989A), fontSize: 24, fontFamily: "Roboto"),
+      inactiveWeekendTextStyle: TextStyle(
+          color: Color(0xFF95989A), fontSize: 24, fontFamily: "Roboto"),
       onCalendarChanged: (DateTime date) {},
     );
     return Padding(
@@ -115,29 +115,27 @@ class ModalHeader extends StatelessWidget {
   const ModalHeader({this.text});
   @override
   Widget build(BuildContext context) {
-    {
-      return Container(
-        height: 56,
-        width: 500,
-        decoration: BoxDecoration(
-          color: Colour.blue.color,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+    return Container(
+      height: 56,
+      width: 500,
+      decoration: BoxDecoration(
+        color: Colour.blue.color,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        child: Text(
+          text,
+          style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'Roboto',
+              fontSize: 18,
+              fontWeight: FontWeight.w700),
+          textAlign: TextAlign.center,
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          child: Text(
-            text,
-            style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Roboto',
-                fontSize: 18,
-                fontWeight: FontWeight.w700),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      );
-    }
+      ),
+    );
   }
 }
 
@@ -202,7 +200,10 @@ class _DateTimeModalState extends State<DateTimeModal> {
 
     void _onDatePicked(DateTime date) {
       setState(() {
-        _datePicked = date;
+        var diff = date.difference(DateTime.now()).inDays;
+        if (diff < 0) {
+          _datePicked = date;
+        } else {}
       });
     }
 
@@ -213,18 +214,20 @@ class _DateTimeModalState extends State<DateTimeModal> {
     }
 
     Widget datePickerColumn() {
-      return Column(children: [
-        ModalHeader(text: "Set Date"),
-        _isCalendar
-            ? DatePicker(
-                onDateChange: _onDatePicked,
-              )
-            : TimePicker(),
-        NextButton(
-          text: "Next",
-          onSubmit: shiftScreen,
-        )
-      ]);
+      return Container(
+        child: Column(children: [
+          ModalHeader(text: "Set Date"),
+          _isCalendar
+              ? DatePicker(
+                  onDateChange: _onDatePicked,
+                )
+              : TimePicker(),
+          NextButton(
+            text: "Next",
+            onSubmit: shiftScreen,
+          )
+        ]),
+      );
     }
 
     Widget timePickerColumn() {
@@ -240,6 +243,6 @@ class _DateTimeModalState extends State<DateTimeModal> {
       ]);
     }
 
-    return  _isCalendar ? datePickerColumn() : timePickerColumn();
+    return _isCalendar ? datePickerColumn() : timePickerColumn();
   }
 }

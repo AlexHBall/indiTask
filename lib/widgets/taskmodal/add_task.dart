@@ -534,18 +534,26 @@ class _AddTaskState extends State<AddTask> {
 
     return Container(
         height: 527,
+        width: 375,
         decoration: BoxDecoration(
             border: Border.all(width: 1.0, color: Colour.blue.color),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10), topRight: Radius.circular(10)),
             color: Colors.white),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 28.0, right: 28.0),
-          child: selectingDate
-              ? DateTimeModal(
-                  onSubmit: _updateDate,
-                )
-              : Column(children: inputWidgets),
-        ));
+        // child: Padding(
+        //   padding: const EdgeInsets.only(left: 28.0, right: 28.0),
+        //   // child: selectingDate
+        //   //     ? DateTimeModal(
+        //   //         onSubmit: _updateDate,
+        //   //       )
+        //   //     : Column(children: inputWidgets),
+        child: selectingDate
+            ? DateTimeModal(
+                onSubmit: _updateDate,
+              )
+            : Padding(
+                padding: const EdgeInsets.only(left: 28.0, right: 28.0),
+                child: Column(children: inputWidgets),
+              ));
   }
 }
