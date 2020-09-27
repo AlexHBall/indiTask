@@ -101,7 +101,7 @@ class RemaingingTimeWidget extends StatelessWidget {
               ),
             ),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 6.0),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6.0),
                 child: TimeRemaining(
                   endTime: timeLeft,
                 )),
