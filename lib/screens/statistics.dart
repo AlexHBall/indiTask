@@ -177,7 +177,8 @@ class StatisticsBody extends StatelessWidget {
   final int totalPoints;
   final int percentComplete;
   final int percentLost;
-  StatisticsBody(this.totalTasks, this.totalPoints, this.percentComplete,this.percentLost);
+  StatisticsBody(this.totalTasks, this.totalPoints, this.percentComplete,
+      this.percentLost);
 
   Widget statsLeftCol() {
     return Column(
@@ -225,8 +226,9 @@ class StatisticsBody extends StatelessWidget {
             ),
           ),
         ]),
-        floatingActionButton: MaterialButton(
-          color: Colors.red,
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.arrow_back),
+          backgroundColor: Colour.blue.color,
           onPressed: () {
             BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
           },
@@ -241,8 +243,8 @@ class StatsDash extends StatelessWidget {
       if (state is StatsLoading) {
         return CircleIndicator();
       } else if (state is StatsLoaded) {
-        return StatisticsBody(
-            state.tasksEntered, state.totalPoints, state.percentageComplete, state.percentageLoss);
+        return StatisticsBody(state.tasksEntered, state.totalPoints,
+            state.percentageComplete, state.percentageLoss);
       }
       return CircleIndicator();
     });

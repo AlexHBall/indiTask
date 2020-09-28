@@ -184,11 +184,6 @@ class _DateTimeModalState extends State<DateTimeModal> {
 
   @override
   Widget build(Object context) {
-    void shiftScreen() {
-      setState(() {
-        _isCalendar = false;
-      });
-    }
 
     void submit() {
       DateTime timeToReturn = DateTime(_datePicked.year, _datePicked.month,
@@ -201,6 +196,7 @@ class _DateTimeModalState extends State<DateTimeModal> {
     void _onDatePicked(DateTime date) {
       setState(() {
         _datePicked = date;
+        _isCalendar = false;
       });
     }
 
@@ -221,7 +217,7 @@ class _DateTimeModalState extends State<DateTimeModal> {
               : TimePicker(),
           NextButton(
             text: "Next",
-            onSubmit: shiftScreen,
+            onSubmit: (){},
           )
         ]),
       );
