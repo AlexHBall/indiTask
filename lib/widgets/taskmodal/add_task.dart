@@ -9,7 +9,8 @@ import 'package:intl/intl.dart';
 
 class TaskInput extends StatelessWidget {
   final TextEditingController descriptionCtrl;
-  TaskInput(this.descriptionCtrl);
+  final bool focus;
+  TaskInput(this.descriptionCtrl,this.focus);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class TaskInput extends StatelessWidget {
         style: style,
         controller: descriptionCtrl,
         textAlign: TextAlign.left,
-        autofocus: true,
+        autofocus: focus,
       ),
     );
   }
@@ -394,6 +395,7 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
+  bool visited = false;
   String costButtonText;
   int alarmSelected = -1;
   TextEditingController descriptionCtrl;
@@ -498,7 +500,7 @@ class _AddTaskState extends State<AddTask> {
 
   _getInputRow() {
     if (inputRowState == AddTaskState.text) {
-      return TaskInput(descriptionCtrl);
+      return TaskInput(descriptionCtrl,!visited);
     } else if (inputRowState == AddTaskState.alarm) {
       return AlarmInput(
         updateAlarm: _updateAlarm,
@@ -563,7 +565,7 @@ class _AddTaskState extends State<AddTask> {
       ),
       AddTaskButton(_addTask, isEdit)
     ];
-
+    visited = true;
     return Container(
         height: 527,
         width: 375,
