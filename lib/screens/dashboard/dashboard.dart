@@ -97,6 +97,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
       BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
       incompleteTasks =
           widget.tasks.where((element) => element.completed == 0).toList();
+
       if (currentTask == incompleteTasks.length) {
         currentTask -= 1;
       }

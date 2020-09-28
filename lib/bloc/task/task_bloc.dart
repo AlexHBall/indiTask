@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:inditask/models/task.dart';
 import 'package:inditask/repository/task_repository.dart';
@@ -32,7 +32,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   Stream<TaskState> _mapTasksAddedToState(AddTaskEvent event) async* {
     if (state is TasksLoaded) {
-      print('saving');
       final List<Task> updatedTodos = List.from((state as TasksLoaded).tasks)
         ..add(event.task);
       _saveTask(event.task);
@@ -44,6 +43,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Stream<TaskState> _mapTaskEditedToState(EditTaskEvent event) async* {
+    yield TaskLoading();
     if (state is TasksLoaded) {
       final List<Task> updatedTasks = (state as TasksLoaded).tasks.map((task) {
         return task.id == event.editedTask.id ? event.editedTask : task;

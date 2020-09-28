@@ -42,27 +42,19 @@ class StatBloc extends Bloc<StatEvent, StatState> {
         int incompletePoints = tasks
             .where((task) => task.completed == 0)
             .fold(0, (sum, item) => sum + item.cost);
-            
-        int percentCompleted = ((totalTasksCompleted/tasksEntered)*100).floor();
-        int percentLoss = ((incompletePoints / totalPoints)*100).floor();
-        print("task length $tasksEntered");
-        print("task complete length $totalTasksCompleted");
-        print("total points $totalPoints");
-        print("total incomplete points $incompletePoints");
-        print("percent complete $percentCompleted");
-        print("overdue points / complete points $percentLoss");
+
+        int percentCompleted =
+            ((totalTasksCompleted / tasksEntered) * 100).floor();
+        int percentLoss = ((incompletePoints / totalPoints) * 100).floor();
         yield StatsLoaded(
-            tasksEntered,
-            totalPoints,
-            percentCompleted,
-            percentLoss
-        );
+            tasksEntered, totalPoints, percentCompleted, percentLoss);
       }
     }
   }
 
   @override
   Future<void> close() {
+    print("statbloc closing");
     taskSubscription.cancel();
     return super.close();
   }
