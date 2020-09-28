@@ -10,8 +10,7 @@ ThemeData basicTheme() {
             color: Colour.blue.color,
             fontFamily: fontFamily,
             fontSize: 18,
-            fontStyle: FontStyle.normal
-        ),
+            fontStyle: FontStyle.normal),
         bodyText2: base.bodyText2.copyWith(
             color: Colour.white.color,
             fontFamily: fontFamily,
@@ -20,6 +19,9 @@ ThemeData basicTheme() {
   }
 
   final ThemeData base = ThemeData.light();
+
   return base.copyWith(
-      textTheme: _basicTextTheme(base.textTheme),);
+    textTheme: _basicTextTheme(base.textTheme),
+    canvasColor: Colors.transparent,
+  );
 }
