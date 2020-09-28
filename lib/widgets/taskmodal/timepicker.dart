@@ -23,21 +23,21 @@ class _DatePickerState extends State<DatePicker> {
         this.setState(() => _currentDate = date);
       },
       weekdayTextStyle: TextStyle(
-          color: Colour.blue.color, fontSize: 20, fontFamily: "Roboto"),
+          color: Colour.blue.color, fontSize: 18, fontFamily: "Monoserrat"),
       weekDayFormat: WeekdayFormat.short,
       daysTextStyle: TextStyle(
-          color: Color(0xFF95989A), fontSize: 24, fontFamily: "Roboto"),
+          color: Color(0xFF95989A), fontSize: 18, fontFamily: "Monoserrat"),
       weekendTextStyle: TextStyle(
-          color: Color(0xFF95989A), fontSize: 24, fontFamily: "Roboto"),
+          color: Color(0xFF95989A), fontSize: 18, fontFamily: "Monoserrat"),
       prevDaysTextStyle: TextStyle(
-        fontSize: 24,
+        fontSize: 18,
         color: Color(0xFFE5E5E5),
       ),
       nextDaysTextStyle: TextStyle(
-        fontSize: 24,
+        fontSize: 18,
         color: Color(0xFFE5E5E5),
       ),
-      selectedDayTextStyle: TextStyle(color: Colors.white, fontSize: 24),
+      selectedDayTextStyle: TextStyle(color: Colors.white, fontSize: 18),
       selectedDayButtonColor: Colour.blue.color,
       selectedDayBorderColor: Colour.blue.color,
       daysHaveCircularBorder: true,
@@ -50,23 +50,23 @@ class _DatePickerState extends State<DatePicker> {
       showHeader: true,
       headerTextStyle: TextStyle(
         color: Colour.blue.color,
-        fontSize: 24,
+        fontSize: 18,
         fontWeight: FontWeight.w500,
       ),
       showHeaderButton: false,
       todayTextStyle: TextStyle(
         color: Color(0xFF95989A),
-        fontSize: 24,
-        fontFamily: "Roboto",
+        fontSize: 18,
+        fontFamily: "Monoserrat",
       ),
       todayButtonColor: Colors.white,
       todayBorderColor: Colors.white,
-      minSelectedDate: _currentDate,
+      minSelectedDate: _currentDate.subtract(Duration(days: 1)),
       maxSelectedDate: _currentDate.add(Duration(days: 360)),
       inactiveDaysTextStyle: TextStyle(
-          color: Color(0xFF95989A), fontSize: 24, fontFamily: "Roboto"),
+          color: Color(0xFF95989A), fontSize: 18, fontFamily: "Monoserrat"),
       inactiveWeekendTextStyle: TextStyle(
-          color: Color(0xFF95989A), fontSize: 24, fontFamily: "Roboto"),
+          color: Color(0xFF95989A), fontSize: 18, fontFamily: "Monoserrat"),
       onCalendarChanged: (DateTime date) {},
     );
     return Padding(
@@ -89,12 +89,12 @@ class TimePicker extends StatelessWidget {
       child: Center(
         child: TimePickerSpinner(
           normalTextStyle: TextStyle(
-              fontSize: 50, color: Colour.grey.color, fontFamily: "Roboto"),
+              fontSize: 50, color: Colour.grey.color, fontFamily: "Monoserrat"),
           highlightedTextStyle: TextStyle(
             fontSize: 70,
             color: Colour.blue.color,
             fontWeight: FontWeight.w700,
-            fontFamily: "Roboto",
+            fontFamily: "Monoserrat",
             decoration: TextDecoration.underline,
           ),
           spacing: 30,
@@ -146,7 +146,7 @@ class NextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.only(top: 5),
       child: ButtonTheme(
         minWidth: 140.0,
         height: 56,
