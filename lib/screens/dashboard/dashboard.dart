@@ -44,7 +44,6 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
   PageController pageController;
 
   void editTask() async {
-    print("hello from the other side");
     await showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
@@ -136,7 +135,6 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime as = incompleteTasks[currentTask].getDate();
     taskCards = fillTaskCards(incompleteTasks);
     return Scaffold(
       backgroundColor: Colour.backGrey.color,
@@ -145,7 +143,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
           HeaderRow(),
           TasksRow(),
           CardView(taskCards, pageController, _onPageChanged, currentTask),
-          RemaingingTimeWidget(as),
+          RemaingingTimeWidget(incompleteTasks[currentTask].getDate()),
           CompleteWidget(_onCompleteSwipe),
         ],
       ),
@@ -160,6 +158,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
                     costToggled: false,
                     isModal: true,
                   ),
+                  // child: LocalNotificationScreen(),
                 );
               });
           _handleAddedTasks();

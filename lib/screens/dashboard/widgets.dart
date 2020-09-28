@@ -33,8 +33,7 @@ class TasksRow extends StatelessWidget {
             ),
             MaterialButton(
               onPressed: () {
-            BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.stats));
-
+                BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.stats));
               },
               textColor: Colors.white,
               child: Image.asset('assets/images/listicon.png'),
@@ -60,8 +59,9 @@ class TimeRemaining extends StatefulWidget {
 class _TimeRemainingState extends State<TimeRemaining> {
   @override
   Widget build(BuildContext context) {
+    int time = widget.endTime.millisecondsSinceEpoch;
     return CountdownTimer(
-      endTime: widget.endTime.millisecondsSinceEpoch,
+      endTime: time,
       defaultDays: "==",
       defaultHours: "--",
       defaultMin: "**",
@@ -81,7 +81,6 @@ class RemaingingTimeWidget extends StatelessWidget {
   const RemaingingTimeWidget(this.timeLeft);
   @override
   Widget build(BuildContext context) {
-    print("time left $timeLeft");
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Container(
@@ -100,11 +99,13 @@ class RemaingingTimeWidget extends StatelessWidget {
                 size: 24,
               ),
             ),
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6.0),
-                child: TimeRemaining(
-                  endTime: timeLeft,
-                )),
+            Flexible(
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 9, vertical: 6.0),
+                  child: TimeRemaining(
+                    endTime: timeLeft,
+                  )),
+            ),
           ],
         ),
       ),

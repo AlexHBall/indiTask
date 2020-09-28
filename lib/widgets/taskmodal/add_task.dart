@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/models/models.dart';
-import 'package:inditask/utils/colors.dart';
+import 'package:inditask/utils/utils.dart';
 import 'package:inditask/widgets/taskmodal/timepicker.dart';
 import 'package:flutter/material.dart';
 import 'package:inditask/widgets/widgets.dart';
@@ -153,10 +153,11 @@ class _AlarmInputState extends State<AlarmInput> {
   }
 
   int selected;
-
+  bool pressed;
   @override
   void initState() {
     selected = widget.selected;
+    (selected > -1) ? pressed = true : pressed = false;
     super.initState();
   }
 
@@ -181,7 +182,10 @@ class _AlarmInputState extends State<AlarmInput> {
           textColor: (selected == i) ? Colors.white : Colour.lightBlue.color,
           padding: EdgeInsets.all(12.0),
           onPressed: () {
-            widget.updateAlarm(selected);
+            if (i != selected) {
+              widget.updateAlarm(i, true);
+            }
+
             setState(() {
               if (selected == i) {
                 selected = -1;
@@ -399,6 +403,7 @@ class _AddTaskState extends State<AddTask> {
   bool selectingDate = false;
   Task task;
   bool isEdit = false;
+
   String _formatDateString() {
     final DateFormat firstFormatter = DateFormat('dd MMM');
     String partOne = firstFormatter.format(dueDate);
@@ -438,9 +443,12 @@ class _AddTaskState extends State<AddTask> {
     });
   }
 
-  void _updateAlarm(int selected) {
+  void _updateAlarm(int selected, bool pressed) {
     setState(() {
-      alarmSelected = selected;
+      if (pressed) {
+        print("updating alarm $selected");
+        alarmSelected = selected;
+      }
     });
   }
 
@@ -457,6 +465,15 @@ class _AddTaskState extends State<AddTask> {
     _toggleDate();
   }
 
+  void _addNotification() async {
+    List<String> dueTimes = ["24 hrs", "3 hrs", "1hr"];
+    String dueIn = dueTimes[alarmSelected];
+    String desc = task.description;
+    String cost = task.cost.toString();
+    await notificationPlugin.showNotification(
+        "Task Due in $dueIn", "$desc costing $cost");
+  }
+
   void _addTask() {
     String desc = descriptionCtrl.text;
     if (desc.isNotEmpty) {
@@ -470,6 +487,9 @@ class _AddTaskState extends State<AddTask> {
         BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
         Navigator.pop(context);
       } else {
+        if (alarmSelected > -1) {
+          _addNotification();
+        }
         BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(task));
       }
       descriptionCtrl.clear();
@@ -499,8 +519,18 @@ class _AddTaskState extends State<AddTask> {
     return rounded.round();
   }
 
+  onNotificationInLowerVersions(ReceivedNotification receivedNotification) {
+    print('Notification Received ${receivedNotification.id}');
+  }
+
+  onNotificationClick(String payload) {
+    print('Payload $payload');
+  }
+
   @override
   void initState() {
+    super.initState();
+
     if (widget.task != null) {
       task = widget.task;
       isEdit = true;
@@ -514,7 +544,9 @@ class _AddTaskState extends State<AddTask> {
     int roundedMins = toNearestFive(dueDate.minute);
     dueDate = new DateTime(dueDate.year, dueDate.month, dueDate.day + 1,
         dueDate.hour, roundedMins);
-    super.initState();
+    notificationPlugin
+        .setListenerForLowerVersions(onNotificationInLowerVersions);
+    notificationPlugin.setOnNotificationClick(onNotificationClick);
   }
 
   @override

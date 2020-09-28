@@ -165,7 +165,37 @@ class _CountDownState extends State<CountdownTimer> {
     );
     List<Widget> list = [];
     if (diffDate == null) {
-      list.add(widget.emptyWidget);
+      list.add(Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(
+          '${0 ?? widget.defaultDays}',
+          style: _getTextStyle(widget.daysTextStyle),
+        ),
+        Text("day", style: _getTextStyle(widget.daysTextStyle))
+      ]));
+      list.add(inbetween);
+       list.add(Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(
+          '${0 ?? widget.defaultHours}',
+          style: _getTextStyle(widget.hoursTextStyle),
+        ),
+        Text("hrs", style: _getTextStyle(widget.hoursTextStyle))
+      ]));
+      list.add(inbetween);
+       list.add(Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(
+          '${0 ?? widget.defaultMin}',
+          style: _getTextStyle(widget.minTextStyle),
+        ),
+        Text("min", style: _getTextStyle(widget.minTextStyle))
+      ]));
+      list.add(inbetween);
+       list.add(Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(
+          '${0 ?? widget.defaultSec}',
+          style: _getTextStyle(widget.secTextStyle),
+        ),
+        Text("sec", style: _getTextStyle(widget.secTextStyle))
+      ]));
       return list;
     }
     if (diffDate.days != -1) {
