@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 class TaskInput extends StatelessWidget {
   final TextEditingController descriptionCtrl;
   final bool focus;
-  TaskInput(this.descriptionCtrl,this.focus);
+  TaskInput(this.descriptionCtrl, this.focus);
 
   @override
   Widget build(BuildContext context) {
@@ -468,12 +468,16 @@ class _AddTaskState extends State<AddTask> {
   }
 
   void _addNotification() async {
+    List<int> hours = [24, 3, 1];
     List<String> dueTimes = ["24 hrs", "3 hrs", "1hr"];
     String dueIn = dueTimes[alarmSelected];
     String desc = task.description;
     String cost = task.cost.toString();
-    await notificationPlugin.showNotification(
-        "Task Due in $dueIn", "$desc costing $cost");
+    DateTime reminderTime =
+        task.getDate().subtract(Duration(hours: hours[alarmSelected]));
+
+    await notificationPlugin.scheduleNotification(
+        reminderTime, "Task Due in $dueIn", "$desc costing $cost");
   }
 
   void _addTask() {
@@ -500,7 +504,7 @@ class _AddTaskState extends State<AddTask> {
 
   _getInputRow() {
     if (inputRowState == AddTaskState.text) {
-      return TaskInput(descriptionCtrl,!visited);
+      return TaskInput(descriptionCtrl, !visited);
     } else if (inputRowState == AddTaskState.alarm) {
       return AlarmInput(
         updateAlarm: _updateAlarm,
@@ -574,13 +578,6 @@ class _AddTaskState extends State<AddTask> {
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10), topRight: Radius.circular(10)),
             color: Colors.white),
-        // child: Padding(
-        //   padding: const EdgeInsets.only(left: 28.0, right: 28.0),
-        //   // child: selectingDate
-        //   //     ? DateTimeModal(
-        //   //         onSubmit: _updateDate,
-        //   //       )
-        //   //     : Column(children: inputWidgets),
         child: selectingDate
             ? DateTimeModal(
                 onSubmit: _updateDate,

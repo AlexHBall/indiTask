@@ -159,7 +159,7 @@ class NotificationPlugin {
     );
   }
 
-  Future<void> scheduleNotification() async {
+  Future<void> scheduleNotification(DateTime time, String title, String body) async {
     var scheduleNotificationDateTime = DateTime.now().add(Duration(seconds: 5));
     var androidChannelSpecifics = AndroidNotificationDetails(
       'CHANNEL_ID 1',
@@ -188,9 +188,9 @@ class NotificationPlugin {
     );
     await flutterLocalNotificationsPlugin.schedule(
       0,
-      'Test Title',
-      'Test Body',
-      scheduleNotificationDateTime,
+      title,
+      body,
+      time,
       platformChannelSpecifics,
       payload: 'Test Payload',
     );
