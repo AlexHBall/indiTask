@@ -176,7 +176,8 @@ class StatisticsBody extends StatelessWidget {
   final int totalTasks;
   final int totalPoints;
   final int percentComplete;
-  StatisticsBody(this.totalTasks, this.totalPoints, this.percentComplete);
+  final int percentLost;
+  StatisticsBody(this.totalTasks, this.totalPoints, this.percentComplete,this.percentLost);
 
   Widget statsLeftCol() {
     return Column(
@@ -186,7 +187,7 @@ class StatisticsBody extends StatelessWidget {
         SizedBox(
           height: 16.0,
         ),
-        StatisticsCard("Loss/Wage %", "?", "assets/images/rate.png",
+        StatisticsCard("Loss/Wage %", "$percentLost%", "assets/images/rate.png",
             Colour.green.color, 226),
       ],
     );
@@ -241,7 +242,7 @@ class StatsDash extends StatelessWidget {
         return CircleIndicator();
       } else if (state is StatsLoaded) {
         return StatisticsBody(
-            state.tasksEntered, state.totalPoints, state.percentageComplete);
+            state.tasksEntered, state.totalPoints, state.percentageComplete, state.percentageLoss);
       }
       return CircleIndicator();
     });

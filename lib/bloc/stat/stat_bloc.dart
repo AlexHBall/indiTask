@@ -16,7 +16,7 @@ class StatBloc extends Bloc<StatEvent, StatState> {
       : assert(taskBloc != null),
         super(StatsLoading()) {
     void _onTaskStateChange(TaskState state) {
-      print('I am listening for task state changes');
+      print('I am listening for task state changes $state');
       if (state is TasksLoaded) {
         add(StatsUpdated(state.tasks));
       }
@@ -30,20 +30,34 @@ class StatBloc extends Bloc<StatEvent, StatState> {
   @override
   Stream<StatState> mapEventToState(StatEvent event) async* {
     if (event is StatsUpdated) {
-      //TODO: Get loss
-
       List<Task> tasks = event.tasks;
       if (tasks.length == 0) {
-        yield StatsLoaded(0,0,0,0);
+        yield StatsLoaded(0, 0, 0, 0);
       } else {
-      int tasksEntered = tasks.toList().length;
-      int totalTasksCompleted =
-          tasks.where((task) => task.completed == 1).toList().length;
-      int percentageComplete = (totalTasksCompleted / tasksEntered).round();
-      int totalPoints = tasks.toList().fold(0, (sum, item) => sum + item.cost);
-      yield StatsLoaded(tasksEntered, totalPoints, 9, 7);
+        int tasksEntered = tasks.toList().length;
+        int totalTasksCompleted =
+            tasks.where((task) => task.completed == 1).toList().length;
+        int totalPoints =
+            tasks.toList().fold(0, (sum, item) => sum + item.cost);
+        int incompletePoints = tasks
+            .where((task) => task.completed == 0)
+            .fold(0, (sum, item) => sum + item.cost);
+            
+        int percentCompleted = ((totalTasksCompleted/tasksEntered)*100).floor();
+        int percentLoss = ((incompletePoints / totalPoints)*100).floor();
+        print("task length $tasksEntered");
+        print("task complete length $totalTasksCompleted");
+        print("total points $totalPoints");
+        print("total incomplete points $incompletePoints");
+        print("percent complete $percentCompleted");
+        print("overdue points / complete points $percentLoss");
+        yield StatsLoaded(
+            tasksEntered,
+            totalPoints,
+            percentCompleted,
+            percentLoss
+        );
       }
-
     }
   }
 

@@ -83,7 +83,7 @@ class Task extends Equatable {
 
   @override
   String toString() {
-    return "Task with ID [$_id] Description [$_description] date [$_dueDate] cost [$_cost] and alarm [$_hasAlarm]";
+    return "Task ID [$_id] Desc [$_description] date [$_dueDate] cost [$_cost] alarm [$_hasAlarm] comp [$_completed]";
   }
 
   @override

@@ -8,7 +8,7 @@ class TabBloc extends Bloc<TabEvent, AppTab> {
 
   @override
   Stream<AppTab> mapEventToState(TabEvent event) async* {
-    print('tab got event');
+    print('tab got event $event');
     if (event is TabUpdated) {
       yield event.tab;
     }
