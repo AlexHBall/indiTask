@@ -44,7 +44,7 @@ class _DatePickerState extends State<DatePicker> {
       showOnlyCurrentMonthDate: false,
       weekFormat: false,
       firstDayOfWeek: 1,
-      height: 280.0,
+      height: 330.0,
       selectedDateTime: _currentDate,
       customGridViewPhysics: NeverScrollableScrollPhysics(),
       showHeader: true,
@@ -146,7 +146,7 @@ class NextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 40),
+      padding: const EdgeInsets.only(top: 10),
       child: ButtonTheme(
         minWidth: 140.0,
         height: 56,
@@ -200,10 +200,7 @@ class _DateTimeModalState extends State<DateTimeModal> {
 
     void _onDatePicked(DateTime date) {
       setState(() {
-        var diff = date.difference(DateTime.now()).inDays;
-        if (diff < 0) {
-          _datePicked = date;
-        } else {}
+        _datePicked = date;
       });
     }
 
