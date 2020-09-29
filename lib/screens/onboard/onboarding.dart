@@ -17,6 +17,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void _setPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("welcome", true);
+    prefs.setInt("lastAlarmId", 0);
   }
 
   List<Widget> _buildPageIndicator() {

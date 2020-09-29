@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/models/models.dart';
@@ -6,6 +8,7 @@ import 'package:inditask/widgets/taskmodal/timepicker.dart';
 import 'package:flutter/material.dart';
 import 'package:inditask/widgets/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'widgets.dart';
 part 'input_widgets.dart';
@@ -25,7 +28,7 @@ class AddTask extends StatefulWidget {
 class _AddTaskState extends State<AddTask> {
   bool visited = false;
   String costButtonText;
-  int alarmSelected = -1;
+  int alarmSelected;
   TextEditingController descriptionCtrl;
   TextEditingController dateCtrl;
   AddTaskState inputRowState;
@@ -33,8 +36,7 @@ class _AddTaskState extends State<AddTask> {
   bool selectingDate = false;
   Task task;
   bool isEdit = false;
-
- 
+  int previousAlarmId = -1;
 
   void _toggleCost() {
     setState(() {
@@ -70,7 +72,7 @@ class _AddTaskState extends State<AddTask> {
   void _updateAlarm(int selected, bool pressed) {
     setState(() {
       if (pressed) {
-        print("updating alarm $selected");
+        print("updating add task alarm $selected");
         alarmSelected = selected;
       }
     });
@@ -89,7 +91,8 @@ class _AddTaskState extends State<AddTask> {
     _toggleDate();
   }
 
-  void _addNotification() async {
+  void _add(int value) async {
+    task.alarmId = value;
     List<int> hours = [24, 3, 1];
     List<String> dueTimes = ["24 hrs", "3 hrs", "1hr"];
     String dueIn = dueTimes[alarmSelected];
@@ -98,33 +101,51 @@ class _AddTaskState extends State<AddTask> {
     DateTime reminderTime =
         task.getDate().subtract(Duration(hours: hours[alarmSelected]));
 
-    await notificationPlugin.scheduleNotification(
-        reminderTime, "Task Due in $dueIn", "$desc costing $cost");
+    await notificationPlugin.scheduleNotification(task.alarmId, reminderTime,
+        "Task Due in $dueIn", "$desc costing $cost");
+  }
+
+  void _addNotification() async {
+    _getNextAlarmId().then((value) => _add(value));
+  }
+
+  Future<int> _getNextAlarmId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("lastAlarmId") + 1;
+    prefs.setInt("lastAlarmId", id);
+    return id;
   }
 
   void _addTask() {
     String desc = descriptionCtrl.text;
     if (desc.isNotEmpty) {
       task.date = dueDate;
-      task.description = desc;
       task.alarm = alarmSelected;
-      print('Adding Task $task');
-      if (!widget.isModal) {
-        BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
-      }
+      task.description = desc;
+      bool needToSetNotification = task.alarm > -1 ? true : false;
+
       if (isEdit) {
+        bool hasOldNotification = previousAlarmId > -1 ? true : false;
+        if (hasOldNotification) {
+          notificationPlugin.cancelNotification(previousAlarmId);
+        }
+        if (needToSetNotification) {
+          _addNotification();
+        }
         BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
-        //TODO: Edit notification
         Navigator.pop(context);
       } else {
-        if (alarmSelected > -1) {
+        if (needToSetNotification) {
           _addNotification();
         }
         BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(task));
       }
       descriptionCtrl.clear();
-      alarmSelected = -1;
+      // alarmSelected = -1;
       dueDate = DateTime.now();
+      if (!widget.isModal) {
+        BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
+      }
     }
   }
 
@@ -166,8 +187,11 @@ class _AddTaskState extends State<AddTask> {
     if (widget.task != null) {
       task = widget.task;
       isEdit = true;
+      previousAlarmId = task.alarmId;
+      alarmSelected = task.alarm;
     } else {
       task = Task("", dueDate.toString(), 100, 0);
+      alarmSelected = -1;
     }
     costButtonText = task.cost.toString();
     descriptionCtrl = TextEditingController(text: task.description);

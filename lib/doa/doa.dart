@@ -10,6 +10,7 @@ final String colDescription = 'description';
 final String colDate = 'dueDate';
 final String colScore = 'cost';
 final String colAlarm = 'hasAlarm';
+final String colAlarmId = 'alarmId';
 final String colSoftDelete = "softDelete";
 
 class TasksDao {

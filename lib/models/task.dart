@@ -8,16 +8,23 @@ class Task extends Equatable {
   String _description;
   String _dueDate;
   int _cost;
-  int __alarm;
+  int _alarm;
+  int _alarmId = -1;
   int _completed = 0;
 
-  Task(this._description, this._dueDate, this._cost, this.__alarm);
-  Task.withId(this._id, this._description, this._dueDate, this.__alarm);
+  Task(this._description, this._dueDate, this._cost, this._alarm);
+  Task.withId(this._id, this._description, this._dueDate, this._alarm,this._alarmId);
 
   int get id => _id;
   String get description => _description;
   int get cost => _cost;
-  int get alarm => __alarm;
+  int get alarm => _alarm;
+
+  int get alarmId => _alarmId;
+
+  set alarmId(int id) {
+    this._alarmId = id;
+  }
 
   set task(String newTask) {
     this._description = newTask;
@@ -45,7 +52,7 @@ class Task extends Equatable {
   }
 
   set alarm(int alarmStatus) {
-    this.__alarm = alarmStatus;
+    this._alarm = alarmStatus;
   }
 
   set setCompleted(int deleted) {
@@ -66,7 +73,8 @@ class Task extends Equatable {
     map['description'] = _description;
     map['dueDate'] = _dueDate;
     map['cost'] = _cost;
-    map['hasAlarm'] = __alarm;
+    map['hasAlarm'] = _alarm;
+    map['alarmId'] = _alarmId;
     map['softDelete'] = _completed;
     return map;
   }
@@ -76,13 +84,14 @@ class Task extends Equatable {
     this._description = map['description'];
     this._dueDate = map['dueDate'];
     this._cost = map['cost'];
-    this.__alarm = map['hasAlarm'];
+    this._alarm = map['hasAlarm'];
+    this._alarmId = map['alarmId'];
     this._completed = map['softDelete'];
   }
 
   @override
   String toString() {
-    return "Task ID [$_id] Desc [$_description] date [$_dueDate] cost [$_cost] alarm [$__alarm] comp [$_completed]";
+    return "Task ID [$_id] Desc [$_description] date [$_dueDate] cost [$_cost] alarm [$_alarm] comp [$_completed]";
   }
 
   @override

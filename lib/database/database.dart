@@ -10,6 +10,7 @@ final String colDescription = 'description';
 final String colDate = 'dueDate';
 final String colScore = 'cost';
 final String colAlarm = 'hasAlarm';
+final String colAlarmId = 'alarmId';
 final String colSoftDelete = "softDelete";
 
 class DatabaseProvider {
@@ -38,6 +39,6 @@ class DatabaseProvider {
   void initDB(Database db, int version) async {
     await db.execute(
         'CREATE TABLE $taskTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colDescription TEXT, '
-        '$colDate TEXT, $colScore INTEGER, $colAlarm INT, $colSoftDelete INTEGER)');
+        '$colDate TEXT, $colScore INTEGER, $colAlarm INT, $colAlarmId INT, $colSoftDelete INTEGER)');
   }
 }

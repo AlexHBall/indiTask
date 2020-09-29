@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:io' show Platform;
@@ -157,8 +159,8 @@ class NotificationPlugin {
     );
   }
 
-  Future<void> scheduleNotification(DateTime time, String title, String body) async {
-    var scheduleNotificationDateTime = DateTime.now().add(Duration(seconds: 5));
+  Future<void> scheduleNotification(int id, DateTime time, String title, String body) async {
+    log("Scheduling notification id $id for time $time");
     var androidChannelSpecifics = AndroidNotificationDetails(
       'CHANNEL_ID 1',
       'CHANNEL_NAME 1',
@@ -185,7 +187,7 @@ class NotificationPlugin {
       iosChannelSpecifics,
     );
     await flutterLocalNotificationsPlugin.schedule(
-      0,
+      id,
       title,
       body,
       time,
@@ -200,8 +202,9 @@ class NotificationPlugin {
     return p.length;
   }
 
-  Future<void> cancelNotification() async {
-    await flutterLocalNotificationsPlugin.cancel(0);
+  Future<void> cancelNotification(int id) async {
+    log("Cancelling log notification with it $id");
+    await flutterLocalNotificationsPlugin.cancel(id);
   }
 
   Future<void> cancelAllNotification() async {
