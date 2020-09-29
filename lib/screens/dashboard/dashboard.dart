@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -69,18 +71,17 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
     ];
     taskCards = <TaskCard>[];
     if (incompleteTasks.length < 1) {
-      TaskCard taskCard = TaskCard(
-        cost: 0,
-        description: "Please add a task",
-        backgroundColor: colors[0],
-        onEditPress: () => {},
-      );
-      taskCards.add(taskCard);
+      // TaskCard taskCard = TaskCard(
+      //   cost: 0,
+      //   description: "Please add a task",
+      //   backgroundColor: colors[0],
+      //   onEditPress: () => {},
+      // );
+      // taskCards.add(taskCard);
     } else {
       for (var i = 0; i < incompleteTasks.length; i++) {
         TaskCard taskCard = TaskCard(
-          cost: incompleteTasks[i].cost,
-          description: incompleteTasks[i].description,
+          task: incompleteTasks[i],
           backgroundColor: colors[i % 4],
           onEditPress: editTask,
         );

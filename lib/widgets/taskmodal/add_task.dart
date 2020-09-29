@@ -107,6 +107,7 @@ class _AddTaskState extends State<AddTask> {
     if (desc.isNotEmpty) {
       task.date = dueDate;
       task.description = desc;
+      task.alarm = alarmSelected;
       print('Adding Task $task');
       if (!widget.isModal) {
         BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
@@ -121,6 +122,8 @@ class _AddTaskState extends State<AddTask> {
         BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(task));
       }
       descriptionCtrl.clear();
+      alarmSelected = -1;
+      dueDate = DateTime.now();
     }
   }
 
