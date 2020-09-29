@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:inditask/models/task.dart';
 import 'package:inditask/repository/task_repository.dart';

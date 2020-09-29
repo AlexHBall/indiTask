@@ -76,7 +76,7 @@ class TaskCard extends StatefulWidget {
 
 class _TaskCardState extends State<TaskCard> {
   bool showAlarms;
-
+  int alarmSelected;
   Widget score() {
     return Container(
       height: 350,
@@ -116,7 +116,7 @@ class _TaskCardState extends State<TaskCard> {
         ));
   }
 
-  Widget editAlarmRow(int alarmSelected) {
+  Widget editAlarmRow(int alarmSelected, Function onPress) {
     print(alarmSelected);
     List<String> texts = ["1hr", "3hr", "24hr"];
     List<Widget> elements = [];
@@ -125,14 +125,26 @@ class _TaskCardState extends State<TaskCard> {
       if (i == alarmSelected) {
         elements.add(TextButton(
           text: texts[i],
-          onPress: () {}, selected: true,
-          
+          onPress: () {},
+          selected: true,
         ));
       } else {
-        elements.add(TextButton(
-          text: texts[i],
-          onPress: () {},
-          selected: false,
+        elements.add(ButtonTheme(
+          minWidth: 41.35,
+          height: 27.57,
+          child: FlatButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50.0),
+                side: BorderSide(color: Colors.white)),
+            textColor: Colors.white,
+            color: Color(0x00000000),
+            padding: EdgeInsets.all(8.0),
+            onPressed: () => onPress(i),
+            child: Text(
+              texts[i],
+              style: TextStyle(fontSize: 8.0, fontWeight: FontWeight.w600),
+            ),
+          ),
         ));
       }
     }
@@ -171,8 +183,17 @@ class _TaskCardState extends State<TaskCard> {
     });
   }
 
+  void updateSelectedAlarm(int selected) {
+    print('updating alarm to $selected');
+    setState(() {
+      widget.task.alarm = selected;
+      alarmSelected = selected;
+    });
+  }
+
   void submitAlarm() {
-    //TODO: Update task with whatever alarm was selected
+    BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(widget.task));
+    //TODO: Update alarm ????
     toggleAlarmRow();
   }
 
@@ -180,11 +201,11 @@ class _TaskCardState extends State<TaskCard> {
   void initState() {
     super.initState();
     showAlarms = false;
+    alarmSelected = widget.task.alarm;
   }
 
   @override
   Widget build(BuildContext context) {
-    int alarmSelected = widget.task.alarm;
     print("card has alarm $alarmSelected");
     return Padding(
       padding: const EdgeInsets.only(
@@ -198,7 +219,9 @@ class _TaskCardState extends State<TaskCard> {
             color: widget.backgroundColor.withOpacity(0.5),
           ),
           child: Column(children: [
-            (showAlarms) ? editAlarmRow(alarmSelected) : defaultButtonRow(),
+            (showAlarms)
+                ? editAlarmRow(alarmSelected, updateSelectedAlarm)
+                : defaultButtonRow(),
             descriptionText(),
           ]),
         )

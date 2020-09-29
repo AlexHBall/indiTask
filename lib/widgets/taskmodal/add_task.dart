@@ -114,6 +114,7 @@ class _AddTaskState extends State<AddTask> {
       }
       if (isEdit) {
         BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
+        //TODO: Edit notification
         Navigator.pop(context);
       } else {
         if (alarmSelected > -1) {
