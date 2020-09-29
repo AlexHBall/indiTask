@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:inditask/models/task.dart';
 import 'package:inditask/repository/task_repository.dart';
@@ -54,7 +55,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   @override
   Stream<TaskState> mapEventToState(TaskEvent event) async* {
-    print('got Event $event');
+    log('TaskBloc got event $event');
     if (event is LoadTasksEvent) {
       yield* _mapTasksLoadedToState();
     } else if (event is AddTaskEvent) {

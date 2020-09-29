@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:inditask/bloc/bloc.dart';
@@ -54,7 +55,6 @@ class StatBloc extends Bloc<StatEvent, StatState> {
 
   @override
   Future<void> close() {
-    print("statbloc closing");
     taskSubscription.cancel();
     return super.close();
   }
