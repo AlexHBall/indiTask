@@ -160,7 +160,7 @@ class NotificationPlugin {
   }
 
   Future<void> scheduleNotification(int id, DateTime time, String title, String body) async {
-    log("Scheduling notification id $id for time $time");
+    log("Scheduling notification id [$id] for [$time]");
     var androidChannelSpecifics = AndroidNotificationDetails(
       'CHANNEL_ID 1',
       'CHANNEL_NAME 1',
@@ -203,7 +203,7 @@ class NotificationPlugin {
   }
 
   Future<void> cancelNotification(int id) async {
-    log("Cancelling log notification with it $id");
+    log("Cancelling log notification id [$id]");
     await flutterLocalNotificationsPlugin.cancel(id);
   }
 

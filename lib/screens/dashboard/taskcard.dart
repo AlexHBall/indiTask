@@ -76,7 +76,9 @@ class TaskCard extends StatefulWidget {
 
 class _TaskCardState extends State<TaskCard> {
   bool showAlarms;
+  bool hasPreviousNotificaiton;
   int alarmSelected;
+  int previousNotificationId;
   Widget score() {
     return Container(
       height: 350,
@@ -125,7 +127,7 @@ class _TaskCardState extends State<TaskCard> {
       if (i == alarmSelected) {
         elements.add(TextButton(
           text: texts[i],
-          onPress: () {},
+          onPress: () => onPress(-1),
           selected: true,
         ));
       } else {
@@ -184,6 +186,7 @@ class _TaskCardState extends State<TaskCard> {
   }
 
   void updateSelectedAlarm(int selected) {
+    //TODO: Allow update to 0
     print('updating alarm to $selected');
     setState(() {
       widget.task.alarm = selected;
@@ -191,9 +194,40 @@ class _TaskCardState extends State<TaskCard> {
     });
   }
 
+  Future<int> _getNextAlarmId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("lastAlarmId") + 1;
+    prefs.setInt("lastAlarmId", id);
+    return id;
+  }
+
+  void _add(int value) async {
+    widget.task.alarmId = value;
+    List<int> hours = [24, 3, 1];
+    List<String> dueTimes = ["24 hrs", "3 hrs", "1hr"];
+    String dueIn = dueTimes[alarmSelected];
+    String desc = widget.task.description;
+    String cost = widget.task.cost.toString();
+    DateTime reminderTime =
+        widget.task.getDate().subtract(Duration(hours: hours[alarmSelected]));
+
+    await notificationPlugin.scheduleNotification(widget.task.alarmId,
+        reminderTime, "Task Due in $dueIn", "$desc costing $cost");
+  }
+
+  void _addNotification() async {
+    _getNextAlarmId().then((value) => _add(value));
+  }
+
   void submitAlarm() {
-    BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(widget.task));
     //TODO: Update alarm ????
+    if (hasPreviousNotificaiton) {
+      notificationPlugin.cancelNotification(previousNotificationId);
+    }
+
+    if (widget.task.alarm > -1) {}
+
+    BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(widget.task));
     toggleAlarmRow();
   }
 
@@ -202,6 +236,12 @@ class _TaskCardState extends State<TaskCard> {
     super.initState();
     showAlarms = false;
     alarmSelected = widget.task.alarm;
+    if (widget.task.alarmId > -1) {
+      hasPreviousNotificaiton = true;
+      previousNotificationId = widget.task.alarmId;
+    } else {
+      hasPreviousNotificaiton = false;
+    }
   }
 
   @override

@@ -10,4 +10,4 @@
 
 ### Known Issues
 * Remaing Timer on Dashboard doesn't update to 0:0:0 when scrolling to an overdue task, it keeps the previous tasks time.
-* Responsive design not done.
+* When editing a task the selected alarm on the task card doesn't update automatically, you have to scroll off and then on to the task.

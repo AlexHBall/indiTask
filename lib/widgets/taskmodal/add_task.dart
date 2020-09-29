@@ -69,12 +69,10 @@ class _AddTaskState extends State<AddTask> {
     });
   }
 
-  void _updateAlarm(int selected, bool pressed) {
+  void _updateAlarm(int selected) {
     setState(() {
-      if (pressed) {
-        print("updating add task alarm $selected");
-        alarmSelected = selected;
-      }
+      print("updating add task alarm $selected");
+      alarmSelected = selected;
     });
   }
 
@@ -141,7 +139,7 @@ class _AddTaskState extends State<AddTask> {
         BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(task));
       }
       descriptionCtrl.clear();
-      // alarmSelected = -1;
+      alarmSelected = -1;
       dueDate = DateTime.now();
       if (!widget.isModal) {
         BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));

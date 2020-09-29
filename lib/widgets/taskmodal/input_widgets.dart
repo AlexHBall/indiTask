@@ -177,7 +177,9 @@ class _AlarmInputState extends State<AlarmInput> {
           padding: EdgeInsets.all(12.0),
           onPressed: () {
             if (i != selected) {
-              widget.updateAlarm(i, true);
+              widget.updateAlarm(i);
+            } else {
+              widget.updateAlarm(-1);
             }
 
             setState(() {
