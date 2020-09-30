@@ -185,7 +185,7 @@ class _TaskCardState extends State<TaskCard> {
     });
   }
 
-  int switch_selected(int selected) {
+  int switchSelected(int selected) {
     switch (selected) {
       case -1:
         return -1;
@@ -208,7 +208,7 @@ class _TaskCardState extends State<TaskCard> {
     //TODO: Allow update to 0
     print('updating alarm to $selected');
     setState(() {
-      widget.task.alarm = switch_selected(selected);
+      widget.task.alarm = switchSelected(selected);
       alarmSelected = selected;
     });
   }
@@ -254,7 +254,7 @@ class _TaskCardState extends State<TaskCard> {
   void initState() {
     super.initState();
     showAlarms = false;
-    alarmSelected = switch_selected(widget.task.alarm);
+    alarmSelected = switchSelected(widget.task.alarm);
     if (widget.task.alarmId > -1) {
       hasPreviousNotificaiton = true;
       previousNotificationId = widget.task.alarmId;

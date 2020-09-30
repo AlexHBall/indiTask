@@ -5,9 +5,14 @@ class HeaderRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 40.0, right: 15.0, top: 40.0),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Image.asset('assets/images/ribbon.png'),
-      ]),
+      child: GestureDetector(
+        onTap: () {
+          BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.stats));
+        },
+        child: Align(
+            alignment: Alignment.centerLeft,
+            child: Image.asset('assets/images/ribbon.png')),
+      ),
     );
   }
 }
@@ -22,7 +27,7 @@ class TasksRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 10.0),
+              padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
               child: Text(
                 'Tasks Due:',
                 style: TextStyle(
@@ -31,16 +36,6 @@ class TasksRow extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            MaterialButton(
-              onPressed: () {
-                BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.stats));
-              },
-              textColor: Colors.white,
-              child: Image.asset('assets/images/listicon.png'),
-              padding: EdgeInsets.all(10),
-              shape: ContinuousRectangleBorder(),
-            )
-            //
           ],
         ),
       ),
