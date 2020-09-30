@@ -22,6 +22,12 @@ class IndiTodos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: (BuildContext context, Widget child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+          child: child,
+        );
+      },
       title: "IndiTask",
       debugShowCheckedModeBanner: true,
       theme: basicTheme(),
