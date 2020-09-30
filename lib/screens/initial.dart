@@ -30,7 +30,7 @@ class AddTaskWidget extends State<InitialScreen> {
 
     Widget textHeader() {
       return Padding(
-        padding: EdgeInsets.only(bottom: SizeConfig.safeBlockVertical * 2),
+        padding: EdgeInsets.only(bottom: SizeConfig.safeBlockVertical * 4),
         child: Text("Create your first task",
             textAlign: TextAlign.center,
             style: TextStyle(

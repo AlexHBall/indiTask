@@ -202,6 +202,8 @@ class _AddTaskState extends State<AddTask> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     List<Widget> inputWidgets = [
       _getInputRow(),
       TaskInfo(
@@ -215,21 +217,22 @@ class _AddTaskState extends State<AddTask> {
       AddTaskButton(_addTask, isEdit)
     ];
     visited = true;
-    return Container(
-        height: 527,
-        width: 375,
-        decoration: BoxDecoration(
-            border: Border.all(width: 1.0, color: Colour.blue.color),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-            color: Colors.white),
-        child: selectingDate
-            ? DateTimeModal(
-                onSubmit: _updateDate,
-              )
-            : Padding(
-                padding: const EdgeInsets.only(left: 28.0, right: 28.0),
-                child: Column(children: inputWidgets),
-              ));
+    return Expanded(
+      //TODO: Fix this height? or Fix it on the floating action button ?
+        child: Container(
+            decoration: BoxDecoration(
+                border: Border.all(width: 1.0, color: Colour.blue.color),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
+                color: Colors.white),
+            child: selectingDate
+                ? DateTimeModal(
+                    onSubmit: _updateDate,
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(left: 28.0, right: 28.0),
+                    child: Column(children: inputWidgets),
+                  )));
   }
 }
