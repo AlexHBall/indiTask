@@ -131,19 +131,16 @@ class _AddTaskState extends State<AddTask> {
           _addNotification();
         }
         BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
-        Navigator.pop(context);
       } else {
         if (needToSetNotification) {
           _addNotification();
         }
         BlocProvider.of<TaskBloc>(context).add(AddTaskEvent(task));
       }
-      descriptionCtrl.clear();
-      alarmSelected = -1;
-      dueDate = DateTime.now();
-      if (!widget.isModal) {
-        BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
+      if (widget.isModal) {
+        Navigator.of(context).pop();
       }
+      BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
     }
   }
 
