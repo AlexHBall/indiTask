@@ -29,7 +29,9 @@ class NotificationPlugin {
 
   initializePlatformSpecifics() {
     var initializationSettingsAndroid =
-        AndroidInitializationSettings('app_notf_icon');
+        AndroidInitializationSettings('app_icon');
+                // AndroidInitializationSettings('@mipmap/ic_launcher');
+
     var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
