@@ -139,8 +139,9 @@ class _AddTaskState extends State<AddTask> {
       }
       if (widget.isModal) {
         Navigator.of(context).pop();
+      } else {
+        BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
       }
-      BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
     }
   }
 
@@ -218,7 +219,7 @@ class _AddTaskState extends State<AddTask> {
     ];
     visited = true;
     return Expanded(
-      //TODO: Fix this height? or Fix it on the floating action button ?
+        //TODO: Fix this height? or Fix it on the floating action button ?
         child: Container(
             decoration: BoxDecoration(
                 border: Border.all(width: 1.0, color: Colour.blue.color),
