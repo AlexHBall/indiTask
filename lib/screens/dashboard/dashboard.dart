@@ -138,6 +138,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     taskCards = fillTaskCards(incompleteTasks);
     return Scaffold(
       backgroundColor: Colour.backGrey.color,
@@ -154,6 +155,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
         onPressed: () async {
           await showModalBottomSheet(
               context: context,
+              isScrollControlled: true,
               builder: (BuildContext bc) {
                 return BlocProvider.value(
                   value: BlocProvider.of<TaskBloc>(context),
@@ -161,7 +163,6 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
                     costToggled: false,
                     isModal: true,
                   ),
-                  // child: LocalNotificationScreen(),
                 );
               });
           _handleAddedTasks();

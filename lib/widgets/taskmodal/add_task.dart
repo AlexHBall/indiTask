@@ -218,9 +218,8 @@ class _AddTaskState extends State<AddTask> {
       AddTaskButton(_addTask, isEdit)
     ];
     visited = true;
-    return Expanded(
-        //TODO: Fix this height? or Fix it on the floating action button ?
-        child: Container(
+    return Container(
+      height: SizeConfig.safeBlockVertical * 66,
             decoration: BoxDecoration(
                 border: Border.all(width: 1.0, color: Colour.blue.color),
                 borderRadius: BorderRadius.only(
@@ -234,6 +233,6 @@ class _AddTaskState extends State<AddTask> {
                 : Padding(
                     padding: const EdgeInsets.only(left: 28.0, right: 28.0),
                     child: Column(children: inputWidgets),
-                  )));
+                  ));
   }
 }
