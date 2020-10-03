@@ -234,12 +234,13 @@ class _TaskCardState extends State<TaskCard> {
   }
 
   void submitAlarm() {
-    //TODO: Update alarm ????
     if (hasPreviousNotificaiton) {
       notificationPlugin.cancelNotification(previousNotificationId);
     }
 
-    if (widget.task.alarm > -1) {}
+    if (widget.task.alarm > -1) {
+      _addNotification();
+    }
 
     BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(widget.task));
     toggleAlarmRow();
