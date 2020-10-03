@@ -20,7 +20,9 @@ class _DatePickerState extends State<DatePicker> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     //TODO: Figure out how to adjust font size and space inbetween days depending on size
-    double fontSize = 12;
+    double m = SizeConfig.safeBlockHorizontal;
+    print("media query $m ");
+    double fontSize = m * 2;
 
     CalendarCarousel _calendarCarouselNoHeader = CalendarCarousel<Event>(
       onDayPressed: (DateTime date, List<Event> events) {
@@ -56,7 +58,7 @@ class _DatePickerState extends State<DatePicker> {
       showOnlyCurrentMonthDate: false,
       weekFormat: false,
       firstDayOfWeek: 1,
-      height: SizeConfig.blockSizeVertical * 45,
+      height: SizeConfig.safeBlockVertical * 45,
       selectedDateTime: _currentDate,
       customGridViewPhysics: NeverScrollableScrollPhysics(),
       showHeader: true,
@@ -100,30 +102,25 @@ class TimePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     //TODO: Figure out how to adjust font size and space inbetween time depending on size
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: SizeConfig.safeBlockVertical * 5,
-      ),
-      child: Container(
-        height: SizeConfig.blockSizeVertical * 45,
-        child: TimePickerSpinner(
-          normalTextStyle: TextStyle(
-              fontSize: 50, color: Colour.grey.color, fontFamily: "Monoserrat"),
-          highlightedTextStyle: TextStyle(
-            fontSize: 70,
-            color: Colour.blue.color,
-            fontWeight: FontWeight.w700,
-            fontFamily: "Monoserrat",
-            decoration: TextDecoration.underline,
-          ),
-          spacing: 30,
-          itemHeight: 80,
-          itemWidth: 100,
-          minutesInterval: 5,
-          onTimeChange: (time) {
-            this.onTimeChange(time);
-          },
+    return Container(
+      height: SizeConfig.safeBlockVertical * 45,
+      child: TimePickerSpinner(
+        normalTextStyle: TextStyle(
+            fontSize: 50, color: Colour.grey.color, fontFamily: "Monoserrat"),
+        highlightedTextStyle: TextStyle(
+          fontSize: 70,
+          color: Colour.blue.color,
+          fontWeight: FontWeight.w700,
+          fontFamily: "Monoserrat",
+          decoration: TextDecoration.underline,
         ),
+        spacing: 30,
+        itemHeight: 80,
+        itemWidth: 100,
+        minutesInterval: 5,
+        onTimeChange: (time) {
+          this.onTimeChange(time);
+        },
       ),
     );
   }
@@ -166,26 +163,24 @@ class NextButton extends StatelessWidget {
   const NextButton({this.text, this.onSubmit});
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 5),
-      child: ButtonTheme(
-        minWidth: 140.0,
-        height: 56,
-        child: FlatButton(
-          color: Colour.blue.color,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50.0),
-            side: BorderSide(color: Colour.white.color),
-          ),
-          padding: EdgeInsets.all(8.0),
-          onPressed: onSubmit,
-          child: Text(text,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white)),
+    SizeConfig().init(context);
+    return ButtonTheme(
+      minWidth: 140.0,
+      height: SizeConfig.safeBlockVertical*6,
+      child: FlatButton(
+        color: Colour.blue.color,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50.0),
+          side: BorderSide(color: Colour.white.color),
         ),
+        padding: EdgeInsets.all(8.0),
+        onPressed: onSubmit,
+        child: Text(text,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: Colors.white)),
       ),
     );
   }

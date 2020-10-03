@@ -180,14 +180,18 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
     taskCards = fillTaskCards(widget.tasks);
     return Scaffold(
       backgroundColor: Colour.backGrey.color,
-      body: Column(
-        children: [
-          HeaderRow(),
-          TasksRow(),
-          CardView(taskCards, pageController, _onPageChanged, currentTask),
-          RemaingingTimeWidget(widget.tasks[currentTask].getDate()),
-          CompleteWidget(_onCompleteSwipe),
-        ],
+      body: Padding(
+        padding:
+            EdgeInsets.only(top: SizeConfig.safeBlockVertical * 5),
+        child: Column(
+          children: [
+            HeaderRow(),
+            TasksRow(),
+            CardView(taskCards, pageController, _onPageChanged, currentTask),
+            RemaingingTimeWidget(widget.tasks[currentTask].getDate()),
+            CompleteWidget(_onCompleteSwipe),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
