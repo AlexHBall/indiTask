@@ -24,9 +24,7 @@ class TaskInput extends StatelessWidget {
         style: style,
         controller: descriptionCtrl,
         textAlign: TextAlign.left,
-        // TODO; Change this back to focus
-        // autofocus: focus,
-        autofocus: false,
+        autofocus: focus,
       ),
     );
   }

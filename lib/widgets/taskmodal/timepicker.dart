@@ -19,7 +19,6 @@ class _DatePickerState extends State<DatePicker> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    //TODO: Figure out how to adjust font size and space inbetween days depending on size
     double m = SizeConfig.safeBlockHorizontal;
     print("media query $m ");
     double fontSize = m * 2;
@@ -101,7 +100,6 @@ class TimePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    //TODO: Figure out how to adjust font size and space inbetween time depending on size
     return Container(
       height: SizeConfig.safeBlockVertical * 45,
       child: TimePickerSpinner(
