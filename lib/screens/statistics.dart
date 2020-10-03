@@ -204,7 +204,7 @@ class StatisticsBody extends StatelessWidget {
                           totalTasks.toString(),
                           "assets/images/charts.png",
                           Colour.blue.color,
-                          SizeConfig.safeBlockVertical * 32.1),
+                          SizeConfig.safeBlockVertical * 35.1),
                       SizedBox(
                         height: SizeConfig.safeBlockVertical * 2,
                       ),
@@ -213,7 +213,7 @@ class StatisticsBody extends StatelessWidget {
                           "$percentLost%",
                           "assets/images/rate.png",
                           Colour.green.color,
-                          SizeConfig.safeBlockVertical * 27.8),
+                          SizeConfig.safeBlockVertical * 30.8),
                     ],
                   ),
                   SizedBox(
@@ -226,7 +226,7 @@ class StatisticsBody extends StatelessWidget {
                           totalPoints.toString(),
                           "assets/images/running.png",
                           Colour.lightBlue.color,
-                          SizeConfig.safeBlockVertical * 22),
+                          SizeConfig.safeBlockVertical * 25),
                       SizedBox(
                         height: SizeConfig.safeBlockVertical * 2,
                       ),
@@ -235,7 +235,7 @@ class StatisticsBody extends StatelessWidget {
                           "$percentComplete%",
                           "assets/images/calories.png",
                           Colour.orange.color,
-                          SizeConfig.safeBlockVertical * 38),
+                          SizeConfig.safeBlockVertical * 41),
                     ],
                   ),
                 ],

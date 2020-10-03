@@ -164,10 +164,7 @@ class Screen extends StatelessWidget {
     SizeConfig().init(context);
     double w = SizeConfig.safeBlockHorizontal;
     double h = SizeConfig.safeBlockVertical;
-
-    print("Size horizontial: $w");
-    print("Size vertical: $h");
-
+    
     Widget image() {
       return Container(
         height: h * 50,
