@@ -117,7 +117,7 @@ class _AddTaskState extends State<AddTask> {
   void _addTask() {
     String desc = descriptionCtrl.text;
     if (desc.isNotEmpty) {
-      task.date = dueDate;
+      task.dueDate = Task.convert(dueDate);
       task.alarm = alarmSelected;
       task.description = desc;
       bool needToSetNotification = task.alarm > -1 ? true : false;
@@ -191,7 +191,7 @@ class _AddTaskState extends State<AddTask> {
     }
     costButtonText = task.cost.toString();
     descriptionCtrl = TextEditingController(text: task.description);
-    dateCtrl = TextEditingController(text: task.getDateString());
+    dateCtrl = TextEditingController(text: task.dueDate);
     inputRowState = AddTaskState.text;
     int roundedMins = toNearestFive(dueDate.minute);
     dueDate = new DateTime(dueDate.year, dueDate.month, dueDate.day + 1,

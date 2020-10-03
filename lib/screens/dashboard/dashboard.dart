@@ -145,7 +145,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
       print("remaing task length " + widget.tasks.length.toString());
       //TODO: ID erros are being thrown, can UUID or SQLite be used.
       Task task = widget.tasks[pageController.page.toInt()];
-      task.setCompleted = 1;
+      task.completed = 1;
       BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
       print("remaing task length " + widget.tasks.length.toString());
       _handleAddedTasks();

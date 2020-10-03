@@ -1,99 +1,61 @@
 import 'package:intl/intl.dart';
 import 'package:equatable/equatable.dart';
+import 'package:uuid/uuid.dart';
 
-// ignore: must_be_immutable
+DateFormat daysFormat = DateFormat("yyyy-MM-dd H:m:s");
+
+// ignore: mustbeimmutable
 class Task extends Equatable {
-  DateFormat daysFormat = DateFormat("yyyy-MM-dd H:m:s");
-  int _id;
-  String _description;
-  String _dueDate;
-  int _cost;
-  int _alarm;
-  int _alarmId = -1;
-  int _completed = 0;
+  String id;
+  String description;
+  String dueDate;
+  int cost;
+  int alarm;
+  int alarmId = -1;
+  int completed = 0;
 
-  Task(this._description, this._dueDate, this._cost, this._alarm);
-  Task.withId(this._id, this._description, this._dueDate, this._alarm,this._alarmId);
+  Task(this.description, this.dueDate, this.cost, this.alarm)
+      : this.id = Uuid().v4();
 
-  int get id => _id;
-  String get description => _description;
-  int get cost => _cost;
-  int get alarm => _alarm;
-
-  int get alarmId => _alarmId;
-
-  set alarmId(int id) {
-    this._alarmId = id;
-  }
-
-  set task(String newTask) {
-    this._description = newTask;
-  }
-
-  set date(DateTime newDate) {
-    this._dueDate = daysFormat.format(newDate);
-  }
+  @override
+  List<Object> get props =>
+      [id, description, dueDate, cost, alarm, alarmId, completed];
 
   DateTime getDate() {
-    DateTime date = daysFormat.parse(_dueDate);
+    DateTime date = daysFormat.parse(dueDate);
     return date;
   }
 
-  String getDateString() {
-    return _dueDate;
-  }
-
-  set description(String description) {
-    this._description = description;
-  }
-
-  set cost(int cost) {
-    this._cost = cost;
-  }
-
-  set alarm(int alarmStatus) {
-    this._alarm = alarmStatus;
-  }
-
-  set setCompleted(int deleted) {
-    if (deleted == 0 || deleted == 1) {
-      this._completed = deleted;
-    }
-  }
-
-  get completed {
-    return this._completed;
+  static String convert(DateTime date) {
+    return daysFormat.format(date);
   }
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
-    if (_id != null) {
-      map['id'] = _id;
+    if (id != null) {
+      map['id'] = id;
     }
-    map['description'] = _description;
-    map['dueDate'] = _dueDate;
-    map['cost'] = _cost;
-    map['hasAlarm'] = _alarm;
-    map['alarmId'] = _alarmId;
-    map['softDelete'] = _completed;
+    map['description'] = description;
+    map['dueDate'] = dueDate;
+    map['cost'] = cost;
+    map['hasAlarm'] = alarm;
+    map['alarmId'] = alarmId;
+    map['softDelete'] = completed;
     return map;
   }
 
   Task.fromMapObject(Map<String, dynamic> map) {
-    this._id = map['id'];
-    this._description = map['description'];
-    this._dueDate = map['dueDate'];
-    this._cost = map['cost'];
-    this._alarm = map['hasAlarm'];
-    this._alarmId = map['alarmId'];
-    this._completed = map['softDelete'];
+    this.id = map['id'];
+    this.description = map['description'];
+    this.dueDate = map['dueDate'];
+    this.cost = map['cost'];
+    this.alarm = map['hasAlarm'];
+    this.alarmId = map['alarmId'];
+    this.completed = map['softDelete'];
   }
 
   @override
   String toString() {
-    return "Task ID [$_id] Desc [$_description] date [$_dueDate] cost [$_cost] alarm [$_alarm] comp [$_completed]";
+    return "Task ID [$id] Desc [$description] date [$dueDate] cost [$cost] alarm [$alarm] comp [$completed]";
   }
-
-  @override
-  List<Object> get props => [_id, _description, _dueDate, _cost];
 }
