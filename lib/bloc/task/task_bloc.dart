@@ -32,12 +32,13 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   Stream<TaskState> _mapTasksAddedToState(AddTaskEvent event) async* {
     if (state is TasksLoaded) {
+      _saveTask(event.task);
       final List<Task> updatedTodos = List.from((state as TasksLoaded).tasks)
         ..add(event.task);
-      _saveTask(event.task);
+
       yield TasksLoaded(updatedTodos);
     } else if (state is NoTasks) {
-      _saveTask(event.task);
+      await _saveTask(event.task);
       yield TaskLoading();
     }
   }
@@ -48,8 +49,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       final List<Task> updatedTasks = (state as TasksLoaded).tasks.map((task) {
         return task.id == event.editedTask.id ? event.editedTask : task;
       }).toList();
+      await _updateTask(event.editedTask);
       yield TasksLoaded(updatedTasks);
-      _updateTask(event.editedTask);
     }
   }
 

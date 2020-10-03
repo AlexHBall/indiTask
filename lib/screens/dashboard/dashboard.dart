@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/models/models.dart';
+import 'package:inditask/screens/initial.dart';
 import 'package:inditask/utils/colors.dart';
 import 'package:inditask/utils/notification_handler.dart';
 import 'package:inditask/utils/utils.dart';
@@ -24,9 +25,65 @@ class Dashboard extends StatelessWidget {
         state,
       ) {
         if (state is TasksLoaded) {
-          return DashBoardDisplay(state.tasks);
+          List<Task> incompleteTasks =
+              state.tasks.where((t) => t.completed == 0).toList();
+          if (incompleteTasks.length < 1) {
+            return InitialScreen();
+          } else {
+            return DashBoardDisplay(incompleteTasks);
+          }
         }
         return CircleIndicator();
+      },
+    );
+  }
+}
+
+class Dash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TaskBloc, TaskState>(
+      builder: (context, state) {
+        if (state is TasksLoaded) {
+          List<Task> tasks =
+              state.tasks.where((element) => element.completed == 0).toList();
+          print("incomplete tasks $tasks");
+          return Scaffold(
+            backgroundColor: Colors.pink,
+            body: ListView.builder(
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                      color: Colors.purple,
+                      child: Text(
+                        tasks[index].toString(),
+                        style: TextStyle(color: Colors.white),
+                      ));
+                }),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () async {
+                print("I'm waiting for modal");
+
+                await showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (BuildContext bc) {
+                      return BlocProvider.value(
+                        value: BlocProvider.of<TaskBloc>(context),
+                        child: AddTask(
+                          costToggled: false,
+                          isModal: true,
+                        ),
+                      );
+                    });
+                print("I've waited for modal");
+              },
+              child: Icon(Icons.add),
+              backgroundColor: Colour.blue.color,
+            ),
+          );
+        }
+        return Container();
       },
     );
   }
@@ -42,7 +99,6 @@ class DashBoardDisplay extends StatefulWidget {
 
 class _DashBoardDisplayState extends State<DashBoardDisplay> {
   int currentTask;
-  List<Task> incompleteTasks;
   List<TaskCard> taskCards;
   PageController pageController;
 
@@ -55,7 +111,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
             child: AddTask(
               costToggled: false,
               isModal: true,
-              task: incompleteTasks[currentTask],
+              task: widget.tasks[currentTask],
             ),
           );
         });
@@ -71,39 +127,31 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
       Colour.orange.color
     ];
     taskCards = <TaskCard>[];
-    if (incompleteTasks.length < 1) {
-      // TaskCard taskCard = TaskCard(
-      //   cost: 0,
-      //   description: "Please add a task",
-      //   backgroundColor: colors[0],
-      //   onEditPress: () => {},
-      // );
-      // taskCards.add(taskCard);
-    } else {
-      for (var i = 0; i < incompleteTasks.length; i++) {
-        TaskCard taskCard = TaskCard(
-          task: incompleteTasks[i],
-          backgroundColor: colors[i % 4],
-          onEditPress: editTask,
-        );
-        taskCards.add(taskCard);
-      }
+
+    for (var i = 0; i < widget.tasks.length; i++) {
+      TaskCard taskCard = TaskCard(
+        task: widget.tasks[i],
+        backgroundColor: colors[i % 4],
+        onEditPress: editTask,
+      );
+      taskCards.add(taskCard);
     }
+
     return taskCards;
   }
 
   void _onCompleteSwipe() {
     setState(() {
-      Task task = incompleteTasks[pageController.page.toInt()];
+      print("remaing task length " + widget.tasks.length.toString());
+
+      Task task = widget.tasks[pageController.page.toInt()];
       task.setCompleted = 1;
       BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
-      incompleteTasks =
-          widget.tasks.where((element) => element.completed == 0).toList();
-
-      if (currentTask == incompleteTasks.length) {
+      print("remaing task length " + widget.tasks.length.toString());
+      if (currentTask == widget.tasks.length) {
         currentTask -= 1;
       }
-      if (incompleteTasks.length == 0) {
+      if (widget.tasks.length == 0) {
         BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.add));
       }
     });
@@ -116,22 +164,16 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
   }
 
   void _handleAddedTasks() {
+    print("I'm handling added tasks before $widget.tasks");
     setState(() {
-      incompleteTasks =
-          widget.tasks.where((element) => element.completed == 0).toList();
-      taskCards = fillTaskCards(incompleteTasks);
+      print("tasks now $widget.tasks");
+      taskCards = fillTaskCards(widget.tasks);
     });
   }
 
   @override
   void initState() {
     currentTask = 0;
-    incompleteTasks =
-        widget.tasks.where((element) => element.completed == 0).toList();
-    if (incompleteTasks.length == 0) {
-      incompleteTasks.add(
-          Task("Finish financial analysis for sonly", "09-25-2020", 50, 0));
-    }
     pageController = PageController();
     super.initState();
   }
@@ -139,7 +181,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    taskCards = fillTaskCards(incompleteTasks);
+    taskCards = fillTaskCards(widget.tasks);
     return Scaffold(
       backgroundColor: Colour.backGrey.color,
       body: Column(
@@ -147,12 +189,14 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
           HeaderRow(),
           TasksRow(),
           CardView(taskCards, pageController, _onPageChanged, currentTask),
-          RemaingingTimeWidget(incompleteTasks[currentTask].getDate()),
+          RemaingingTimeWidget(widget.tasks[currentTask].getDate()),
           CompleteWidget(_onCompleteSwipe),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+          print("I'm waiting for modal");
+
           await showModalBottomSheet(
               context: context,
               isScrollControlled: true,
@@ -165,6 +209,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
                   ),
                 );
               });
+          print("I've waited for modal");
           _handleAddedTasks();
         },
         child: Icon(Icons.add),
