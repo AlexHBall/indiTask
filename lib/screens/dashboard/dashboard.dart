@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/models/models.dart';
-import 'package:inditask/screens/initial.dart';
+import 'package:inditask/screens/dashboard/initial.dart';
 import 'package:inditask/utils/colors.dart';
 import 'package:inditask/utils/notification_handler.dart';
 import 'package:inditask/utils/utils.dart';
@@ -143,16 +143,14 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
   void _onCompleteSwipe() {
     setState(() {
       print("remaing task length " + widget.tasks.length.toString());
-
+      //TODO: ID erros are being thrown, can UUID or SQLite be used.
       Task task = widget.tasks[pageController.page.toInt()];
       task.setCompleted = 1;
       BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(task));
       print("remaing task length " + widget.tasks.length.toString());
+      _handleAddedTasks();
       if (currentTask == widget.tasks.length) {
         currentTask -= 1;
-      }
-      if (widget.tasks.length == 0) {
-        BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.add));
       }
     });
   }
@@ -164,9 +162,7 @@ class _DashBoardDisplayState extends State<DashBoardDisplay> {
   }
 
   void _handleAddedTasks() {
-    print("I'm handling added tasks before $widget.tasks");
     setState(() {
-      print("tasks now $widget.tasks");
       taskCards = fillTaskCards(widget.tasks);
     });
   }
