@@ -239,7 +239,11 @@ class _DateTimeModalState extends State<DateTimeModal> {
               : TimePicker(),
           NextButton(
             text: "Next",
-            onSubmit: () {},
+            onSubmit: () {
+              setState(() {
+                _isCalendar = false;
+              });
+            },
           )
         ]),
       );
