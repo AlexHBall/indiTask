@@ -18,7 +18,7 @@ class AddTaskWidget extends State<InitialScreen> {
     Widget image() {
       return Padding(
         padding: EdgeInsets.only(
-            top: SizeConfig.safeBlockVertical * 17,
+            top: SizeConfig.safeBlockVertical * 10,
             bottom: SizeConfig.safeBlockVertical * 3),
         child: Image.asset(
           'assets/images/logoSmall.png',
@@ -45,9 +45,11 @@ class AddTaskWidget extends State<InitialScreen> {
         children: <Widget>[
           image(),
           textHeader(),
-          AddTask(
-            costToggled: false,
-            isModal: false,
+          Expanded(
+            child: AddTask(
+              costToggled: false,
+              isModal: false,
+            ),
           ),
         ],
       );

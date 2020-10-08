@@ -20,8 +20,7 @@ class _DatePickerState extends State<DatePicker> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     double m = SizeConfig.safeBlockHorizontal;
-    print("media query $m ");
-    double fontSize = m * 2;
+    double fontSize = m * 5;
 
     CalendarCarousel _calendarCarouselNoHeader = CalendarCarousel<Event>(
       onDayPressed: (DateTime date, List<Event> events) {
@@ -164,7 +163,7 @@ class NextButton extends StatelessWidget {
     SizeConfig().init(context);
     return ButtonTheme(
       minWidth: 140.0,
-      height: SizeConfig.safeBlockVertical*6,
+      height: SizeConfig.safeBlockVertical * 6,
       child: FlatButton(
         color: Colour.blue.color,
         shape: RoundedRectangleBorder(
@@ -230,6 +229,9 @@ class _DateTimeModalState extends State<DateTimeModal> {
                   onDateChange: _onDatePicked,
                 )
               : TimePicker(),
+          SizedBox(
+            height: SizeConfig.safeBlockVertical * 5,
+          ),
           NextButton(
             text: "Next",
             onSubmit: () {
@@ -247,6 +249,9 @@ class _DateTimeModalState extends State<DateTimeModal> {
         ModalHeader(text: "Set Time"),
         TimePicker(
           onTimeChange: _onTimePicked,
+        ),
+        SizedBox(
+          height: SizeConfig.safeBlockVertical * 5,
         ),
         NextButton(
           text: "Done",
