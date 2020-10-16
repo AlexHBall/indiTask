@@ -15,20 +15,7 @@ class HomeScreen extends StatelessWidget {
       builder: (context, activeTab) {
         Widget _getActivePage() {
           if (activeTab == AppTab.tasks) {
-            return BlocConsumer<TaskBloc, TaskState>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                if (state is TasksLoaded) {
-                  int l = state.tasks.where((element) => element.completed == 0).length;
-                  if (l == 0) {
-                    return InitialScreen();
-                  } else {
-                    return Dashboard();
-                  }
-                }
-                return CircleIndicator();
-              },
-            );
+            return Dashboard();
           } else if (activeTab == AppTab.stats) {
             return StatsDash();
           } else if (activeTab == AppTab.add) {
@@ -73,4 +60,3 @@ class ErrorScreen extends StatelessWidget {
     return Text("Error");
   }
 }
-

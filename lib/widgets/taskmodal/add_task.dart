@@ -117,7 +117,7 @@ class _AddTaskState extends State<AddTask> {
   void _addTask() {
     String desc = descriptionCtrl.text;
     if (desc.isNotEmpty) {
-      task.date = dueDate;
+      task.dueDate = Task.convert(dueDate);
       task.alarm = alarmSelected;
       task.description = desc;
       bool needToSetNotification = task.alarm > -1 ? true : false;
@@ -139,8 +139,9 @@ class _AddTaskState extends State<AddTask> {
       }
       if (widget.isModal) {
         Navigator.of(context).pop();
+      } else {
+        BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
       }
-      BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.tasks));
     }
   }
 
@@ -190,7 +191,7 @@ class _AddTaskState extends State<AddTask> {
     }
     costButtonText = task.cost.toString();
     descriptionCtrl = TextEditingController(text: task.description);
-    dateCtrl = TextEditingController(text: task.getDateString());
+    dateCtrl = TextEditingController(text: task.dueDate);
     inputRowState = AddTaskState.text;
     int roundedMins = toNearestFive(dueDate.minute);
     dueDate = new DateTime(dueDate.year, dueDate.month, dueDate.day + 1,
@@ -202,6 +203,8 @@ class _AddTaskState extends State<AddTask> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     List<Widget> inputWidgets = [
       _getInputRow(),
       TaskInfo(
@@ -216,20 +219,20 @@ class _AddTaskState extends State<AddTask> {
     ];
     visited = true;
     return Container(
-        height: 527,
-        width: 375,
-        decoration: BoxDecoration(
-            border: Border.all(width: 1.0, color: Colour.blue.color),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-            color: Colors.white),
-        child: selectingDate
-            ? DateTimeModal(
-                onSubmit: _updateDate,
-              )
-            : Padding(
-                padding: const EdgeInsets.only(left: 28.0, right: 28.0),
-                child: Column(children: inputWidgets),
-              ));
+      height: SizeConfig.safeBlockVertical * 66,
+            decoration: BoxDecoration(
+                border: Border.all(width: 1.0, color: Colour.blue.color),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
+                color: Colors.white),
+            child: selectingDate
+                ? DateTimeModal(
+                    onSubmit: _updateDate,
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(left: 28.0, right: 28.0),
+                    child: Column(children: inputWidgets),
+                  ));
   }
 }

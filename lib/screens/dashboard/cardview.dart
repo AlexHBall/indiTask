@@ -14,6 +14,8 @@ class CardView extends StatefulWidget {
 class _CardViewState extends State<CardView> {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     int _currentPage = widget.currentTask;
     Widget _indicator(bool isActive, int i) {
       int numberOfPages = widget.tasks.length;
@@ -67,7 +69,10 @@ class _CardViewState extends State<CardView> {
 
     Widget pageIndicator() {
       return Padding(
-        padding: const EdgeInsets.only(left: 25.0, right: 40),
+        padding: EdgeInsets.only(
+            left: SizeConfig.safeBlockHorizontal * 10,
+            right: 20,
+            bottom: SizeConfig.safeBlockVertical * 2),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: _buildPageIndicator(),
@@ -77,7 +82,7 @@ class _CardViewState extends State<CardView> {
 
     Widget page() {
       return Container(
-        height: 400,
+        height: SizeConfig.safeBlockVertical * 50,
         child: PageView.builder(
             controller: widget.ctrl,
             onPageChanged: (index) {
@@ -91,11 +96,15 @@ class _CardViewState extends State<CardView> {
       );
     }
 
-    return Column(
-      children: [
-        pageIndicator(),
-        page(),
-      ],
+    return Container(
+      height: SizeConfig.safeBlockVertical * 56,
+      // width: SizeConfig.,
+      child: Column(
+        children: [
+          pageIndicator(),
+          page(),
+        ],
+      ),
     );
   }
 }

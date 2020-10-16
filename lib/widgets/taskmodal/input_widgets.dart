@@ -51,8 +51,10 @@ class _CostInputState extends State<CostInput> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     Container scoreContainer = Container(
-        width: 60.0,
+        width: SizeConfig.safeBlockHorizontal * 16  ,
         height: 40.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
@@ -70,7 +72,7 @@ class _CostInputState extends State<CostInput> {
 
     SizedBox sliderBox = SizedBox(
         height: 21,
-        width: 250,
+        width: SizeConfig.safeBlockHorizontal * 60,
         child: SliderTheme(
             data: SliderTheme.of(context).copyWith(
               activeTrackColor: Colour.green.color,
@@ -100,7 +102,7 @@ class _CostInputState extends State<CostInput> {
         padding: const EdgeInsets.only(top: 30.0, bottom: 25.0),
         child: Container(
           height: 60.0,
-          width: 320.0,
+          width: SizeConfig.safeBlockHorizontal * 85,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
@@ -118,7 +120,7 @@ class _CostInputState extends State<CostInput> {
             ],
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               sliderBox,
               scoreContainer,

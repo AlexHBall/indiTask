@@ -30,7 +30,6 @@ class NotificationPlugin {
   initializePlatformSpecifics() {
     var initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
-                // AndroidInitializationSettings('@mipmap/ic_launcher');
 
     var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: true,
@@ -167,9 +166,9 @@ class NotificationPlugin {
       'CHANNEL_ID 1',
       'CHANNEL_NAME 1',
       "CHANNEL_DESCRIPTION 1",
-      icon: 'secondary_icon',
-      sound: RawResourceAndroidNotificationSound('my_sound'),
-      largeIcon: DrawableResourceAndroidBitmap('large_notf_icon'),
+      // icon: 'secondary_icon',
+      // sound: RawResourceAndroidNotificationSound('my_sound'),
+      // largeIcon: DrawableResourceAndroidBitmap('large_notf_icon'),
       enableLights: true,
       color: const Color.fromARGB(255, 255, 0, 0),
       ledColor: const Color.fromARGB(255, 255, 0, 0),

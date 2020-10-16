@@ -29,7 +29,7 @@ class IndiTodos extends StatelessWidget {
         );
       },
       title: "IndiTask",
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       theme: basicTheme(),
       // theme: themeD.theme,
       routes: {

@@ -5,6 +5,7 @@ import 'package:inditask/bloc/bloc.dart';
 import 'package:inditask/bloc/tab/tab.dart';
 import 'package:inditask/models/models.dart';
 import 'package:inditask/utils/colors.dart';
+import 'package:inditask/utils/utils.dart';
 import 'package:inditask/widgets/widgets.dart';
 
 class StatisticsHeader extends StatelessWidget {
@@ -22,31 +23,31 @@ class StatisticsHeader extends StatelessWidget {
   }
 
   Widget dashboardSubtitleText() {
-    return Text(
-      "Dashboard",
-      style: TextStyle(
-          color: Colour.blue.color,
-          fontWeight: FontWeight.bold,
-          fontSize: 40.0),
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        "Dashboard",
+        style: TextStyle(
+            color: Colour.blue.color,
+            fontWeight: FontWeight.bold,
+            fontSize: 40.0),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Padding(
-      padding: const EdgeInsets.only(top: 60, bottom: 40.0, left: 30.0),
-      child: Column(children: [
-        statsHeaderText(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            dashboardSubtitleText(),
-            SizedBox(
-              width: 18.0,
-            ),
-          ],
-        )
-      ]),
+      padding: EdgeInsets.only(
+          top: SizeConfig.safeBlockVertical * 5,
+          left: SizeConfig.safeBlockHorizontal * 5),
+      child: Column(
+        children: [
+          statsHeaderText(),
+          dashboardSubtitleText(),
+        ],
+      ),
     );
   }
 }
@@ -79,7 +80,7 @@ class StatisticsCard extends StatelessWidget {
 
   Widget bodyText() {
     return Padding(
-      padding: const EdgeInsets.only(top: 48.0),
+      padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 2),
       child: Center(
           child: Text(
         body,
@@ -93,14 +94,14 @@ class StatisticsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         height: height,
-        width: 165.0,
+        width: SizeConfig.safeBlockHorizontal * 43,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
           color: backgroundColor,
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
             image: AssetImage(imgPath),
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
         ),
         child: Column(
@@ -130,7 +131,7 @@ class StatisticsCard2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         height: height,
-        width: 165.0,
+        width: SizeConfig.safeBlockHorizontal * 43,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
           color: backgroundColor,
@@ -150,7 +151,7 @@ class StatisticsCard2 extends StatelessWidget {
               )),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 48.0),
+              padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 2),
               child: Center(
                   child: Text(
                 body,
@@ -161,10 +162,13 @@ class StatisticsCard2 extends StatelessWidget {
               )),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.only(top: 20.0, left: 15.0, right: 15.0),
+              padding: EdgeInsets.only(
+                  top: SizeConfig.safeBlockVertical * 2,
+                  left: 15.0,
+                  right: 15.0),
               child: Image.asset(
                 imgPath,
+                scale: SizeConfig.safeBlockVertical / 4.6,
               ),
             ),
           ],
@@ -180,51 +184,62 @@ class StatisticsBody extends StatelessWidget {
   StatisticsBody(this.totalTasks, this.totalPoints, this.percentComplete,
       this.percentLost);
 
-  Widget statsLeftCol() {
-    return Column(
-      children: [
-        StatisticsCard2("Tasks Entered", totalTasks.toString(),
-            "assets/images/charts.png", Colour.blue.color, 261),
-        SizedBox(
-          height: 16.0,
-        ),
-        StatisticsCard("Loss/Wage %", "$percentLost%", "assets/images/rate.png",
-            Colour.green.color, 226),
-      ],
-    );
-  }
-
-  Widget statsRightCol() {
-    return Column(
-      children: [
-        StatisticsCard("Total Points", totalPoints.toString(),
-            "assets/images/running.png", Colour.lightBlue.color, 179),
-        SizedBox(
-          height: 16.0,
-        ),
-        StatisticsCard("% Complete", "$percentComplete%",
-            "assets/images/calories.png", Colour.orange.color, 309),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
         body: Column(children: [
           StatisticsHeader(),
           Padding(
-            padding: const EdgeInsets.only(top: 15.0, left: 16.0),
-            child: Row(
-              children: [
-                statsLeftCol(),
-                SizedBox(
-                  width: 16.0,
-                ),
-                statsRightCol(),
-              ],
-            ),
-          ),
+              padding: EdgeInsets.only(
+                  top: SizeConfig.safeBlockVertical * 5,
+                  left: SizeConfig.safeBlockHorizontal * 5,
+                  right: SizeConfig.safeBlockHorizontal * 5),
+              child: Row(
+                children: [
+                  Column(
+                    children: [
+                      StatisticsCard2(
+                          "Tasks Entered",
+                          totalTasks.toString(),
+                          "assets/images/charts.png",
+                          Colour.blue.color,
+                          SizeConfig.safeBlockVertical * 35.1),
+                      SizedBox(
+                        height: SizeConfig.safeBlockVertical * 2,
+                      ),
+                      StatisticsCard(
+                          "Loss/Wage %",
+                          "$percentLost%",
+                          "assets/images/rate.png",
+                          Colour.green.color,
+                          SizeConfig.safeBlockVertical * 30.8),
+                    ],
+                  ),
+                  SizedBox(
+                    width: SizeConfig.safeBlockHorizontal * 3,
+                  ),
+                  Column(
+                    children: [
+                      StatisticsCard(
+                          "Total Points",
+                          totalPoints.toString(),
+                          "assets/images/running.png",
+                          Colour.lightBlue.color,
+                          SizeConfig.safeBlockVertical * 25),
+                      SizedBox(
+                        height: SizeConfig.safeBlockVertical * 2,
+                      ),
+                      StatisticsCard(
+                          "% Complete",
+                          "$percentComplete%",
+                          "assets/images/calories.png",
+                          Colour.orange.color,
+                          SizeConfig.safeBlockVertical * 41),
+                    ],
+                  ),
+                ],
+              )),
         ]),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.arrow_back),

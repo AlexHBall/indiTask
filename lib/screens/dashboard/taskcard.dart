@@ -81,7 +81,7 @@ class _TaskCardState extends State<TaskCard> {
   int previousNotificationId;
   Widget score() {
     return Container(
-      height: 350,
+      height: SizeConfig.safeBlockVertical * 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: widget.backgroundColor,
@@ -153,28 +153,23 @@ class _TaskCardState extends State<TaskCard> {
     elements
         .add(TextButton(text: "Done", onPress: submitAlarm, selected: false));
     return Padding(
-      padding: const EdgeInsets.only(top: 12.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: elements,
-      ),
-    );
+        padding: const EdgeInsets.only(left: 17.0, top: 12.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: elements,
+        ));
   }
 
   Widget descriptionText() {
-    return Padding(
-      padding: const EdgeInsets.only(
-          left: 53.0, top: 90.0, right: 30.0, bottom: 50.0),
-      child: Align(
-        alignment: Alignment.center,
-        child: Text(
-          widget.task.description,
-          overflow: TextOverflow.ellipsis,
-          maxLines: 3,
-          style: TextStyle(
-              color: Colors.white, fontSize: 23, fontWeight: FontWeight.w600),
-          textAlign: TextAlign.left,
-        ),
+    return Align(
+      alignment: Alignment.center,
+      child: Text(
+        widget.task.description,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 3,
+        style: TextStyle(
+            color: Colors.white, fontSize: 23, fontWeight: FontWeight.w600),
+        textAlign: TextAlign.left,
       ),
     );
   }
@@ -185,7 +180,7 @@ class _TaskCardState extends State<TaskCard> {
     });
   }
 
-  int switch_selected(int selected) {
+  int switchSelected(int selected) {
     switch (selected) {
       case -1:
         return -1;
@@ -208,7 +203,7 @@ class _TaskCardState extends State<TaskCard> {
     //TODO: Allow update to 0
     print('updating alarm to $selected');
     setState(() {
-      widget.task.alarm = switch_selected(selected);
+      widget.task.alarm = switchSelected(selected);
       alarmSelected = selected;
     });
   }
@@ -239,12 +234,13 @@ class _TaskCardState extends State<TaskCard> {
   }
 
   void submitAlarm() {
-    //TODO: Update alarm ????
     if (hasPreviousNotificaiton) {
       notificationPlugin.cancelNotification(previousNotificationId);
     }
 
-    if (widget.task.alarm > -1) {}
+    if (widget.task.alarm > -1) {
+      _addNotification();
+    }
 
     BlocProvider.of<TaskBloc>(context).add(EditTaskEvent(widget.task));
     toggleAlarmRow();
@@ -254,7 +250,7 @@ class _TaskCardState extends State<TaskCard> {
   void initState() {
     super.initState();
     showAlarms = false;
-    alarmSelected = switch_selected(widget.task.alarm);
+    alarmSelected = switchSelected(widget.task.alarm);
     if (widget.task.alarmId > -1) {
       hasPreviousNotificaiton = true;
       previousNotificationId = widget.task.alarmId;
@@ -265,26 +261,29 @@ class _TaskCardState extends State<TaskCard> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     print("card has alarm $alarmSelected");
     return Padding(
-      padding: const EdgeInsets.only(
-          left: 40.0, right: 40.0, top: 20.0, bottom: 38.0),
-      child: Stack(children: [
-        score(),
-        Container(
-          height: 350,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: widget.backgroundColor.withOpacity(0.5),
-          ),
-          child: Column(children: [
-            (showAlarms)
-                ? editAlarmRow(alarmSelected, updateSelectedAlarm)
-                : defaultButtonRow(),
-            descriptionText(),
-          ]),
-        )
-      ]),
+      padding:
+          EdgeInsets.symmetric(horizontal: SizeConfig.safeBlockHorizontal * 10),
+      child: Stack(
+        children: [
+          score(),
+          Container(
+            height: SizeConfig.safeBlockVertical * 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: widget.backgroundColor.withOpacity(0.5),
+            ),
+            child: Column(children: [
+              (showAlarms)
+                  ? editAlarmRow(alarmSelected, updateSelectedAlarm)
+                  : defaultButtonRow(),
+              descriptionText(),
+            ]),
+          )
+        ],
+      ),
     );
   }
 }

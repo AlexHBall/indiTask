@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inditask/utils/colors.dart';
+import 'package:inditask/utils/size.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -42,8 +43,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget page() {
+    SizeConfig().init(context);
+
     return Container(
-      height: 542.0,
+      height: SizeConfig.safeBlockVertical * 75,
       child: PageView(
           physics: new NeverScrollableScrollPhysics(),
           controller: _pageController,
@@ -58,57 +61,54 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget pageIndicator() {
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 2),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: _buildPageIndicator(),
-        ));
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: _buildPageIndicator());
   }
 
   Widget nextButton() {
+    SizeConfig().init(context);
+
     return Padding(
-        padding: const EdgeInsets.only(top: 33.0, left: 5.0, right: 5.0),
-        child: Container(
-            width: 320,
-            height: 66,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: Colour.blue.color,
-            ),
-            child: RawMaterialButton(
-              fillColor: Colour.blue.color,
-              splashColor: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(22.0),
-                child: Text(_text,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white)),
-              ),
-              onPressed: () async {
-                setState(() async {
-                  _currentPage++;
-                  if (_currentPage == 3) {
-                    _text = "Get Started";
-                  }
+            padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 10),
+      child: ButtonTheme(
+        minWidth: SizeConfig.safeBlockHorizontal * 85,
+        height: SizeConfig.safeBlockVertical * 10,
+        child: MaterialButton(
+          color: Colour.blue.color,
+          splashColor: Colors.white,
+          child: Padding(
+            padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
+            child: Text(_text,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white)),
+          ),
+          onPressed: () async {
+            setState(() async {
+              _currentPage++;
+              if (_currentPage == 3) {
+                _text = "Get Started";
+              }
 
-                  if (_currentPage == 4) {
-                    _setPrefs();
-                    Navigator.pushNamed(
-                      context,
-                      "/",
-                    );
-                  }
+              if (_currentPage == 4) {
+                _setPrefs();
+                Navigator.pushNamed(
+                  context,
+                  "/",
+                );
+              }
 
-                  _pageController.animateToPage(_currentPage,
-                      duration: kTabScrollDuration, curve: Curves.ease);
-                });
-              },
-              shape: const StadiumBorder(),
-            )));
+              _pageController.animateToPage(_currentPage,
+                  duration: kTabScrollDuration, curve: Curves.ease);
+            });
+          },
+          shape: const StadiumBorder(),
+        ),
+      ),
+    );
   }
 
   @override
@@ -126,7 +126,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       Screen(
           'assets/images/onboard3.png',
           "Based on loss aversion",
-          "When you don’t complete a task, you lose the amount of points    you waged.",
+          "When you don’t complete a task, you lose the amount of points \nyou waged.",
           146.0,
           60.0),
       Screen('assets/images/onboard4.png', "Welcome To Inditask",
@@ -140,12 +140,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
         backgroundColor: Colour.backGrey.color,
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             page(),
             pageIndicator(),
-            SizedBox(
-              height: 30,
-            ),
             nextButton(),
           ],
         ));
@@ -161,43 +159,55 @@ class Screen extends StatelessWidget {
   Screen(this.imagePath, this.headerText, this.bodyText, this.imageTopPadding,
       this.headerPadding);
 
-  Widget image() {
-    return Padding(
-        padding: EdgeInsets.only(top: imageTopPadding),
-        child: Image.asset(imagePath));
-  }
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    double w = SizeConfig.safeBlockHorizontal;
+    double h = SizeConfig.safeBlockVertical;
+    
+    Widget image() {
+      return Container(
+        height: h * 50,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: h * 5),
+          child: Image.asset(
+            imagePath,
+            height: h * 30,
+            width: w * 100,
+          ),
+        ),
+      );
+    }
 
-  Widget textHeader() {
-    return Padding(
-      padding: EdgeInsets.only(top: headerPadding),
-      child: Text(headerText,
+    Widget textHeader() {
+      return Text(headerText,
           style: TextStyle(
               color: Colour.blue.color,
               fontSize: 24,
-              fontWeight: FontWeight.bold)),
-    );
-  }
+              fontWeight: FontWeight.bold));
+    }
 
-  Widget textBody() {
+    Widget textBody() {
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: w * 0, vertical: h * 2.5),
+        child: Text(bodyText,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colour.blue.color,
+                fontSize: 18,
+                fontWeight: FontWeight.w400)),
+      );
+    }
+
     return Padding(
-      padding: EdgeInsets.only(top: 15, left: 30, bottom: 0, right: 30),
-      child: Text(bodyText,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colour.blue.color,
-              fontSize: 18,
-              fontWeight: FontWeight.w400)),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        image(),
-        textHeader(),
-        textBody(),
-      ],
+      padding: EdgeInsets.symmetric(horizontal: w * 5),
+      child: Column(
+        children: [
+          image(),
+          textHeader(),
+          textBody(),
+        ],
+      ),
     );
   }
 }

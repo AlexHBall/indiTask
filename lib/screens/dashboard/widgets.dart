@@ -3,11 +3,22 @@ part of 'dashboard.dart';
 class HeaderRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     return Padding(
-      padding: const EdgeInsets.only(left: 40.0, right: 15.0, top: 40.0),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Image.asset('assets/images/ribbon.png'),
-      ]),
+      padding: EdgeInsets.only(
+        left: SizeConfig.safeBlockHorizontal * 10,
+        right: SizeConfig.safeBlockHorizontal * 10,
+        top: SizeConfig.safeBlockVertical * 3,
+      ),
+      child: GestureDetector(
+        onTap: () {
+          BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.stats));
+        },
+        child: Align(
+            alignment: Alignment.centerLeft,
+            child: Image.asset('assets/images/ribbon.png')),
+      ),
     );
   }
 }
@@ -15,33 +26,23 @@ class HeaderRow extends StatelessWidget {
 class TasksRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     return Padding(
-      padding: const EdgeInsets.only(left: 40.0, right: 14.0, top: 0),
-      child: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Text(
-                'Tasks Due:',
-                style: TextStyle(
-                    color: Colour.darkPurple.color,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            MaterialButton(
-              onPressed: () {
-                BlocProvider.of<TabBloc>(context).add(TabUpdated(AppTab.stats));
-              },
-              textColor: Colors.white,
-              child: Image.asset('assets/images/listicon.png'),
-              padding: EdgeInsets.all(10),
-              shape: ContinuousRectangleBorder(),
-            )
-            //
-          ],
+      padding: EdgeInsets.only(
+        left: SizeConfig.safeBlockHorizontal * 10,
+        right: SizeConfig.safeBlockHorizontal * 10,
+        top: SizeConfig.safeBlockVertical * 3,
+        bottom: SizeConfig.safeBlockVertical * 1,
+      ),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          'Tasks Due:',
+          style: TextStyle(
+              color: Colour.darkPurple.color,
+              fontSize: 18,
+              fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -81,8 +82,13 @@ class RemaingingTimeWidget extends StatelessWidget {
   const RemaingingTimeWidget(this.timeLeft);
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+      padding: EdgeInsets.only(
+        left: SizeConfig.safeBlockHorizontal * 10,
+        right: SizeConfig.safeBlockHorizontal * 10,
+        // top: SizeConfig.safeBlockVertical * 3,
+      ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -120,7 +126,11 @@ class CompleteWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 18.0),
+        padding: EdgeInsets.only(
+          left: SizeConfig.safeBlockHorizontal * 10,
+          right: SizeConfig.safeBlockHorizontal * 10,
+          top: SizeConfig.safeBlockVertical * 3,
+        ),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
